@@ -60,7 +60,7 @@ const proxy = {
 module.exports = proxy;
 ```
 
-Using with [Express](https://github.com/expressjs/express)
+## Using with [Express](https://github.com/expressjs/express)
 
 ```js
 const express = require('express');
@@ -73,7 +73,7 @@ app.use(apiMocker(app, mocker));
 app.listen(8080);
 ```
 
-Using with Webpack
+## Using with Webpack
 
 To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects, simply add a setup options to your [webpack-dev-server](https://github.com/webpack/webpack-dev-server) options:
 

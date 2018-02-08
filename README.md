@@ -62,14 +62,14 @@ module.exports = proxy;
 
 ## Using with [Express](https://github.com/expressjs/express)
 
-```js
+```diff
 const express = require('express');
-const apiMocker = require('webpack-api-mocker');
-const mocker = require('./mocker')
++ const apiMocker = require('webpack-api-mocker');
++ const mocker = require('./mocker')
 
 const app = express();
 
-app.use(apiMocker(app, mocker));
++ app.use(apiMocker(app, mocker));
 app.listen(8080);
 ```
 
@@ -83,8 +83,8 @@ Change your config file to tell the dev server where to look for files: `webpack
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const apiMocker = require('webpack-api-mocker');
-const mocker = require('./mocker');
++ const apiMocker = require('webpack-api-mocker');
++ const mocker = require('./mocker');
 
 
 module.exports = {
@@ -94,7 +94,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
 + devServer: {
-+   contentBase: './dist',
++   ...
 +   before(app){
 +     apiMocker(app, mocker)
 +   }

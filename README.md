@@ -39,7 +39,7 @@ const proxy = {
   'POST /api/login/account': (req, res) => {
     const { password, username } = req.body;
     if (password === '888888' && username === 'admin') {
-      return res.send({
+      return res.json({
         status: 'ok',
         code: 0,
         token: "sdfsdfsdfdsf",
@@ -50,7 +50,7 @@ const proxy = {
         }
       });
     } else {
-      return res.send({
+      return res.json({
         status: 'error',
         code: 403
       });

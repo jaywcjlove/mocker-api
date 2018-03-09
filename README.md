@@ -3,6 +3,11 @@ webpack-api-mocker
 
 webpack-api-mocker is a [webpack-dev-server](https://github.com/webpack/webpack-dev-server)  middleware that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
+**Features:**  
+
+🔥 Built in support for hot Mocker file replacement.  
+🚀 Quickly and easily configure the API via JSON.  
+
 ## Installation
 
 ```bash
@@ -73,7 +78,7 @@ const app = express();
 app.listen(8080);
 ```
 
-## Using with Webpack
+## Using with [Webpack](https://github.com/webpack/webpack)
 
 To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects, simply add a setup options to your [webpack-dev-server](https://github.com/webpack/webpack-dev-server) options:
 
@@ -84,8 +89,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 + const apiMocker = require('webpack-api-mocker');
-+ const mocker = require('./mocker');
-
 
 module.exports = {
   entry: {
@@ -96,7 +99,7 @@ module.exports = {
 + devServer: {
 +   ...
 +   before(app){
-+     apiMocker(app, mocker)
++     apiMocker(app, path.resolve('./mocker/index.js'))
 +   }
 + },
   plugins: [
@@ -111,6 +114,8 @@ module.exports = {
   }
 };
 ```
+
+Must have a file suffix! For example: `./mocker/index.js`.
 
 Let's add a script to easily run the dev server as well:
 

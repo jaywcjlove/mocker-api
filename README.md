@@ -68,6 +68,7 @@ module.exports = proxy;
 ## Using with [Express](https://github.com/expressjs/express)
 
 ```diff
+const path = require('path');
 const express = require('express');
 + const apiMocker = require('webpack-api-mocker');
 

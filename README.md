@@ -70,11 +70,10 @@ module.exports = proxy;
 ```diff
 const express = require('express');
 + const apiMocker = require('webpack-api-mocker');
-+ const mocker = require('./mocker')
 
 const app = express();
 
-+ app.use(apiMocker(app, mocker));
++ apiMocker(app, path.resolve('./mocker/index.js'))
 app.listen(8080);
 ```
 

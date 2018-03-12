@@ -12,8 +12,18 @@ module.exports = function (app, watchFile, proxyConf = {}) {
     const general = key.toString().split(' ');
     if (general.length > 1 && general[0] && app[general[0].toLowerCase()]) {
       const proxyNames = Object.keys(proxyConf);
-      if (proxyNames.length > 0 && proxyNames.indexOf(key) > -1) {
-        app[general[0].toLowerCase()](general[1], proxyMiddleware({ target: proxyConf[key], changeOrigin: true }));
+      const proxyFuzzyMatch = proxyNames.filter(function (kname) {
+        return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(key);;
+      });
+      const proxyMatch = proxyNames.filter(function (kname) {
+        return kname === key;
+      });
+      if (proxyNames.length > 0 && (proxyMatch.length > 0 || proxyFuzzyMatch.length > 0)) {
+        let currentProxy = proxyNames.filter(function (kname) {
+          return (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(key);;
+        });
+        currentProxy = proxyConf[currentProxy[0]];
+        app[general[0].toLowerCase()](general[1], proxyMiddleware({ target: currentProxy, changeOrigin: true }));
       } else {
         app[general[0].toLowerCase()](general[1], function (req, res, next) {
           const contentType = req.get('Content-Type');

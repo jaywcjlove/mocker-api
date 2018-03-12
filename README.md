@@ -87,7 +87,6 @@ Change your config file to tell the dev server where to look for files: `webpack
 ```diff
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 + const apiMocker = require('webpack-api-mocker');
 
 module.exports = {
@@ -103,7 +102,6 @@ module.exports = {
 +   }
 + },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Development'
     })
@@ -130,7 +128,6 @@ package.json
     "main": "webpack.config.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "watch": "webpack --progress --watch",
 +     "start": "webpack-dev-server --open",
       "build": "webpack"
     },

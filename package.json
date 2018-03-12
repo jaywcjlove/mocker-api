@@ -19,6 +19,7 @@
   "author": "Kenny Wong <kennyiseeyou@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2"
+    "body-parser": "^1.18.2",
+    "http-proxy-middleware": "^0.17.4"
   }
 }

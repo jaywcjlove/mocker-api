@@ -1,7 +1,8 @@
 const bodyParser = require('body-parser');
+const proxyMiddleware = require('http-proxy-middleware');
 const fs = require('fs');
 
-module.exports = function (app, watchFile) {
+module.exports = function (app, watchFile, proxyConf = {}) {
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
     return;
@@ -10,20 +11,25 @@ module.exports = function (app, watchFile) {
   for (const key in proxy) {
     const general = key.toString().split(' ');
     if (general.length > 1 && general[0] && app[general[0].toLowerCase()]) {
-      app[general[0].toLowerCase()](general[1], function (req, res, next) {
-        const contentType = req.get('Content-Type');
-        let bodyParserMethd = bodyParser.json();
-        if (contentType === 'text/plain') {
-          bodyParserMethd = bodyParser.raw({ type: 'text/plain' });
-        }
-        bodyParserMethd(req, res, function () {
-          if (typeof proxy[key] === 'function') {
-            proxy[key](req, res, next);
-          } else {
-            res.json(proxy[key]);
+      const proxyNames = Object.keys(proxyConf);
+      if (proxyNames.length > 0 && proxyNames.indexOf(key) > -1) {
+        app[general[0].toLowerCase()](general[1], proxyMiddleware({ target: proxyConf[key], changeOrigin: true }));
+      } else {
+        app[general[0].toLowerCase()](general[1], function (req, res, next) {
+          const contentType = req.get('Content-Type');
+          let bodyParserMethd = bodyParser.json();
+          if (contentType === 'text/plain') {
+            bodyParserMethd = bodyParser.raw({ type: 'text/plain' });
           }
+          bodyParserMethd(req, res, function () {
+            if (typeof proxy[key] === 'function') {
+              proxy[key](req, res, next);
+            } else {
+              res.json(proxy[key]);
+            }
+          });
         });
-      });
+      }
     }
   }
 

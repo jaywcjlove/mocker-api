@@ -65,6 +65,12 @@ const proxy = {
 module.exports = proxy;
 ```
 
+## apiMocker
+
+```js
+apiMocker(app, mocker[,proxy])
+```
+
 ## Using with [Express](https://github.com/expressjs/express)
 
 ```diff
@@ -98,7 +104,10 @@ module.exports = {
 + devServer: {
 +   ...
 +   before(app){
-+     apiMocker(app, path.resolve('./mocker/index.js'))
++     apiMocker(app, path.resolve('./mocker.js'), {
++       'GET /api/user/list': 'http://localhost:3000',
++       'GET /api/prod/*': 'http://localhost:3000',
++     })
 +   }
 + },
   plugins: [
@@ -113,12 +122,9 @@ module.exports = {
 };
 ```
 
-Must have a file suffix! For example: `./mocker/index.js`.
+Must have a file suffix! For example: `./mocker.js`.
 
-Let's add a script to easily run the dev server as well:
-
-package.json
-
+Let's add a script to easily run the dev server as well: `package.json`
 
 ```diff
   {
@@ -133,16 +139,22 @@ package.json
     },
     "keywords": [],
     "author": "",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
-      "clean-webpack-plugin": "^0.1.16",
-      "css-loader": "^0.28.4",
-      "csv-loader": "^2.1.1",
-      "file-loader": "^0.11.2",
-      "html-webpack-plugin": "^2.29.0",
-      "style-loader": "^0.18.2",
-      "webpack": "^3.0.0",
-      "xml-loader": "^1.2.1"
+      ....
     }
   }
+```
+
+Mock API proxying made simple.
+
+```js
+{
+  before(app){
+    apiMocker(app, path.resolve('./mocker.js'), {
+        'GET /api/user/list': 'http://localhost:3000',
+        'GET /api/prod/*': 'http://localhost:3000',
+    })
+  }
+}
 ```

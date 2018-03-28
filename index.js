@@ -30,7 +30,7 @@ module.exports = function (app, watchFile, proxyConf = {}) {
       cleanCache(require.resolve(watchFile));
       // 完事儿，进行赋值，哈哈成功了！
       proxy = require(watchFile);
-      console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(__dirname,'')} file replacement success!`);
+      console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
     } catch (ex) {
       console.error(`${` Failed: `.green_b.black} Hot Mocker file replacement failed!!`);
     }

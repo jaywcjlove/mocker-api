@@ -32,7 +32,7 @@ module.exports = function (app, watchFile, proxyConf = {}) {
       proxy = require(watchFile);
       console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
     } catch (ex) {
-      console.error(`${` Failed: `.green_b.black} Hot Mocker file replacement failed!!`);
+      console.error(`${` Failed: `.red_b.black} Hot Mocker file replacement failed!!`);
     }
   });
 

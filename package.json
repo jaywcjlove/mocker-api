@@ -20,6 +20,8 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "colors-cli": "^1.0.13",
     "http-proxy": "^1.16.2"
-  }
+  },
+  "devDependencies": {}
 }

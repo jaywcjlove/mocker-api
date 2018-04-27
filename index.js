@@ -1,11 +1,34 @@
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
+const pathToRegexp = require('path-to-regexp');
 const fs = require('fs');
+const parse = require('url').parse;
 require('colors-cli/toxic');
 
 const proxyHTTP = httpProxy.createProxyServer({});
-
 let proxy = {};
+
+function pathMatch(options) {
+  options = options || {};
+  return function (path) {
+    var keys = [];
+    var re = pathToRegexp(path, keys, options);
+    return function (pathname, params) {
+      var m = re.exec(pathname);
+      if (!m) return false;
+      params = params || {};
+      var key, param;
+      for (var i = 0; i < keys.length; i++) {
+        key = keys[i];
+        param = m[i + 1];
+        if (!param) continue;
+        params[key.name] = decodeURIComponent(param);
+        if (key.repeat) params[key.name] = params[key.name].split(key.delimiter)
+      }
+      return params;
+    }
+  }
+}
 
 module.exports = function (app, watchFile, proxyConf = {}) {
   if (!watchFile) {
@@ -66,6 +89,20 @@ module.exports = function (app, watchFile, proxyConf = {}) {
       bodyParserMethd(req, res, function () {
         const result = proxy[proxyURL] || proxy[containMockURL[0]];
         if (typeof result === 'function') {
+          // params 参数获取
+          if (containMockURL[0]) {
+            const mockURL = containMockURL[0].split(' ');
+            if (mockURL && mockURL.length === 2 && req.method === mockURL[0]) {
+              const route = pathMatch({
+                sensitive: false,
+                strict: false,
+                end: false,
+              });
+              const match = route(mockURL[1]);
+              const params = match(parse(req.url).pathname);
+              req.params = params;
+            }
+          }
           result(req, res, next);
         } else {
           res.json(result);

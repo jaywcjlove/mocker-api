@@ -21,7 +21,8 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "colors-cli": "^1.0.13",
-    "http-proxy": "^1.16.2"
+    "http-proxy": "^1.16.2",
+    "path-to-regexp": "^2.2.1"
   },
   "devDependencies": {}
 }

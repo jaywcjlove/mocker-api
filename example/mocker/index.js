@@ -1,20 +1,27 @@
 const proxy = {
-  'GET /api/user': {
-    id: 1,
-    username: 'kenny',
-    sex: 6
-  },
-  'GET /api/user/list': [
-    {
+  'GET /api/userinfo/:id': (req, res) => {
+    console.log('---->', req.params)
+    return res.json({
       id: 1,
       username: 'kenny',
       sex: 6
-    }, {
-      id: 2,
-      username: 'kenny',
-      sex: 6
-    }
-  ],
+    });
+  },
+  'GET /api/user/list/:id/:type': (req, res) => {
+    console.log('--22-->', req.params)
+    return res.json([
+      {
+        id: 1,
+        username: 'kenny',
+        sex: 6
+      }, {
+        id: 2,
+        username: 'kenny',
+        sex: 6
+      }
+    ]);
+  },
+  
   'POST /api/login/account': (req, res) => {
     const { password, username } = req.body;
     if (password === '888888' && username === 'admin') {

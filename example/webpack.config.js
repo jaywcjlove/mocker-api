@@ -15,8 +15,8 @@ module.exports = {
   devServer: {
     before(app){
       apiMocker(app, path.resolve('./mocker/index.js'), {
-        'GET /api/user/list': 'http://localhost:3000',
-        // 'GET /api/user/*': 'http://localhost:3000',
+        // 'GET /api/users/list': 'http://localhost:3000',
+        // 'GET /api/userinfo/:id': 'http://localhost:3000',
       })
     }
   },

@@ -30,10 +30,11 @@ function pathMatch(options) {
   }
 }
 
-module.exports = function (app, watchFile, proxyConf = {}) {
+module.exports = function (app, watchFile, conf = {}) {
+  const proxyConf = conf.proxy || {};
+
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
-    return;
   }
   proxy = require(watchFile);
 
@@ -63,7 +64,10 @@ module.exports = function (app, watchFile, proxyConf = {}) {
     const proxyURL = `${req.method} ${req.path}`;
     const proxyNames = Object.keys(proxyConf);
     const proxyFuzzyMatch = proxyNames.filter(function (kname) {
-      return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(proxyURL);;
+      if (kname.startsWith('ALL') || kname.startsWith('/')) {
+        return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(req.path);
+      }
+      return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(proxyURL);
     });
     const proxyMatch = proxyNames.filter(function (kname) {
       return kname === proxyURL;
@@ -74,13 +78,7 @@ module.exports = function (app, watchFile, proxyConf = {}) {
       return (new RegExp(kname.replace(/(:\w*)[^/]/ig, '(.*)'))).test(proxyURL);
     });
 
-    if (proxyNames.length > 0 && (proxyMatch.length > 0 || proxyFuzzyMatch.length > 0)) {
-      let currentProxy = proxyNames.filter(function (kname) {
-        return (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(proxyURL);;
-      });
-      currentProxy = proxyConf[currentProxy[0]];
-      proxyHTTP.web(req, res, { target: currentProxy });
-    } else if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
+    if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
       let bodyParserMethd = bodyParser.json();
       const contentType = req.get('Content-Type');
       if (contentType === 'text/plain') {
@@ -108,6 +106,13 @@ module.exports = function (app, watchFile, proxyConf = {}) {
           res.json(result);
         }
       });
+    } else if (proxyNames.length > 0 && (proxyMatch.length > 0 || proxyFuzzyMatch.length > 0)) {
+      const currentProxy = proxyConf[proxyMatch.length > 0 ? proxyMatch[0] : proxyFuzzyMatch[0]];
+      const url = parse(currentProxy);
+      if (conf.changeHost !== false) {
+        req.headers.host = url.host;
+      }
+      proxyHTTP.web(req, res, { target: url.href });
     } else {
       next();
     }

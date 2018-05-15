@@ -106,8 +106,12 @@ module.exports = {
 +   ...
 +   before(app){
 +     apiMocker(app, path.resolve('./mocker.js'), {
-+       'GET /api/user/list': 'http://localhost:3000',
-+       'GET /api/prod/*': 'http://localhost:3000',
+        proxy: {
+          'GET /api/users/list': 'http://localhost:3000',
+          'GET /api/userinfo/:id': 'http://localhost:3000',
+          '/api//*': 'http://localhost:3000',
+        },
+        changeHost: true,
 +     })
 +   }
 + },

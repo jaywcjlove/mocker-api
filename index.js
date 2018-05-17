@@ -31,7 +31,7 @@ function pathMatch(options) {
 }
 
 module.exports = function (app, watchFile, conf = {}) {
-  const proxyConf = conf.proxy || {};
+  const { proxy: proxyConf = {}, changeHost = true } = conf;
 
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
@@ -52,7 +52,7 @@ module.exports = function (app, watchFile, conf = {}) {
       const moackData = require(watchFile);
       // 确认没有问题进行热更新
       cleanCache(require.resolve(watchFile));
-      // 完事儿，进行赋值，哈哈成功了！
+
       proxy = require(watchFile);
       console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
     } catch (ex) {
@@ -97,8 +97,7 @@ module.exports = function (app, watchFile, conf = {}) {
                 end: false,
               });
               const match = route(mockURL[1]);
-              const params = match(parse(req.url).pathname);
-              req.params = params;
+              req.params = match(parse(req.url).pathname);
             }
           }
           result(req, res, next);
@@ -109,7 +108,7 @@ module.exports = function (app, watchFile, conf = {}) {
     } else if (proxyNames.length > 0 && (proxyMatch.length > 0 || proxyFuzzyMatch.length > 0)) {
       const currentProxy = proxyConf[proxyMatch.length > 0 ? proxyMatch[0] : proxyFuzzyMatch[0]];
       const url = parse(currentProxy);
-      if (conf.changeHost !== false) {
+      if (changeHost) {
         req.headers.host = url.host;
       }
       proxyHTTP.web(req, res, { target: url.href });

@@ -107,9 +107,7 @@ module.exports = {
 +   before(app){
 +     apiMocker(app, path.resolve('./mocker.js'), {
 +       proxy: {
-+         'GET /api/users/list': 'http://localhost:3000',
-+         'GET /api/userinfo/:id': 'http://localhost:3000',
-+         '/api//*': 'http://localhost:3000',
++         '/repos//*': 'https://api.github.com/',
 +       },
 +       changeHost: true,
 +     })
@@ -153,13 +151,15 @@ Let's add a script to easily run the dev server as well: `package.json`
 
 Mock API proxying made simple.
 
-```js
+```diff
 {
   before(app){
-    apiMocker(app, path.resolve('./mocker.js'), {
-        'GET /api/user/list': 'http://localhost:3000',
-        'GET /api/prod/*': 'http://localhost:3000',
-    })
++   apiMocker(app, path.resolve('./mocker.js'), {
++     proxy: {
++       '/repos//*': 'https://api.github.com/',
++     },
++     changeHost: true,
++   })
   }
 }
 ```

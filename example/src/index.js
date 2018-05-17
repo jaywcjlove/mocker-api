@@ -1,21 +1,21 @@
 fetch('/api/userinfo/1314', {
   'Accept': 'application/json',
   'Content-Type': 'application/x-www-form-urlencoded',
-})
-.then((response) => response.json())
-.then(data => {
-  console.log('data:', data);
-  document.getElementById('name').innerHTML = data.username;
-  document.getElementById('age').innerHTML = data.sex;
-})
-
-fetch('/api/user/list/23/vip', {
-  'Accept': 'application/json',
-  'Content-Type': 'application/x-www-form-urlencoded',
-})
-  .then((response) => response.json())
+}).then((response) => response.json())
   .then(data => {
-    // console.log('data:', data);
-    // document.getElementById('name').innerHTML = data.username;
-    // document.getElementById('age').innerHTML = data.sex;
-  })
+    console.log('data:', data);
+    document.getElementById('name').innerHTML = data.username;
+    document.getElementById('age').innerHTML = data.sex;
+  });
+
+fetch('/repos/hello',)
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('mock').innerText = data.text;
+  });
+
+fetch('/repos/jaywcjlove/webpack-api-mocker')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('github').innerText = `from github api: webpack-api-mocker star count: ${data.stargazers_count}`
+  });

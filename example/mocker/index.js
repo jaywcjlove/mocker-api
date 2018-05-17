@@ -21,6 +21,12 @@ const proxy = {
       }
     ]);
   },
+
+  'GET /repos/hello': (req, res) => {
+    return res.json({
+      text: 'this is from mock server'
+    });
+  },
   
   'POST /api/login/account': (req, res) => {
     const { password, username } = req.body;

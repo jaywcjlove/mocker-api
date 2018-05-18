@@ -1,6 +1,6 @@
 {
   "name": "webpack-api-mocker",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "This is dev support mock RESTful API.",
   "main": "index.js",
   "repository": {
@@ -19,9 +19,9 @@
   "author": "Kenny Wong <kennyiseeyou@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "colors-cli": "^1.0.13",
-    "http-proxy": "^1.16.2",
+    "http-proxy": "^1.17.0",
     "path-to-regexp": "^2.2.1"
   },
   "devDependencies": {}

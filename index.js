@@ -46,7 +46,7 @@ module.exports = function (app, watchFile, conf = {}) {
 
   // 监听文件修改重新加载代码
   // 配置热更新
-  fs.watch(require.resolve(watchFile), function (dt) {
+  fs.watchFile(require.resolve(watchFile), { interval: 1000 }, function (dt) {
     try {
       // 热更新先引用，冒烟，实时编辑报错，错误语法避免 crash
       const moackData = require(watchFile);

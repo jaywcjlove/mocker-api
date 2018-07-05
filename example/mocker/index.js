@@ -27,7 +27,20 @@ const proxy = {
       text: 'this is from mock server'
     });
   },
+
+  'GET /api/jobs/:id': (req, res) => {
+    return res.json({
+      text: 'url: /api/jobs/:id'
+    });
+  },
+
+  'GET /api/jobs': (req, res) => {
+    return res.json({
+      text: 'url: /api/jobs'
+    });
+  },
   
+
   'POST /api/login/account': (req, res) => {
     const { password, username } = req.body;
     if (password === '888888' && username === 'admin') {

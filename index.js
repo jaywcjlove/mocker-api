@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
 const pathToRegexp = require('path-to-regexp');
 const fs = require('fs');
+const PATH = require('path');
 const parse = require('url').parse;
 const chokidar = require('chokidar');
 require('colors-cli/toxic');
@@ -46,7 +47,7 @@ module.exports = function (app, watchFile, conf = {}) {
     }
   }
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  const watcher = chokidar.watch(path.dirname(watchFile)); 
+  const watcher = chokidar.watch(PATH.dirname(watchFile)); 
 
   watcher.on('all', function (event, path) {
     if (event === 'change' || event === 'add') {

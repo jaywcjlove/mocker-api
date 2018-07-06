@@ -1,3 +1,5 @@
+const { login } = require('./user');
+
 const proxy = {
   'GET /api/userinfo/:id': (req, res) => {
     console.log('---->', req.params)
@@ -41,26 +43,27 @@ const proxy = {
   },
   
 
-  'POST /api/login/account': (req, res) => {
-    const { password, username } = req.body;
-    if (password === '888888' && username === 'admin') {
-      return res.json({
-        status: 'ok',
-        code: 0,
-        token: "sdfsdfsdfdsf",
-        data: {
-          id: 1,
-          username: 'kenny',
-          sex: 6
-        }
-      });
-    } else {
-      return res.json({
-        status: 'error',
-        code: 403
-      });
-    }
-  },
+  'POST /api/login/account': login,
+  // 'POST /api/login/account': (req, res) => {
+  //   const { password, username } = req.body;
+  //   if (password === '888888' && username === 'admin') {
+  //     return res.json({
+  //       status: 'ok',
+  //       code: 0,
+  //       token: "sdfsdfsdfdsf",
+  //       data: {
+  //         id: 1,
+  //         username: 'kenny',
+  //         sex: 6
+  //       }
+  //     });
+  //   } else {
+  //     return res.json({
+  //       status: 'error',
+  //       code: 403
+  //     });
+  //   }
+  // },
   'DELETE /api/user/:id': (req, res) => {
     console.log('---->', req.body)
     console.log('---->', req.params.id)

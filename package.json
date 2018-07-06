@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "chokidar": "^2.0.4",
     "colors-cli": "^1.0.13",
     "http-proxy": "^1.17.0",
     "path-to-regexp": "^2.2.1"

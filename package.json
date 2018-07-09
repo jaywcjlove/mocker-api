@@ -1,11 +1,11 @@
 {
-  "name": "webpack-api-mocker",
+  "name": "webpack-api-mocker2",
   "version": "1.5.5",
   "description": "This is dev support mock RESTful API.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaywcjlove/webpack-api-mocker.git"
+    "url": "git+https://github.com/chaosforfun/webpack-api-mocker.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -46,30 +46,6 @@ module.exports = function (app, watchFile, conf = {}) {
       next();
     }
   }
-  // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  const watcher = chokidar.watch(PATH.dirname(watchFile)); 
-
-  watcher.on('all', function (event, path) {
-    if (event === 'change' || event === 'add') {
-      try {
-        const mockData = require(watchFile);
-
-        // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
-        cleanCache(path)
-        if (path !== watchFile) {
-          cleanCache(watchFile)
-        }
-
-        proxyList = require(watchFile)
-
-        console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
-      } catch (ex) {
-        console.error(`${` Failed: `.red_b.black} Hot Mocker file replacement failed!!`);
-      }
-    }
-  })
-  // 监听文件修改重新加载代码
-  // 配置热更新
 
   app.all('/*', function (req, res, next) {
     const proxyURL = `${req.method} ${req.path}`;
@@ -127,16 +103,6 @@ module.exports = function (app, watchFile, conf = {}) {
       next();
     }
   });
-
-  // 释放老模块的资源
-  function cleanCache(modulePath) {
-    var module = require.cache[modulePath];
-    // remove reference in module.parent
-    if (module.parent) {
-      module.parent.children.splice(module.parent.children.indexOf(module), 1);
-    }
-    require.cache[modulePath] = null;
-  }
   return function (req, res, next) {
     next();
   }

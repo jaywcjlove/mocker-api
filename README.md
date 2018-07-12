@@ -53,7 +53,7 @@ const proxy = {
         }
       });
     } else {
-      return res.json({
+      return res.status(403).json({
         status: 'error',
         code: 403
       });

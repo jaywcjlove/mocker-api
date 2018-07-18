@@ -19,7 +19,7 @@ npm install webpack-api-mocker --save-dev
 
 webpack-api-mocker dev support mock, configured in `mocker/index.js`.
 
-> ⚠️ The webpack-api-mocker@1.5.5 config needs to be placed in the directory.  
+> ⚠️ The webpack-api-mocker@1.5.5+ config needs to be placed in the directory.  
 
 ```js
 const proxy = {

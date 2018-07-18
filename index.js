@@ -52,15 +52,13 @@ module.exports = function (app, watchFile, conf = {}) {
   watcher.on('all', function (event, path) {
     if (event === 'change' || event === 'add') {
       try {
-        const mockData = require(watchFile);
-
         // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
-        cleanCache(path)
+        cleanCache(path);
         if (path !== watchFile) {
-          cleanCache(watchFile)
+          cleanCache(watchFile);
         }
 
-        proxyList = require(watchFile)
+        proxy = require(watchFile);
 
         console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
       } catch (ex) {

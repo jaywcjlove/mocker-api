@@ -92,6 +92,10 @@ module.exports = function (app, watchFile, conf = {}) {
       const contentType = req.get('Content-Type');
       if (contentType === 'text/plain') {
         bodyParserMethd = bodyParser.raw({ type: 'text/plain' });
+      } else if (contentType === 'text/html') {
+        bodyParserMethd = bodyParser.text({ type: 'text/html' });
+      } else if (contentType === 'application/x-www-form-urlencoded') {
+        bodyParserMethd = bodyParser.urlencoded({ extended: false });
       }
       bodyParserMethd(req, res, function () {
         const result = proxy[proxyURL] || proxy[containMockURL[0]];

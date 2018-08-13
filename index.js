@@ -62,7 +62,7 @@ module.exports = function (app, watchFile, conf = {}) {
 
         console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
       } catch (ex) {
-        console.error(`${` Failed: `.red_b.black} Hot Mocker file replacement failed!!`);
+        console.error(`${` Failed: `.red_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').red} file replacement failed!!`);
       }
     }
   })
@@ -133,6 +133,7 @@ module.exports = function (app, watchFile, conf = {}) {
   // 释放老模块的资源
   function cleanCache(modulePath) {
     var module = require.cache[modulePath];
+    if (!module) return;
     // remove reference in module.parent
     if (module.parent) {
       module.parent.children.splice(module.parent.children.indexOf(module), 1);

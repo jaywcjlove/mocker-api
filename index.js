@@ -53,11 +53,22 @@ module.exports = function (app, watchFile, conf = {}) {
     if (event === 'change' || event === 'add') {
       if (path.indexOf(watchFile) === -1) return
       try {
+<<<<<<< HEAD
         cleanCache(path)
         proxy = require(watchFile);
+=======
+        // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
+        cleanCache(path);
+        if (path !== watchFile) {
+          cleanCache(watchFile);
+        }
+
+        proxy = require(watchFile);
+
+>>>>>>> upstream/master
         console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
       } catch (ex) {
-        console.error(`${` Failed: `.red_b.black} Hot Mocker file replacement failed!!`);
+        console.error(`${` Failed: `.red_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').red} file replacement failed!!`);
       }
     }
   })
@@ -87,6 +98,10 @@ module.exports = function (app, watchFile, conf = {}) {
       const contentType = req.get('Content-Type');
       if (contentType === 'text/plain') {
         bodyParserMethd = bodyParser.raw({ type: 'text/plain' });
+      } else if (contentType === 'text/html') {
+        bodyParserMethd = bodyParser.text({ type: 'text/html' });
+      } else if (contentType === 'application/x-www-form-urlencoded') {
+        bodyParserMethd = bodyParser.urlencoded({ extended: false });
       }
       bodyParserMethd(req, res, function () {
         const result = proxy[proxyURL] || proxy[containMockURL[0]];
@@ -124,7 +139,9 @@ module.exports = function (app, watchFile, conf = {}) {
   // 释放老模块的资源
   function cleanCache(modulePath) {
     var module = require.cache[modulePath];
-    if (module && module.parent) {
+    if (!module) return;
+    // remove reference in module.parent
+    if (module.parent) {
       module.parent.children.splice(module.parent.children.indexOf(module), 1);
     }
     require.cache[modulePath] = null;

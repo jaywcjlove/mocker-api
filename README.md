@@ -17,7 +17,9 @@ npm install webpack-api-mocker --save-dev
 
 ## Usage
 
-webpack-api-mocker dev support mock, configured in `mocker.js`.
+webpack-api-mocker dev support mock, configured in `mocker/index.js`.
+
+> ⚠️ The webpack-api-mocker@1.5.5+ config needs to be placed in the directory.  
 
 ```js
 const proxy = {
@@ -51,7 +53,7 @@ const proxy = {
         }
       });
     } else {
-      return res.json({
+      return res.status(403).json({
         status: 'error',
         code: 403
       });
@@ -105,7 +107,7 @@ module.exports = {
 + devServer: {
 +   ...
 +   before(app){
-+     apiMocker(app, path.resolve('./mocker.js'), {
++     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
 +         '/repos/*': 'https://api.github.com/',
 +       },
@@ -125,7 +127,7 @@ module.exports = {
 };
 ```
 
-Must have a file suffix! For example: `./mocker.js`.
+Must have a file suffix! For example: `./mocker/index.js`.
 
 Let's add a script to easily run the dev server as well: `package.json`
 
@@ -154,7 +156,7 @@ Mock API proxying made simple.
 ```diff
 {
   before(app){
-+   apiMocker(app, path.resolve('./mocker.js'), {
++   apiMocker(app, path.resolve('./mocker/index.js'), {
 +     proxy: {
 +       '/repos/*': 'https://api.github.com/',
 +     },

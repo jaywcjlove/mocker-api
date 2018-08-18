@@ -84,7 +84,7 @@ module.exports = function (app, watchFile, conf = {}) {
     // 判断下面这种情况的路由
     // => GET /api/user/:org/:name
     const containMockURL = Object.keys(proxy).filter(function (kname) {
-      return (new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '((?!\/).)') + '*$')).test(proxyURL);
+      return (new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]') + '*$')).test(proxyURL);
     });
 
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {

@@ -33,8 +33,8 @@ function pathMatch(options) {
 }
 
 module.exports = function (app, watchFile, conf = {}) {
-  const { proxy: proxyConf = {}, changeHost = true } = conf;
-  
+  let { proxy: proxyConf = {}, changeHost = true } = conf;
+
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
   }
@@ -47,11 +47,16 @@ module.exports = function (app, watchFile, conf = {}) {
     }
   }
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  const watcher = chokidar.watch(PATH.dirname(watchFile)); 
+  const watcher = chokidar.watch(PATH.dirname(watchFile));
 
   watcher.on('all', function (event, path) {
     if (event === 'change' || event === 'add') {
+      if (path.indexOf(watchFile) === -1) return
       try {
+<<<<<<< HEAD
+        cleanCache(path)
+        proxy = require(watchFile);
+=======
         // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
         cleanCache(path);
         if (path !== watchFile) {
@@ -60,6 +65,7 @@ module.exports = function (app, watchFile, conf = {}) {
 
         proxy = require(watchFile);
 
+>>>>>>> upstream/master
         console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
       } catch (ex) {
         console.error(`${` Failed: `.red_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').red} file replacement failed!!`);

@@ -10,7 +10,13 @@ const proxy = {
     });
   },
   'GET /api/user/list/:id/:type': (req, res) => {
-    console.log('--22-->', req.params)
+    const { type } = req.params;
+    if (type === 'webpack') {
+      res.status(403).json({
+        status: 'error',
+        code: 403
+      });
+    }
     return res.json([
       {
         id: 1,

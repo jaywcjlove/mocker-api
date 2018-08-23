@@ -1,4 +1,8 @@
 const { login } = require('./user');
+const delay = require('../../utils/delay');
+
+// 是否禁用代理
+const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
   'GET /api/userinfo/:id': (req, res) => {
@@ -12,7 +16,7 @@ const proxy = {
   'GET /api/user/list/:id/:type': (req, res) => {
     const { type } = req.params;
     if (type === 'webpack') {
-      res.status(403).json({
+      return res.status(403).json({
         status: 'error',
         code: 403
       });
@@ -29,7 +33,6 @@ const proxy = {
       }
     ]);
   },
-
   'GET /repos/hello': (req, res) => {
     return res.json({
       text: 'this is from mock server'
@@ -47,8 +50,6 @@ const proxy = {
       text: 'url: /api/jobs'
     });
   },
-  
-
   'POST /api/login/account': login,
   // 'POST /api/login/account': (req, res) => {
   //   const { password, username } = req.body;
@@ -76,4 +77,5 @@ const proxy = {
     res.send({ status: 'ok', message: '删除成功！' });
   }
 }
-module.exports = proxy;
+module.exports = (noProxy ? {} : delay(proxy, 1000));
+// module.exports = proxy;

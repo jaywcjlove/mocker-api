@@ -1,7 +1,6 @@
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
 const pathToRegexp = require('path-to-regexp');
-const fs = require('fs');
 const PATH = require('path');
 const parse = require('url').parse;
 const chokidar = require('chokidar');

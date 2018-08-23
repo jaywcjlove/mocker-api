@@ -68,6 +68,25 @@ const proxy = {
 module.exports = proxy;
 ```
 
+## Delayed Response
+
+You can use functional tool to enhance mock.
+
+```js
+const delay = require('webpack-api-mocker/utils/delay');
+const noProxy = process.env.NO_PROXY === 'true';
+
+const proxy = {
+  'GET /api/user': {
+    id: 1,
+    username: 'kenny',
+    sex: 6
+  },
+  // ...
+}
+module.exports = (noProxy ? {} : delay(proxy, 1000));
+```
+
 ## apiMocker
 
 ```js

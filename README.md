@@ -39,6 +39,19 @@ const proxy = {
       sex: 6
     }
   ],
+  'GET /api/:owner/:repo/raw/:ref/*': (req, res) => {
+    const { owner, repo, ref } = req.params;
+    // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
+    // owner => admin
+    // repo => webpack-mock-api
+    // ref => master
+    // req.params[0] => add/ddd.md
+    return res.json({
+      id: 1,
+      username: 'kenny22',
+      sex: 6
+    });
+  },
   'POST /api/login/account': (req, res) => {
     const { password, username } = req.body;
     if (password === '888888' && username === 'admin') {
@@ -129,6 +142,7 @@ module.exports = {
 +     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
 +         '/repos/*': 'https://api.github.com/',
++         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
 +       },
 +       changeHost: true,
 +     })

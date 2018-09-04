@@ -33,7 +33,7 @@ function pathMatch(options) {
 
 module.exports = function (app, watchFile, conf = {}) {
   const { proxy: proxyConf = {}, changeHost = true } = conf;
-  
+
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
   }
@@ -46,7 +46,7 @@ module.exports = function (app, watchFile, conf = {}) {
     }
   }
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  const watcher = chokidar.watch(PATH.dirname(watchFile)); 
+  const watcher = chokidar.watch(PATH.dirname(watchFile));
 
   watcher.on('all', function (event, path) {
     if (event === 'change' || event === 'add') {
@@ -72,18 +72,21 @@ module.exports = function (app, watchFile, conf = {}) {
     const proxyURL = `${req.method} ${req.path}`;
     const proxyNames = Object.keys(proxyConf);
     const proxyFuzzyMatch = proxyNames.filter(function (kname) {
+      const reg = new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]').replace(/\/\*$/, ''));
       if (kname.startsWith('ALL') || kname.startsWith('/')) {
-        return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(req.path);
+        return /\*$/.test(kname) && reg.test(req.path);
       }
-      return /\*$/.test(kname) && (new RegExp("^" + kname.replace(/\/\*$/, ''))).test(proxyURL);
+      return /\*$/.test(kname) && reg.test(proxyURL);
     });
     const proxyMatch = proxyNames.filter(function (kname) {
       return kname === proxyURL;
     });
     // 判断下面这种情况的路由
     // => GET /api/user/:org/:name
+    // => GET /api/:owner/:repo/raw/:ref/*
     const containMockURL = Object.keys(proxy).filter(function (kname) {
-      return (new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]') + '*$')).test(proxyURL);
+      const replaceStr = /\*$/.test(kname) ? '' : '$';
+      return (new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]') + replaceStr)).test(proxyURL);
     });
 
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {

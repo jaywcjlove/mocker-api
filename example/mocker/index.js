@@ -5,6 +5,14 @@ const delay = require('../../utils/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
+  'GET /api/:owner/:repo/raw/:ref/*': (req, res) => {
+    console.log('---2->', repo, req.params)
+    return res.json({
+      id: 1,
+      username: 'kenny22',
+      sex: 6
+    });
+  },
   'GET /api/userinfo/:id': (req, res) => {
     console.log('---->', req.params)
     return res.json({

@@ -39,7 +39,7 @@ const proxy = {
       sex: 6
     }
   ],
-  'GET /api/:owner/:repo/raw/:ref/*': (req, res) => {
+  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
     const { owner, repo, ref } = req.params;
     // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
     // owner => admin
@@ -48,8 +48,8 @@ const proxy = {
     // req.params[0] => add/ddd.md
     return res.json({
       id: 1,
-      username: 'kenny22',
-      sex: 6
+      owner, repo, ref,
+      path: req.params[0]
     });
   },
   'POST /api/login/account': (req, res) => {

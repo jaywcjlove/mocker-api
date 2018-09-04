@@ -5,6 +5,13 @@ const delay = require('../../../utils/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
+  // Priority processing.
+  _proxy: {
+    proxy: {
+      '/repos/*': 'https://api.github.com/',
+    },
+    changeHost: true,
+  },
   'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
     const { owner, repo, ref } = req.params;
     // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
@@ -19,7 +26,7 @@ const proxy = {
     });
   },
   'GET /api/userinfo/:id': (req, res) => {
-    console.log('---->', req.params)
+    console.log('-1--->', req.params)
     return res.json({
       id: 1,
       username: 'kenny',
@@ -85,8 +92,8 @@ const proxy = {
   //   }
   // },
   'DELETE /api/user/:id': (req, res) => {
-    console.log('---->', req.body)
-    console.log('---->', req.params.id)
+    console.log('--2-->', req.body)
+    console.log('--3-->', req.params.id)
     res.send({ status: 'ok', message: '删除成功！' });
   }
 }

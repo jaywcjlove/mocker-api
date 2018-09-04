@@ -3,7 +3,7 @@ module.exports = function (proxy, timer = 0) {
   const mockApi = {};
   Object.keys(proxy).forEach(function (key) {
     const result = proxy[key];
-    if (Object.prototype.toString.call(result) === '[object String]' && /^http/.test(result) || timer === 0) {
+    if (Object.prototype.toString.call(result) === '[object String]' && /^http/.test(result) || key === '_proxy' || timer === 0) {
       mockApi[key] = proxy[key];
     } else {
       mockApi[key] = function (req, res) {

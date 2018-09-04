@@ -23,6 +23,16 @@ webpack-api-mocker dev support mock, configured in `mocker/index.js`.
 
 ```js
 const proxy = {
+  // Priority processing.
+  // apiMocker(app, path, option)
+  // This is the option parameter setting for apiMocker
+  _proxy: {
+    proxy: {
+      '/repos/*': 'https://api.github.com/',
+      '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
+    },
+    changeHost: true,
+  },
   'GET /api/user': {
     id: 1,
     username: 'kenny',

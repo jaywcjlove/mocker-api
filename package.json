@@ -1,6 +1,6 @@
 {
   "name": "webpack-api-mocker",
-  "version": "1.5.13",
+  "version": "1.5.14",
   "description": "This is dev support mock RESTful API.",
   "main": "index.js",
   "repository": {

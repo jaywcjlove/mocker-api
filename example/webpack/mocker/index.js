@@ -28,7 +28,7 @@ const proxy = {
   'GET /api/userinfo/:id': (req, res) => {
     console.log('-1--->', req.params)
     return res.json({
-      id: 1,
+      id: req.params.id,
       username: 'kenny',
       sex: 6
     });

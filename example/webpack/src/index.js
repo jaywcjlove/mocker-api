@@ -6,6 +6,7 @@ fetch('/api/userinfo/1314', {
     console.log('data:', data);
     document.getElementById('name').innerHTML = data.username;
     document.getElementById('age').innerHTML = data.sex;
+    document.getElementById('id').innerHTML = data.id;
   });
 
 fetch('/repos/hello',)

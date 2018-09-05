@@ -26,7 +26,7 @@ const proxy = {
   // Priority processing.
   // apiMocker(app, path, option)
   // This is the option parameter setting for apiMocker
-  // webpack-api-mocker@1.5.14 support
+  // webpack-api-mocker@1.5.15 support
   _proxy: {
     proxy: {
       '/repos/*': 'https://api.github.com/',

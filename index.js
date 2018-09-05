@@ -32,7 +32,6 @@ function pathMatch(options) {
 }
 
 module.exports = function (app, watchFile, conf = {}) {
-  const { proxy: proxyConf = {}, changeHost = true } = conf;
 
   if (!watchFile) {
     throw new Error('Mocker file does not exist!.');
@@ -45,6 +44,7 @@ module.exports = function (app, watchFile, conf = {}) {
       next();
     }
   }
+  const { proxy: proxyConf = {}, changeHost = true } = proxy._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   const watcher = chokidar.watch(PATH.dirname(watchFile));
 

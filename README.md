@@ -26,6 +26,7 @@ const proxy = {
   // Priority processing.
   // apiMocker(app, path, option)
   // This is the option parameter setting for apiMocker
+  // webpack-api-mocker@1.5.14 support
   _proxy: {
     proxy: {
       '/repos/*': 'https://api.github.com/',
@@ -33,6 +34,7 @@ const proxy = {
     },
     changeHost: true,
   },
+  // =====================
   'GET /api/user': {
     id: 1,
     username: 'kenny',
@@ -118,6 +120,8 @@ apiMocker(app, mocker[,proxy])
 
 ## Using with [Express](https://github.com/expressjs/express)
 
+[Express example](example/express)
+
 ```diff
 const path = require('path');
 const express = require('express');
@@ -130,6 +134,8 @@ app.listen(8080);
 ```
 
 ## Using with [Webpack](https://github.com/webpack/webpack)
+
+[webpack example](example/express)
 
 To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects, simply add a setup options to your [webpack-dev-server](https://github.com/webpack/webpack-dev-server) options:
 

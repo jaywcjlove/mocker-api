@@ -1,4 +1,4 @@
-fetch('/api/userinfo/1314', {
+fetch('/api/userinfo/1314-sd', {
   'Accept': 'application/json',
   'Content-Type': 'application/x-www-form-urlencoded',
 }).then((response) => response.json())

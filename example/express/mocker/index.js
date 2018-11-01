@@ -4,19 +4,6 @@ const delay = require('../../../utils/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
-  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
-    const { owner, repo, ref } = req.params;
-    // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
-    // owner => admin
-    // repo => webpack-mock-api
-    // ref => master
-    // req.params[0] => add/ddd.md
-    return res.json({
-      id: 1,
-      owner, repo, ref,
-      path: req.params[0]
-    });
-  },
   'GET /api/userinfo/:id': (req, res) => {
     console.log('---->', req.params)
     return res.json({
@@ -86,7 +73,20 @@ const proxy = {
     console.log('---->', req.body)
     console.log('---->', req.params.id)
     res.send({ status: 'ok', message: '删除成功！' });
-  }
+  },
+  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
+    const { owner, repo, ref } = req.params;
+    // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
+    // owner => admin
+    // repo => webpack-mock-api
+    // ref => master
+    // req.params[0] => add/ddd.md
+    return res.json({
+      id: 1,
+      owner, repo, ref,
+      path: req.params[0]
+    });
+  },
 }
 module.exports = (noProxy ? {} : delay(proxy, 1000));
 // module.exports = proxy;

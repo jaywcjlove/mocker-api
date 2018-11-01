@@ -1,17 +1,21 @@
 const delay = require('../../../utils/delay');
+const user = require('./user.mock');
+
+console.log('user:', user)
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
-  'GET /api/userinfo/:id': (req, res) => {
-    console.log('---->', req.params)
-    return res.json({
-      id: 1,
-      username: 'kenny',
-      sex: 6
-    });
-  },
+  ...user,
+  // 'GET /api/userinfo/:id': (req, res) => {
+  //   console.log('---->', req.params)
+  //   return res.json({
+  //     id: 1,
+  //     username: 'kenny',
+  //     sex: 6
+  //   });
+  // },
   'GET /api/user/list/:id/:type': (req, res) => {
     const { type } = req.params;
     if (type === 'webpack') {

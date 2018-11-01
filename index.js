@@ -72,7 +72,7 @@ module.exports = function (app, watchFile, conf = {}) {
     const proxyURL = `${req.method} ${req.path}`;
     const proxyNames = Object.keys(proxyConf);
     const proxyFuzzyMatch = proxyNames.filter(function (kname) {
-      const reg = new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]').replace(/\/\*$/, ''));
+      const reg = new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]').replace(/\/\*$/, ''));
       if (kname.startsWith('ALL') || kname.startsWith('/')) {
         return /\*$/.test(kname) && reg.test(req.path);
       }
@@ -86,7 +86,7 @@ module.exports = function (app, watchFile, conf = {}) {
     // => GET /api/:owner/:repo/raw/:ref/*
     const containMockURL = Object.keys(proxy).filter(function (kname) {
       const replaceStr = /\*$/.test(kname) ? '' : '$';
-      return (new RegExp('^' + kname.replace(/(:\w*)[^/]/ig, '(\\w*)[^/]') + replaceStr)).test(proxyURL);
+      return (new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]') + replaceStr)).test(proxyURL);
     });
 
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {

@@ -44,7 +44,7 @@ module.exports = function (app, watchFile, conf = {}) {
       next();
     }
   }
-  const { proxy: proxyConf = {}, changeHost = true } = proxy._proxy || conf;
+  const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {} } = proxy._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   const watcher = chokidar.watch(PATH.dirname(watchFile));
 
@@ -126,7 +126,14 @@ module.exports = function (app, watchFile, conf = {}) {
       if (changeHost) {
         req.headers.host = url.host;
       }
-      proxyHTTP.web(req, res, { target: url.href });
+
+      const { options: proxyOptions = {}, listeners: proxyListeners = [] } = httpProxyConf;
+
+      proxyListeners.forEach(item => {
+        proxyHTTP.on(item.event, item.callback);
+      });
+
+      proxyHTTP.web(req, res, Object.assign({ target: url.href }, proxyOptions));
     } else {
       next();
     }

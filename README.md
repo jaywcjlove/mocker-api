@@ -33,6 +33,18 @@ const proxy = {
       '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
     },
     changeHost: true,
+    // modify the http-proxy(https://www.npmjs.com/package/http-proxy) options
+    httpProxy: {
+      options: {
+        ignorePath: true,
+      },
+      listeners: [{
+        event: 'proxyReq',
+        callback: function (proxyReq, req, res, options) {
+          console.log('do something');
+        },
+      }],
+    },    
   },
   // =====================
   'GET /api/user': {
@@ -135,7 +147,7 @@ app.listen(8080);
 
 ## Using with [Webpack](https://github.com/webpack/webpack)
 
-[webpack example](example/express)
+[webpack example](example/webpack)
 
 To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects, simply add a setup options to your [webpack-dev-server](https://github.com/webpack/webpack-dev-server) options:
 

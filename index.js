@@ -127,10 +127,10 @@ module.exports = function (app, watchFile, conf = {}) {
         req.headers.host = url.host;
       }
 
-      const { options: proxyOptions = {}, listeners: proxyListeners = [] } = httpProxyConf;
+      const { options: proxyOptions = {}, listeners: proxyListeners = {} } = httpProxyConf;
 
-      proxyListeners.forEach(item => {
-        proxyHTTP.on(item.event, item.callback);
+      Object.keys(proxyListeners).forEach(event => {
+        proxyHTTP.on(event, proxyListeners[event]);
       });
 
       proxyHTTP.web(req, res, Object.assign({ target: url.href }, proxyOptions));

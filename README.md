@@ -39,12 +39,11 @@ const proxy = {
       options: {
         ignorePath: true,
       },
-      listeners: [{
-        event: 'proxyReq',
-        callback: function (proxyReq, req, res, options) {
-          console.log('do something');
+      listeners: {
+        proxyReq: function (proxyReq, req, res, options) {
+          console.log('proxyReq');
         },
-      }],
+      },
     },    
   },
   // =====================

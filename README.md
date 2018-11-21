@@ -133,6 +133,8 @@ apiMocker(app, mocker[,proxy])
 
 Multi entry `mocker` file watching
 
+>⚠️  The `webpack-api-mocker@1.6.0+` support.
+
 ```js
 const mockerFile = ['./mock/index.js'];
 // or

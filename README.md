@@ -128,6 +128,16 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 
 ```js
 apiMocker(app, mocker[,proxy])
+
+```
+
+Multi entry `mocker` file watching
+
+```js
+const mockerFile = ['./mock/index.js'];
+// or
+// const mockerFile = './mock/index.js';
+apiMocker(app, mockerFile, proxy)
 ```
 
 ## Using with [Express](https://github.com/expressjs/express)

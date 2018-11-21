@@ -32,12 +32,12 @@ function pathMatch(options) {
 }
 
 module.exports = function (app, watchFile, conf = {}) {
-
-  if (!watchFile) {
+  const watchFiles = Array.isArray(watchFile) ? watchFile : [watchFile];
+  if (watchFiles.some(file => !file)) {
     throw new Error('Mocker file does not exist!.');
   }
 
-  proxy = require(watchFile);
+  proxy = getProxy();
 
   if (!proxy) {
     return function (req, res, next) {
@@ -46,22 +46,21 @@ module.exports = function (app, watchFile, conf = {}) {
   }
   const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {} } = proxy._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  const watcher = chokidar.watch(PATH.dirname(watchFile));
+  const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(watchFile)));
 
   watcher.on('all', function (event, path) {
     if (event === 'change' || event === 'add') {
+      console.log(event, path, 'event, path')
       try {
         // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
         cleanCache(path);
-        if (path !== watchFile) {
-          cleanCache(watchFile);
-        }
+        watchFiles.forEach(file => cleanCache(file));
 
-        proxy = require(watchFile);
+        proxy = getProxy();
 
-        console.log(`${` Done: `.green_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').green} file replacement success!`);
+        console.log(`${` Done: `.green_b.black} Hot Mocker ${path.replace(process.cwd(), '').green} file replacement success!`);
       } catch (ex) {
-        console.error(`${` Failed: `.red_b.black} Hot Mocker ${watchFile.replace(process.cwd(), '').red} file replacement failed!!`);
+        console.error(`${` Failed: `.red_b.black} Hot Mocker ${path.replace(process.cwd(), '').red} file replacement failed!!`);
       }
     }
   })
@@ -148,6 +147,13 @@ module.exports = function (app, watchFile, conf = {}) {
       module.parent.children.splice(module.parent.children.indexOf(module), 1);
     }
     require.cache[modulePath] = null;
+  }
+  // 合并多个proxy
+  function getProxy() {
+    return watchFiles.reduce((proxy, file) => {
+      const proxyItem = require(file);
+      return Object.assign(proxy, proxyItem);
+    }, {})
   }
   return function (req, res, next) {
     next();

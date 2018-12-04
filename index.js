@@ -137,12 +137,14 @@ module.exports = function (app, watchFile, conf = {}) {
     }
   });
 
-  // 释放老模块的资源
+  // The old module's resources to be released.
   function cleanCache(modulePath) {
     // The entry file does not have a .js suffix, 
     // causing the module's resources not to be released.
     // https://github.com/jaywcjlove/webpack-api-mocker/issues/30
-    modulePath = require.cache[modulePath] ? modulePath : `${modulePath}.js`;
+    try {
+      modulePath = require.resolve(modulePath);
+    } catch (e) {}
     var module = require.cache[modulePath];
     if (!module) return;
     // remove reference in module.parent

@@ -147,13 +147,12 @@ apiMocker(app, mockerFile, proxy)
 [Express example](example/express)
 
 ```diff
-const path = require('path');
 const express = require('express');
 + const apiMocker = require('webpack-api-mocker');
 
 const app = express();
 
-+ apiMocker(app, path.resolve('./mocker/index.js'))
++ apiMocker(app, require.resolve('./mocker/index.js'))
 app.listen(8080);
 ```
 
@@ -166,7 +165,6 @@ To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects
 Change your config file to tell the dev server where to look for files: `webpack.config.js`.
 
 ```diff
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 + const apiMocker = require('webpack-api-mocker');
 
@@ -179,7 +177,7 @@ module.exports = {
 + devServer: {
 +   ...
 +   before(app){
-+     apiMocker(app, path.resolve('./mocker/index.js'), {
++     apiMocker(app, require.resolve('./mocker/index.js'), {
 +       proxy: {
 +         '/repos/*': 'https://api.github.com/',
 +         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
@@ -195,7 +193,7 @@ module.exports = {
   ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: require.resolve(__dirname, 'dist')
   }
 };
 ```
@@ -229,7 +227,7 @@ Mock API proxying made simple.
 ```diff
 {
   before(app){
-+   apiMocker(app, path.resolve('./mocker/index.js'), {
++   apiMocker(app, require.resolve('./mocker/index.js'), {
 +     proxy: {
 +       '/repos/*': 'https://api.github.com/',
 +     },

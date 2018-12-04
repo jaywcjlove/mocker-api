@@ -1,4 +1,4 @@
-const delay = require('../../../utils/delay');
+const delay = require('webpack-api-mocker/utils/delay');
 const user = require('./user.mock');
 
 console.log('user:', user)

@@ -14,10 +14,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "react",
-    "create-react-app",
+    "express",
     "webpack-dev-server",
-    "webpack"
+    "webpack",
+    "mocker-api",
+    "mock",
+    "mocker",
+    "api",
+    "fetch",
+    "react",
+    "create-react-app"
   ],
   "author": "Kenny Wong <kennyiseeyou@gmail.com>",
   "license": "MIT",

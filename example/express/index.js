@@ -1,5 +1,5 @@
 const express = require('express');
-const apiMocker = require('webpack-api-mocker');
+const apiMocker = require('mocker-api');
 
 const app = express();
 

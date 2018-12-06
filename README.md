@@ -1,7 +1,9 @@
-webpack-api-mocker
+mocker-api
 ---
 
-webpack-api-mocker is a [webpack-dev-server](https://github.com/webpack/webpack-dev-server)  middleware that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
+`mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
+
+> ⚠️  [`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker) has become powerful and can be used independently of webpack. **This is its new name [`mocker-api`](https://npm.im/mocker-api).** [`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker) can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
 
 **Features:**  
 
@@ -13,7 +15,7 @@ webpack-api-mocker is a [webpack-dev-server](https://github.com/webpack/webpack-
 ## Installation
 
 ```bash
-npm install webpack-api-mocker --save-dev
+npm install mocker-api --save-dev
 ```
 
 ## Usage
@@ -111,7 +113,7 @@ module.exports = proxy;
 You can use functional tool to enhance mock. [#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
 
 ```js
-const delay = require('webpack-api-mocker/utils/delay');
+const delay = require('mocker-api/utils/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
@@ -147,7 +149,7 @@ apiMocker(app, mockerFile, proxy)
 [Base example](example/base)
 
 >⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).  
->⚠️  The `webpack-api-mocker@1.6.4+` support.  
+>⚠️  The `mocker-api@1.6.4+` support.  
 
 ```bash
 # Global install dependent.
@@ -165,7 +167,7 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "webpack-api-mocker": "^1.6.4"
++    "mocker-api": "^1.6.4"
   },
   "license": "MIT"
 }
@@ -180,7 +182,7 @@ Or you can put it the `package.json` config as a current project dependency.
 ```diff
 const express = require('express');
 + const path = require('path');
-+ const apiMocker = require('webpack-api-mocker');
++ const apiMocker = require('mocker-api');
 
 const app = express();
 
@@ -199,7 +201,7 @@ Change your config file to tell the dev server where to look for files: `webpack
 ```diff
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 + const path = require('path');
-+ const apiMocker = require('webpack-api-mocker');
++ const apiMocker = require('mocker-api');
 
 module.exports = {
   entry: {

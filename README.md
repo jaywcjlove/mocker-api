@@ -3,7 +3,9 @@ mocker-api
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
-> ⚠️  [`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker) has become powerful and can be used independently of webpack. **This is its new name [`mocker-api`](https://npm.im/mocker-api).** [`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker) can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
+### ⚠️ ~~`webpack-api-mocker`~~ => `mocker-api`
+
+> ⚠️  ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is its new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
 
 **Features:**  
 
@@ -20,7 +22,7 @@ npm install mocker-api --save-dev
 
 ## Usage
 
-webpack-api-mocker dev support mock, configured in `mocker/index.js`.
+`mocker-api` dev support mock, configured in `mocker/index.js`.
 
 you can modify the [http-proxy](https://www.npmjs.com/package/http-proxy) options and add the event listeners by adding the httpProxy configuration
 
@@ -148,7 +150,7 @@ apiMocker(app, mockerFile, proxy)
 
 ```bash
 # Global install dependent.
-npm install webpack-api-mocker -g
+npm install mocker-api -g
 # Run server
 mocker ./mocker/index.js
 ```

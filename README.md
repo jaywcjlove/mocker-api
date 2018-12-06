@@ -128,7 +128,6 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 
 ```js
 apiMocker(app, mocker[,proxy])
-
 ```
 
 Multi entry `mocker` file watching
@@ -142,17 +141,49 @@ const mockerFile = ['./mock/index.js'];
 apiMocker(app, mockerFile, proxy)
 ```
 
+## Using with command
+
+[Base example](example/base)
+
+>⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).  
+>⚠️  The `webpack-api-mocker@1.6.4+` support.  
+
+```bash
+# Global install dependent.
+npm install webpack-api-mocker -g
+# Run server
+mocker ./mocker/index.js
+```
+
+Or you can put it the `package.json` config as a current project dependency.
+
+```diff
+{
+  "name": "base-example",
+  "scripts": {
++    "api": "mocker ./mocker"
+  },
+  "devDependencies": {
++    "webpack-api-mocker": "^1.6.3"
+  },
+  "license": "MIT"
+}
+```
+
 ## Using with [Express](https://github.com/expressjs/express)
 
 [Express example](example/express)
 
+>⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+
 ```diff
 const express = require('express');
++ const path = require('path');
 + const apiMocker = require('webpack-api-mocker');
 
 const app = express();
 
-+ apiMocker(app, require.resolve('./mocker/index.js'))
++ apiMocker(app, path.resolve('./mocker/index.js'))
 app.listen(8080);
 ```
 
@@ -166,6 +197,7 @@ Change your config file to tell the dev server where to look for files: `webpack
 
 ```diff
 const HtmlWebpackPlugin = require('html-webpack-plugin');
++ const path = require('path');
 + const apiMocker = require('webpack-api-mocker');
 
 module.exports = {
@@ -177,7 +209,7 @@ module.exports = {
 + devServer: {
 +   ...
 +   before(app){
-+     apiMocker(app, require.resolve('./mocker/index.js'), {
++     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
 +         '/repos/*': 'https://api.github.com/',
 +         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
@@ -227,7 +259,7 @@ Mock API proxying made simple.
 ```diff
 {
   before(app){
-+   apiMocker(app, require.resolve('./mocker/index.js'), {
++   apiMocker(app, path.resolve('./mocker/index.js'), {
 +     proxy: {
 +       '/repos/*': 'https://api.github.com/',
 +     },

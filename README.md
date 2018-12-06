@@ -14,7 +14,23 @@ mocker-api
 🌱 Mock API proxying made simple.  
 ⚠️ Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
+## Quick Start
+
+```bash
+mkdir mocker-app && cd mocker-app
+
+# Create a mocker configuration file based on rules
+touch api.js
+
+# Global install dependent.
+npm install mocker-api -g
+# Run server
+mocker ./api.js
+```
+
 ## Installation
+
+you can put it the `package.json` config as a current project dependency.
 
 ```bash
 npm install mocker-api --save-dev

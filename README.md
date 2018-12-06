@@ -23,14 +23,12 @@ npm install mocker-api --save-dev
 webpack-api-mocker dev support mock, configured in `mocker/index.js`.
 
 you can modify the [http-proxy](https://www.npmjs.com/package/http-proxy) options and add the event listeners by adding the httpProxy configuration
-> ⚠️ The webpack-api-mocker@1.5.5+ config needs to be placed in the directory.  
 
 ```js
 const proxy = {
   // Priority processing.
   // apiMocker(app, path, option)
   // This is the option parameter setting for apiMocker
-  // webpack-api-mocker@1.5.15 support
   _proxy: {
     proxy: {
       '/repos/*': 'https://api.github.com/',
@@ -135,8 +133,6 @@ apiMocker(app, mocker[,proxy])
 
 Multi entry `mocker` file watching
 
->⚠️  The `webpack-api-mocker@1.6.0+` support.
-
 ```js
 const mockerFile = ['./mock/index.js'];
 // or
@@ -148,8 +144,7 @@ apiMocker(app, mockerFile, proxy)
 
 [Base example](example/base)
 
->⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).  
->⚠️  The `mocker-api@1.6.4+` support.  
+>⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server). 
 
 ```bash
 # Global install dependent.

@@ -164,7 +164,7 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "webpack-api-mocker": "^1.6.3"
++    "webpack-api-mocker": "^1.6.4"
   },
   "license": "MIT"
 }

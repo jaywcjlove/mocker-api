@@ -1,0 +1,15 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "api": "mocker ./mocker"
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "webpack-api-mocker": "file:../../"
+  },
+  "license": "MIT"
+}

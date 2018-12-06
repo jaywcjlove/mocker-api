@@ -8,6 +8,7 @@ webpack-api-mocker is a [webpack-dev-server](https://github.com/webpack/webpack-
 🔥 Built in support for hot Mocker file replacement.  
 🚀 Quickly and easily configure the API via JSON.  
 🌱 Mock API proxying made simple.  
+⚠️ Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
 ## Installation
 

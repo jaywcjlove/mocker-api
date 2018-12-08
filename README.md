@@ -7,12 +7,16 @@ mocker-api
 
 > ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
 
+- [Using with command](#using-with-command)
+- [Using with express](#using-with-express)
+- [Using with webpack](#using-with-webpack)
+
 **Features:**  
 
 🔥 Built in support for hot Mocker file replacement.  
 🚀 Quickly and easily configure the API via JSON.  
 🌱 Mock API proxying made simple.  
-⚠️ Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+💥 Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
 ## Quick Start
 
@@ -158,7 +162,7 @@ const mockerFile = ['./mock/index.js'];
 apiMocker(app, mockerFile, proxy)
 ```
 
-## Using with command
+## Using With Command
 
 [Base example](example/base)
 
@@ -186,7 +190,7 @@ Or you can put it the `package.json` config as a current project dependency.
 }
 ```
 
-## Using with [Express](https://github.com/expressjs/express)
+## Using With [Express](https://github.com/expressjs/express)
 
 [Express example](example/express)
 
@@ -203,7 +207,7 @@ const app = express();
 app.listen(8080);
 ```
 
-## Using with [Webpack](https://github.com/webpack/webpack)
+## Using With [Webpack](https://github.com/webpack/webpack)
 
 [webpack example](example/webpack)
 

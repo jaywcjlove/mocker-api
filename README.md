@@ -10,6 +10,7 @@ mocker-api
 - [Using with command](#using-with-command)
 - [Using with express](#using-with-express)
 - [Using with webpack](#using-with-webpack)
+- [Load data example](example/loadData)
 
 **Features:**  
 

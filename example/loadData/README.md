@@ -9,5 +9,6 @@ npm run api
 ## test
 
 ```bash
-curl http://localhost:3721/repos/hello
+curl http://localhost:3721/api/user
+curl http://localhost:3721/api/user/info
 ```

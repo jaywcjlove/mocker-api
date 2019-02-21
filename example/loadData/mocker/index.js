@@ -14,6 +14,7 @@ function loadData(data) {
 const proxy = loadData({
   'GET /api/user': './db/user',
   'GET /api/user/info': './db/userInfo',
+  'OPTIONS /api/user/info': './db/userInfo',
 });
 
 module.exports = (noProxy ? {} : delay(proxy, 1000));

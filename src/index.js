@@ -44,7 +44,12 @@ module.exports = function (app, watchFile, conf = {}) {
       next();
     }
   }
-  const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {} } = proxy._proxy || conf;
+  const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {},
+    bodyParserJSON = {},
+    bodyParserText = {},
+    bodyParserRaw = {},
+    bodyParserUrlencoded = {},
+  } = proxy._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(watchFile)));
 
@@ -65,7 +70,6 @@ module.exports = function (app, watchFile, conf = {}) {
   })
   // 监听文件修改重新加载代码
   // 配置热更新
-
   app.all('/*', function (req, res, next) {
     const proxyURL = `${req.method} ${req.path}`;
     const proxyNames = Object.keys(proxyConf);
@@ -88,12 +92,12 @@ module.exports = function (app, watchFile, conf = {}) {
     });
 
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
-      let bodyParserMethd = bodyParser.json();
+      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });
       const contentType = req.get('Content-Type');
       if (contentType === 'text/plain') {
-        bodyParserMethd = bodyParser.raw({ type: 'text/plain' });
+        bodyParserMethd = bodyParser.raw({ type: 'text/plain', ...bodyParserRaw });
       } else if (contentType === 'text/html') {
-        bodyParserMethd = bodyParser.text({ type: 'text/html' });
+        bodyParserMethd = bodyParser.text({ type: 'text/html', ...bodyParserText });
       } else if (contentType === 'application/x-www-form-urlencoded') {
         bodyParserMethd = bodyParser.urlencoded({ extended: false });
       }

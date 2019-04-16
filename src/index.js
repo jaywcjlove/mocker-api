@@ -98,25 +98,28 @@ module.exports = function (app, watchFile, conf = {}) {
       if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
         switch(bodyParserConf[contentType]){//获取bodyParser的方法
           case 'raw':
-          bodyParserMethd = bodyParser.raw({...bodyParserRaw });
-          break;
+            bodyParserMethd = bodyParser.raw({...bodyParserRaw });
+            break;
           case 'text':
-          bodyParserMethd = bodyParser.text({...bodyParserText });
-          break;
+            bodyParserMethd = bodyParser.text({...bodyParserText });
+            break;
           case 'urlencoded':
-          bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
-          break;
+            bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
+            break;
+          case 'json':
+            bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//使用json解析
+            break;
         }
       }else { // 兼容原来的代码,默认解析
         switch(contentType){
-          case 'text/plain':
-          bodyParserMethd = bodyParser.raw({...bodyParserRaw });
+            case 'text/plain':
+            bodyParserMethd = bodyParser.raw({...bodyParserRaw });
           break;
-          case 'text/html':
-          bodyParserMethd = bodyParser.text({...bodyParserText });
+            case 'text/html':
+            bodyParserMethd = bodyParser.text({...bodyParserText });
           break;
-          case 'application/x-www-form-urlencoded':
-          bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
+            case 'application/x-www-form-urlencoded':
+            bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
           break;
         }
       }

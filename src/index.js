@@ -45,6 +45,7 @@ module.exports = function (app, watchFile, conf = {}) {
     }
   }
   const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {},
+    bodyParserConf= {},
     bodyParserJSON = {},
     bodyParserText = {},
     bodyParserRaw = {},
@@ -92,15 +93,34 @@ module.exports = function (app, watchFile, conf = {}) {
     });
 
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
-      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });
+      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
       const contentType = req.get('Content-Type');
-      if (contentType === 'text/plain') {
-        bodyParserMethd = bodyParser.raw({ type: 'text/plain', ...bodyParserRaw });
-      } else if (contentType === 'text/html') {
-        bodyParserMethd = bodyParser.text({ type: 'text/html', ...bodyParserText });
-      } else if (contentType === 'application/x-www-form-urlencoded') {
-        bodyParserMethd = bodyParser.urlencoded({ extended: false });
+      if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
+        switch(bodyParserConf[contentType]){//获取bodyParser的方法
+          case 'raw':
+          bodyParserMethd = bodyParser.raw({...bodyParserRaw });
+          break;
+          case 'text':
+          bodyParserMethd = bodyParser.text({...bodyParserText });
+          break;
+          case 'urlencoded':
+          bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
+          break;
+        }
+      }else { // 兼容原来的代码,默认解析
+        switch(contentType){
+          case 'text/plain':
+          bodyParserMethd = bodyParser.raw({...bodyParserRaw });
+          break;
+          case 'text/html':
+          bodyParserMethd = bodyParser.text({...bodyParserText });
+          break;
+          case 'application/x-www-form-urlencoded':
+          bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
+          break;
+        }
       }
+      
       bodyParserMethd(req, res, function () {
         const result = proxy[proxyURL] || proxy[containMockURL[0]];
         if (typeof result === 'function') {

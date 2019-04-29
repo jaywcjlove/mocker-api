@@ -13,6 +13,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "bin",
+    "src",
+    "utils"
+  ],
   "keywords": [
     "express",
     "webpack-dev-server",

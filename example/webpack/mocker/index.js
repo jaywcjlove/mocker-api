@@ -8,7 +8,7 @@ const proxy = {
   // Priority processing.
   _proxy: {
     proxy: {
-      '/repos/*': 'https://api.github.com/',
+      '/repos/(.*)': 'https://api.github.com/',
     },
     changeHost: true,
   },

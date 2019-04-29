@@ -16,6 +16,7 @@ const proxy = {
   // },
   'GET /api/user/list/:id/:type': (req, res) => {
     const { type } = req.params;
+    console.log('req.params:', req.params);
     if (type === 'webpack') {
       return res.status(403).json({
         status: 'error',
@@ -33,6 +34,18 @@ const proxy = {
         sex: 6
       }
     ]);
+  },
+  'GET /api/:first': (req, res) => {
+    console.log(req.params); // { first: 'something' }
+    return res.json({ test: false });
+  },
+  'GET /api/:first/items/:second': (req, res) => {
+    console.log(req.params); // false
+    return res.json({ test: true });
+  },
+  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
+    console.log(req.params); // false
+    return res.json({ test: true });
   },
   'GET /repos/hello': (req, res) => {
     return res.json({
@@ -75,19 +88,6 @@ const proxy = {
     console.log('---->', req.body)
     console.log('---->', req.params.id)
     res.send({ status: 'ok', message: '删除成功！' });
-  },
-  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
-    const { owner, repo, ref } = req.params;
-    // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
-    // owner => admin
-    // repo => webpack-mock-api
-    // ref => master
-    // req.params[0] => add/ddd.md
-    return res.json({
-      id: 1,
-      owner, repo, ref,
-      path: req.params[0]
-    });
   },
 }
 module.exports = (noProxy ? {} : delay(proxy, 1000));

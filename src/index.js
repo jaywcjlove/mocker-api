@@ -91,7 +91,7 @@ module.exports = function (app, watchFile, conf = {}) {
       const replaceStr = /\*$/.test(kname) ? '' : '$';
       return (new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]') + replaceStr)).test(proxyURL);
     });
-
+    
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
       const contentType = req.get('Content-Type');
@@ -182,10 +182,14 @@ module.exports = function (app, watchFile, conf = {}) {
   }
   // 合并多个proxy
   function getProxy() {
-    return watchFiles.reduce((proxy, file) => {
-      const proxyItem = require(file);
-      return Object.assign(proxy, proxyItem);
-    }, {})
+    return watchFiles.reduce(async (proxy, file) => {
+      try {
+        var proxyItem = await require(file);
+        return Object.assign(proxy, proxyItem);
+      } catch (error) {
+        return Object.assign(proxy, {});
+      }
+    }, {});
   }
   return function (req, res, next) {
     next();

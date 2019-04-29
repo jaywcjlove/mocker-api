@@ -8,7 +8,7 @@ const chokidar = require('chokidar');
 const color = require('colors-cli/safe');
 
 const proxyHTTP = httpProxy.createProxyServer({});
-let proxy = {};
+let mocker = {};
 
 function pathMatch(options) {
   options = options || {};
@@ -38,32 +38,33 @@ module.exports = function (app, watchFile, conf = {}) {
     throw new Error('Mocker file does not exist!.');
   }
 
-  proxy = getProxy();
+  mocker = getConfig();
 
-  if (!proxy) {
-    return function (req, res, next) {
+  if (!mocker) {
+    return (req, res, next) => {
       next();
     }
   }
-  const { proxy: proxyConf = {}, changeHost = true, httpProxy: httpProxyConf = {},
+  const {
+    changeHost = true,
+    proxy: proxyConf = {},
+    httpProxy: httpProxyConf = {},
     bodyParserConf= {},
     bodyParserJSON = {},
     bodyParserText = {},
     bodyParserRaw = {},
     bodyParserUrlencoded = {},
-  } = proxy._proxy || conf;
+  } = mocker._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(watchFile)));
 
-  watcher.on('all', function (event, path) {
+  watcher.on('all', (event, path) => {
     if (event === 'change' || event === 'add') {
       try {
         // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
         cleanCache(path);
         watchFiles.forEach(file => cleanCache(file));
-
-        proxy = getProxy();
-
+        mocker = getConfig();
         console.log(`${color.green_b.black(' Done: ')} Hot Mocker ${color.green(path.replace(process.cwd(), ''))} file replacement success!`);
       } catch (ex) {
         console.error(`${color.red_b.black(' Failed: ')} Hot Mocker ${color.red(path.replace(process.cwd(), ''))} file replacement failed!!`);
@@ -72,86 +73,57 @@ module.exports = function (app, watchFile, conf = {}) {
   })
   // 监听文件修改重新加载代码
   // 配置热更新
-  app.all('/*', function (req, res, next) {
-    const proxyURL = `${req.method} ${req.path}`;
-    const proxyNames = Object.keys(proxyConf);
-    const proxyFuzzyMatch = proxyNames.filter(function (kname) {
-      const reg = new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]').replace(/\/\*$/, ''));
-      if (kname.startsWith('ALL') || kname.startsWith('/')) {
-        return /\*$/.test(kname) && reg.test(req.path);
-      }
-      return /\*$/.test(kname) && reg.test(proxyURL);
+  app.all('/*', (req, res, next) => {
+    /**
+     * Get Proxy key
+     */
+    const proxyKey = Object.keys(proxyConf).find((kname) => {
+      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
-    const proxyMatch = proxyNames.filter(function (kname) {
-      return kname === proxyURL;
+    /**
+     * Get Mocker key 
+     * => `GET /api/:owner/:repo/raw/:ref`
+     * => `GET /api/:owner/:repo/raw/:ref/(.*)`
+     */
+    const mockerKey = Object.keys(mocker).find((kname) => {
+      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
-    // 判断下面这种情况的路由
-    // => GET /api/user/:org/:name
-    // => GET /api/:owner/:repo/raw/:ref/*
-    const containMockURL = Object.keys(proxy).filter(function (kname) {
-      const replaceStr = /\*$/.test(kname) ? '' : '$';
-      return (new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]') + replaceStr)).test(proxyURL);
-    });
-    if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
+
+    if (mocker[mockerKey]) {
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
       const contentType = req.get('Content-Type');
       if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
         switch(bodyParserConf[contentType]){//获取bodyParser的方法
-          case 'raw':
-            bodyParserMethd = bodyParser.raw({...bodyParserRaw });
-            break;
-          case 'text':
-            bodyParserMethd = bodyParser.text({...bodyParserText });
-            break;
-          case 'urlencoded':
-            bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
-            break;
-          case 'json':
-            bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//使用json解析
-            break;
+          case 'raw': bodyParserMethd = bodyParser.raw({...bodyParserRaw }); break;
+          case 'text': bodyParserMethd = bodyParser.text({...bodyParserText }); break;
+          case 'urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded }); break;
+          case 'json': bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//使用json解析 break;
         }
-      }else { // 兼容原来的代码,默认解析
+      } else {
+        // 兼容原来的代码,默认解析
+        // Compatible with the original code, default parsing
         switch(contentType){
-            case 'text/plain':
-            bodyParserMethd = bodyParser.raw({...bodyParserRaw });
-          break;
-            case 'text/html':
-            bodyParserMethd = bodyParser.text({...bodyParserText });
-          break;
-            case 'application/x-www-form-urlencoded':
-            bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded });
-          break;
+          case 'text/plain': bodyParserMethd = bodyParser.raw({...bodyParserRaw }); break;
+          case 'text/html': bodyParserMethd = bodyParser.text({...bodyParserText }); break;
+          case 'application/x-www-form-urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded }); break;
         }
       }
-      
+
       bodyParserMethd(req, res, function () {
-        const result = proxy[proxyURL] || proxy[containMockURL[0]];
+        const result = mocker[mockerKey];
         if (typeof result === 'function') {
-          // params 参数获取
-          if (containMockURL[0]) {
-            const mockURL = containMockURL[0].split(' ');
-            if (mockURL && mockURL.length === 2 && req.method === mockURL[0]) {
-              const route = pathMatch({
-                sensitive: false,
-                strict: false,
-                end: false,
-              });
-              const match = route(mockURL[1]);
-              req.params = match(parse(req.url).pathname);
-            }
-          }
+          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(' ')[1])(parse(req.url).pathname);
           result(req, res, next);
         } else {
           res.json(result);
         }
       });
-    } else if (proxyNames.length > 0 && (proxyMatch.length > 0 || proxyFuzzyMatch.length > 0)) {
-      const currentProxy = proxyConf[proxyMatch.length > 0 ? proxyMatch[0] : proxyFuzzyMatch[0]];
+    } else if (proxyKey && proxyConf[proxyKey]) {
+      const currentProxy = proxyConf[proxyKey];
       const url = parse(currentProxy);
       if (changeHost) {
         req.headers.host = url.host;
       }
-
       const { options: proxyOptions = {}, listeners: proxyListeners = {} } = httpProxyConf;
 
       Object.keys(proxyListeners).forEach(event => {
@@ -181,14 +153,14 @@ module.exports = function (app, watchFile, conf = {}) {
     // https://github.com/jaywcjlove/mocker-api/issues/42
     clearModule(modulePath);
   }
-  // 合并多个proxy
-  function getProxy() {
-    return watchFiles.reduce((proxy, file) => {
-      const proxyItem = require(file);
-      return Object.assign(proxy, proxyItem);
+  // Merge multiple Mockers
+  function getConfig() {
+    return watchFiles.reduce((mocker, file) => {
+      const mockerItem = require(file);
+      return Object.assign(mocker, mockerItem);
     }, {})
   }
-  return function (req, res, next) {
+  return (req, res, next) => {
     next();
   }
 }

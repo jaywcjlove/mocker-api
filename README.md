@@ -3,7 +3,7 @@ mocker-api
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
-### ⚠️ [~~`webpack-api-mocker`~~](https://www.npmjs.com/package/webpack-api-mocker) => [`mocker-api`](https://www.npmjs.com/package/mocker-api)
+⚠️ [~~webpack-api-mocker~~](https://www.npmjs.com/package/webpack-api-mocker) => [**`mocker-api`**](https://www.npmjs.com/package/mocker-api)
 
 > ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
 
@@ -54,8 +54,8 @@ const proxy = {
   // This is the option parameter setting for apiMocker
   _proxy: {
     proxy: {
-      '/repos/*': 'https://api.github.com/',
-      '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
+      '/repos/(.*)': 'https://api.github.com/',
+      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
     },
     changeHost: true,
     // modify the http-proxy options
@@ -138,11 +138,10 @@ module.exports = proxy;
 - [`bodyParserText`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparsertextoptions) Text body parser
 - [`bodyParserRaw`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserrawoptions) Raw body parser
 - [`bodyParserUrlencoded`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions) URL-encoded form body parser
-- `bodyParserConf` => `{}` bodyParser settings. eg：
-`
-bodyParserConf : {'text/plain': 'text','text/html': 'text'}
-`
-will parsed `Content-Type='text/plain' and Content-Type='text/html'` with `bodyParser.text`  
+- `bodyParserConf` => `{}` bodyParser settings. eg： `bodyParserConf : {'text/plain': 'text','text/html': 'text'}` will parsed `Content-Type='text/plain' and Content-Type='text/html'` with `bodyParser.text`  
+
+⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
+
 ## Delayed Responsev
 
 You can use functional tool to enhance mock. [#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
@@ -303,3 +302,7 @@ Mock API proxying made simple.
   }
 }
 ```
+
+### License
+
+MIT © Kenny Wong

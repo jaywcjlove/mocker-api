@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
 const pathToRegexp = require('path-to-regexp');
+const clearModule = require('clear-module');
 const PATH = require('path');
 const parse = require('url').parse;
 const chokidar = require('chokidar');
@@ -91,7 +92,6 @@ module.exports = function (app, watchFile, conf = {}) {
       const replaceStr = /\*$/.test(kname) ? '' : '$';
       return (new RegExp('^' + kname.replace(/(:\S*)[^/]/ig, '(\\S*)[^/]') + replaceStr)).test(proxyURL);
     });
-    
     if (proxy[proxyURL] || (containMockURL && containMockURL.length > 0)) {
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
       const contentType = req.get('Content-Type');
@@ -178,18 +178,15 @@ module.exports = function (app, watchFile, conf = {}) {
     if (module.parent) {
       module.parent.children.splice(module.parent.children.indexOf(module), 1);
     }
-    require.cache[modulePath] = null;
+    // https://github.com/jaywcjlove/mocker-api/issues/42
+    clearModule(modulePath);
   }
   // 合并多个proxy
   function getProxy() {
-    return watchFiles.reduce(async (proxy, file) => {
-      try {
-        var proxyItem = await require(file);
-        return Object.assign(proxy, proxyItem);
-      } catch (error) {
-        return Object.assign(proxy, {});
-      }
-    }, {});
+    return watchFiles.reduce((proxy, file) => {
+      const proxyItem = require(file);
+      return Object.assign(proxy, proxyItem);
+    }, {})
   }
   return function (req, res, next) {
     next();

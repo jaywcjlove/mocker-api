@@ -90,6 +90,8 @@ module.exports = function (app, watchFile, conf = {}) {
     });
 
     if (mocker[mockerKey]) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
       const contentType = req.get('Content-Type');
       if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}

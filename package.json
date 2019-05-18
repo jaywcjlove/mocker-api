@@ -8,7 +8,7 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaywcjlove/webpack-api-mocker.git"
+    "url": "git+https://github.com/jaywcjlove/mocker-api.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -142,7 +142,7 @@ module.exports = proxy;
 
 ⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
 
-## Delayed Responsev
+## Delayed Response
 
 You can use functional tool to enhance mock. [#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
 

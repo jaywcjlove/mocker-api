@@ -1,5 +1,5 @@
 const { login } = require('./user');
-const delay = require('../../../utils/delay');
+const delay = require('mocker-api/utils/delay');
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -8,7 +8,7 @@ const proxy = {
   // Priority processing.
   _proxy: {
     proxy: {
-      '/repos/*': 'https://api.github.com/',
+      '/repos/(.*)': 'https://api.github.com/',
     },
     changeHost: true,
   },

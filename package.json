@@ -1,29 +1,48 @@
 {
-  "name": "webpack-api-mocker",
-  "version": "1.5.17",
+  "name": "mocker-api",
+  "version": "1.7.6",
   "description": "This is dev support mock RESTful API.",
-  "main": "index.js",
+  "bin": {
+    "mocker": "./bin/mocker.js"
+  },
+  "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaywcjlove/webpack-api-mocker.git"
+    "url": "git+https://github.com/jaywcjlove/mocker-api.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "bin",
+    "src",
+    "utils"
+  ],
   "keywords": [
-    "react",
-    "create-react-app",
+    "express",
     "webpack-dev-server",
-    "webpack"
+    "webpack-api-mocker",
+    "webpack",
+    "mocker-api",
+    "mock",
+    "mocker",
+    "api",
+    "fetch",
+    "react",
+    "create-react-app"
   ],
   "author": "Kenny Wong <kennyiseeyou@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "chokidar": "^2.0.4",
-    "colors-cli": "^1.0.13",
-    "http-proxy": "^1.17.0",
-    "path-to-regexp": "^2.4.0"
+    "body-parser": "^1.19.0",
+    "chokidar": "^2.1.5",
+    "clear-module": "^3.2.0",
+    "colors-cli": "^1.0.21",
+    "detect-port": "^1.3.0",
+    "express": "^4.16.4",
+    "http-proxy": "1.17.0",
+    "local-ip-url": "^1.0.1",
+    "path-to-regexp": "^3.0.0"
   },
   "devDependencies": {}
 }

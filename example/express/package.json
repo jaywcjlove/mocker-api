@@ -16,5 +16,8 @@
   "dependencies": {
     "express": "^4.16.3",
     "nodemon": "^1.18.4"
+  },
+  "devDependencies": {
+    "mocker-api": "file:../../"
   }
 }

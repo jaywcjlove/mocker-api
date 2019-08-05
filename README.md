@@ -1,37 +1,61 @@
-webpack-api-mocker
+mocker-api
 ---
 
-webpack-api-mocker is a [webpack-dev-server](https://github.com/webpack/webpack-dev-server)  middleware that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
+`mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
+
+⚠️ [~~webpack-api-mocker~~](https://www.npmjs.com/package/webpack-api-mocker) => [**`mocker-api`**](https://www.npmjs.com/package/mocker-api)
+
+> ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
+
+- [Using with command](#using-with-command)
+- [Using with express](#using-with-express)
+- [Using with webpack](#using-with-webpack)
+- [Load data example](example/loadData)
 
 **Features:**  
 
 🔥 Built in support for hot Mocker file replacement.  
 🚀 Quickly and easily configure the API via JSON.  
 🌱 Mock API proxying made simple.  
+💥 Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+
+## Quick Start
+
+```bash
+mkdir mocker-app && cd mocker-app
+
+# Create a mocker configuration file based on rules
+touch api.js
+
+# Global install dependent.
+npm install mocker-api -g
+# Run server
+mocker ./api.js
+```
 
 ## Installation
 
+you can put it the `package.json` config as a current project dependency.
+
 ```bash
-npm install webpack-api-mocker --save-dev
+npm install mocker-api --save-dev
 ```
 
 ## Usage
 
-webpack-api-mocker dev support mock, configured in `mocker/index.js`.
+`mocker-api` dev support mock, configured in `mocker/index.js`.
 
 you can modify the [http-proxy](https://www.npmjs.com/package/http-proxy) options and add the event listeners by adding the httpProxy configuration
-> ⚠️ The webpack-api-mocker@1.5.5+ config needs to be placed in the directory.  
 
 ```js
 const proxy = {
   // Priority processing.
   // apiMocker(app, path, option)
   // This is the option parameter setting for apiMocker
-  // webpack-api-mocker@1.5.15 support
   _proxy: {
     proxy: {
-      '/repos/*': 'https://api.github.com/',
-      '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
+      '/repos/(.*)': 'https://api.github.com/',
+      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
     },
     changeHost: true,
     // modify the http-proxy options
@@ -105,12 +129,25 @@ const proxy = {
 module.exports = proxy;
 ```
 
+## Options 
+
+- `proxy` => `{}` Proxy settings.
+- `changeHost` => `{}` Setting req headers host.
+- `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
+- [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser
+- [`bodyParserText`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparsertextoptions) Text body parser
+- [`bodyParserRaw`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserrawoptions) Raw body parser
+- [`bodyParserUrlencoded`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions) URL-encoded form body parser
+- `bodyParserConf` => `{}` bodyParser settings. eg： `bodyParserConf : {'text/plain': 'text','text/html': 'text'}` will parsed `Content-Type='text/plain' and Content-Type='text/html'` with `bodyParser.text`  
+
+⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
+
 ## Delayed Response
 
 You can use functional tool to enhance mock. [#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
 
 ```js
-const delay = require('webpack-api-mocker/utils/delay');
+const delay = require('mocker-api/utils/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
@@ -130,14 +167,53 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 apiMocker(app, mocker[,proxy])
 ```
 
-## Using with [Express](https://github.com/expressjs/express)
+Multi entry `mocker` file watching
+
+```js
+const mockerFile = ['./mock/index.js'];
+// or
+// const mockerFile = './mock/index.js';
+apiMocker(app, mockerFile, proxy)
+```
+
+## Using With Command
+
+[Base example](example/base)
+
+>⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server). 
+
+```bash
+# Global install dependent.
+npm install mocker-api -g
+# Run server
+mocker ./mocker/index.js
+```
+
+Or you can put it the `package.json` config as a current project dependency.
+
+```diff
+{
+  "name": "base-example",
+  "scripts": {
++    "api": "mocker ./mocker"
+  },
+  "devDependencies": {
++    "mocker-api": "^1.6.4"
+  },
+  "license": "MIT"
+}
+```
+
+## Using With [Express](https://github.com/expressjs/express)
 
 [Express example](example/express)
 
+>⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
+
 ```diff
-const path = require('path');
 const express = require('express');
-+ const apiMocker = require('webpack-api-mocker');
++ const path = require('path');
++ const apiMocker = require('mocker-api');
 
 const app = express();
 
@@ -145,7 +221,7 @@ const app = express();
 app.listen(8080);
 ```
 
-## Using with [Webpack](https://github.com/webpack/webpack)
+## Using With [Webpack](https://github.com/webpack/webpack)
 
 [webpack example](example/webpack)
 
@@ -154,9 +230,9 @@ To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects
 Change your config file to tell the dev server where to look for files: `webpack.config.js`.
 
 ```diff
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-+ const apiMocker = require('webpack-api-mocker');
++ const path = require('path');
++ const apiMocker = require('mocker-api');
 
 module.exports = {
   entry: {
@@ -183,7 +259,7 @@ module.exports = {
   ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: require.resolve(__dirname, 'dist')
   }
 };
 ```
@@ -226,3 +302,7 @@ Mock API proxying made simple.
   }
 }
 ```
+
+### License
+
+MIT © Kenny Wong

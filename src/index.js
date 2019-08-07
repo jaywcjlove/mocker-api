@@ -86,20 +86,15 @@ module.exports = function (app, watchFile, conf = {}) {
      * => `GET /api/:owner/:repo/raw/:ref`
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
-    // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
-    // 主要解决跨域请求中，发出预检请求OPTIONS 404的问题，如果设置了对应的POST、PUT等请求，但是没有设置OPTIONS请求的时候自动添加OPTIONS请求的响应
-    let optionsHasPath = false;
     const mockerKey = Object.keys(mocker).find((kname) => {
-      const { method } = req;
-      if (!optionsHasPath && method.toLocaleUpperCase() === 'OPTIONS') {
-        // 对应的其他请求方式有相应的path
-        optionsHasPath = !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(req.path)
-      }
-      return !!pathToRegexp(kname.replace((new RegExp('^' + method + ' ')), '')).exec(req.path);
+      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
 
-    //mockerKey不存在 && req.method为options，&& mocker有相应的path
-    if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS' && optionsHasPath) {
+    // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
+    // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
+    if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
+      && Object.keys(mocker).find((kname) => !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(req.path))
+    ) {
       return res.sendStatus(200);
     }
 

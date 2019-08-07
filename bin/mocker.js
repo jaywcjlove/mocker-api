@@ -29,7 +29,7 @@ mockpath = require.resolve(path.resolve(mockpath));
   app.all('/*', (req, res, next) => {
     console.log(`${color.green(req.method)} - ${req.url}`);
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');
     res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
     next();
   });

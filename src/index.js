@@ -82,13 +82,22 @@ module.exports = function (app, watchFile, conf = {}) {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
     /**
-     * Get Mocker key 
+     * Get Mocker key
      * => `GET /api/:owner/:repo/raw/:ref`
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
     const mockerKey = Object.keys(mocker).find((kname) => {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
+
+    // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
+    // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
+    if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
+      && Object.keys(mocker).find((kname) => !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(req.path))
+    ) {
+      return res.sendStatus(200);
+    }
+
 
     if (mocker[mockerKey]) {
       res.setHeader('Access-Control-Allow-Origin', '*');
@@ -141,7 +150,7 @@ module.exports = function (app, watchFile, conf = {}) {
 
   // The old module's resources to be released.
   function cleanCache(modulePath) {
-    // The entry file does not have a .js suffix, 
+    // The entry file does not have a .js suffix,
     // causing the module's resources not to be released.
     // https://github.com/jaywcjlove/webpack-api-mocker/issues/30
     try {

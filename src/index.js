@@ -102,10 +102,16 @@ module.exports = function (app, watchFile, conf = {}) {
     if (mocker[mockerKey]) {
       res.setHeader('Access-Control-Allow-Origin', '*');
 
-      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
-      const contentType = req.get('Content-Type');
-      if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
-        switch(bodyParserConf[contentType]){//获取bodyParser的方法
+      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON }); // 默认使用json解析
+      let contentType = req.get('Content-Type');
+      /**
+       * `application/x-www-form-urlencoded; charset=UTF-8` => `application/x-www-form-urlencoded`
+       * Issue: https://github.com/jaywcjlove/mocker-api/issues/50
+       */
+      contentType = contentType.replace(/;.*$/, '');
+      if(bodyParserConf && bodyParserConf[contentType]) {
+        // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
+        switch(bodyParserConf[contentType]){// 获取bodyParser的方法
           case 'raw': bodyParserMethd = bodyParser.raw({...bodyParserRaw }); break;
           case 'text': bodyParserMethd = bodyParser.text({...bodyParserText }); break;
           case 'urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded }); break;

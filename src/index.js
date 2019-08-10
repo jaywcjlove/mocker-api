@@ -108,7 +108,7 @@ module.exports = function (app, watchFile, conf = {}) {
        * `application/x-www-form-urlencoded; charset=UTF-8` => `application/x-www-form-urlencoded`
        * Issue: https://github.com/jaywcjlove/mocker-api/issues/50
        */
-      contentType = contentType.replace(/;.*$/, '');
+      contentType = contentType && contentType.replace(/;.*$/, '');
       if(bodyParserConf && bodyParserConf[contentType]) {
         // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
         switch(bodyParserConf[contentType]){// 获取bodyParser的方法

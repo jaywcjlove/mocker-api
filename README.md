@@ -170,6 +170,7 @@ apiMocker(app, mocker[,proxy])
 Multi entry `mocker` file watching
 
 ```js
+const apiMocker = require('mocker-api');
 const mockerFile = ['./mock/index.js'];
 // or
 // const mockerFile = './mock/index.js';

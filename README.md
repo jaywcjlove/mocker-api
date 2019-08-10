@@ -304,10 +304,6 @@ Mock API proxying made simple.
 }
 ```
 
-### Changelog
-#### 1.7.7
-* fix issue https://github.com/jaywcjlove/mocker-api/issues/34
-
-### License
+## License
 
 MIT © Kenny Wong

@@ -100,7 +100,11 @@ module.exports = function (app, watchFile, conf = {}) {
 
 
     if (mocker[mockerKey]) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      let origin = req.get('Origin') || '*'
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Allow-Credentials', true);
 
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON }); // 默认使用json解析
       let contentType = req.get('Content-Type');

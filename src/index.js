@@ -89,7 +89,11 @@ module.exports = function (app, watchFile, conf = {}) {
     const mockerKey = Object.keys(mocker).find((kname) => {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
-
+    let origin = req.get('Origin') || '*'
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
     if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
@@ -100,12 +104,6 @@ module.exports = function (app, watchFile, conf = {}) {
 
 
     if (mocker[mockerKey]) {
-      let origin = req.get('Origin') || '*'
-      res.setHeader('Access-Control-Allow-Origin', origin);
-      res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-      res.setHeader('Access-Control-Allow-Credentials', true);
-
       let bodyParserMethd = bodyParser.json({ ...bodyParserJSON }); // 默认使用json解析
       let contentType = req.get('Content-Type');
       /**

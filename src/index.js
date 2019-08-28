@@ -7,7 +7,6 @@ const parse = require('url').parse;
 const chokidar = require('chokidar');
 const color = require('colors-cli/safe');
 
-const proxyHTTP = httpProxy.createProxyServer({});
 let mocker = {};
 
 function pathMatch(options) {
@@ -139,6 +138,7 @@ module.exports = function (app, watchFile, conf = {}) {
         }
       });
     } else if (proxyKey && proxyConf[proxyKey]) {
+      const proxyHTTP = httpProxy.createProxyServer({});
       const currentProxy = proxyConf[proxyKey];
       const url = parse(currentProxy);
       if (changeHost) {

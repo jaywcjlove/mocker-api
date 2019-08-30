@@ -1,6 +1,6 @@
 {
   "name": "mocker-api",
-  "version": "1.8.2",
+  "version": "1.9.0",
   "description": "This is dev support mock RESTful API.",
   "bin": {
     "mocker": "./bin/mocker.js"
@@ -35,11 +35,11 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chokidar": "^2.1.5",
+    "chokidar": "^3.0.2",
     "clear-module": "^3.2.0",
-    "colors-cli": "^1.0.21",
+    "colors-cli": "^1.0.23",
     "detect-port": "^1.3.0",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "http-proxy": "1.17.0",
     "local-ip-url": "^1.0.1",
     "path-to-regexp": "^3.0.0"

@@ -1,12 +1,13 @@
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
-const pathToRegexp = require('path-to-regexp');
+const toRegexp = require('path-to-regexp');
 const clearModule = require('clear-module');
 const PATH = require('path');
 const URL = require('url');
 const chokidar = require('chokidar');
 const color = require('colors-cli/safe');
 
+const pathToRegexp = toRegexp.pathToRegexp;
 let mocker = {};
 
 function pathMatch(options) {

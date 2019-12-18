@@ -55,7 +55,11 @@ const proxy = {
   _proxy: {
     proxy: {
       '/repos/(.*)': 'https://api.github.com/',
-      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
+      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018',
+      '/api/repos/(.*)': 'http://127.0.0.1:3721/'
+    },
+    pathRewrite: {
+      '^/api/repos/': '/repos/',
     },
     changeHost: true,
     // modify the http-proxy options
@@ -132,6 +136,7 @@ module.exports = proxy;
 ## Options 
 
 - `proxy` => `{}` Proxy settings.
+- `pathRewrite` => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths.
 - `changeHost` => `{}` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
 - [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser

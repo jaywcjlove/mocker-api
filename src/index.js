@@ -3,7 +3,7 @@ const httpProxy = require('http-proxy');
 const pathToRegexp = require('path-to-regexp');
 const clearModule = require('clear-module');
 const PATH = require('path');
-const parse = require('url').parse;
+const URL = require('url');
 const chokidar = require('chokidar');
 const color = require('colors-cli/safe');
 
@@ -46,6 +46,7 @@ module.exports = function (app, watchFile, conf = {}) {
   }
   const {
     changeHost = true,
+    pathRewrite = {},
     proxy: proxyConf = {},
     httpProxy: httpProxyConf = {},
     bodyParserConf= {},
@@ -131,21 +132,34 @@ module.exports = function (app, watchFile, conf = {}) {
       bodyParserMethd(req, res, function () {
         const result = mocker[mockerKey];
         if (typeof result === 'function') {
-          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(' ')[1])(parse(req.url).pathname);
+          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(' ')[1])(URL.parse(req.url).pathname);
           result(req, res, next);
         } else {
           res.json(result);
         }
       });
     } else if (proxyKey && proxyConf[proxyKey]) {
-      const proxyHTTP = httpProxy.createProxyServer({});
       const currentProxy = proxyConf[proxyKey];
-      const url = parse(currentProxy);
+      const url = URL.parse(currentProxy);
       if (changeHost) {
         req.headers.host = url.host;
       }
       const { options: proxyOptions = {}, listeners: proxyListeners = {} } = httpProxyConf;
+      /**
+       * rewrite target's url path. Object-keys will be used as RegExp to match paths.
+       * https://github.com/jaywcjlove/mocker-api/issues/62
+       */
+      Object.keys(pathRewrite).forEach(rgxStr => {
+        const rePath = req.path.replace(new RegExp(rgxStr), pathRewrite[rgxStr]);
+        const currentPath = [rePath];
+        if (req.url.indexOf('?') > 0) {
+          currentPath.push(req.url.replace(/(.*)\?/, ''));
+        }
+        req.query = URL.parse(req.url, true).query;
+        req.url = req.originalUrl = currentPath.join('?');
+      });
 
+      const proxyHTTP = httpProxy.createProxyServer({});
       Object.keys(proxyListeners).forEach(event => {
         proxyHTTP.on(event, proxyListeners[event]);
       });

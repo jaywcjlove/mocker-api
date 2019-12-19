@@ -58,6 +58,8 @@ const proxy = {
       '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018',
       '/api/repos/(.*)': 'http://127.0.0.1:3721/'
     },
+    // rewrite target's url path. Object-keys will be used as RegExp to match paths.
+    // https://github.com/jaywcjlove/mocker-api/issues/62
     pathRewrite: {
       '^/api/repos/': '/repos/',
     },
@@ -136,7 +138,7 @@ module.exports = proxy;
 ## Options 
 
 - `proxy` => `{}` Proxy settings.
-- `pathRewrite` => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths.
+- `pathRewrite` => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
 - `changeHost` => `{}` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
 - [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser

@@ -133,7 +133,8 @@ module.exports = function (app, watchFile, conf = {}) {
       bodyParserMethd(req, res, function () {
         const result = mocker[mockerKey];
         if (typeof result === 'function') {
-          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(' ')[1])(URL.parse(req.url).pathname);
+          const rgxStr = ~mockerKey.indexOf(' ') ? ' ' : '';
+          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(new RegExp(rgxStr))[1])(URL.parse(req.url).pathname);
           result(req, res, next);
         } else {
           res.json(result);

@@ -1,10 +1,9 @@
 mocker-api
 ---
 
-`mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
-
-
 [Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [License](#license)
+
+`mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
 - [Using with command](#using-with-command)
 - [Using with express](#using-with-express)

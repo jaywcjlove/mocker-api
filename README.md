@@ -3,10 +3,6 @@ mocker-api
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
-⚠️ [~~webpack-api-mocker~~](https://www.npmjs.com/package/webpack-api-mocker) => [**`mocker-api`**](https://www.npmjs.com/package/mocker-api)
-
-> ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
-
 - [Using with command](#using-with-command)
 - [Using with express](#using-with-express)
 - [Using with webpack](#using-with-webpack)

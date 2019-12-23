@@ -82,6 +82,13 @@ const proxy = {
     },    
   },
   // =====================
+  // The default GET request.
+  // https://github.com/jaywcjlove/mocker-api/pull/63
+  '/api/user': {
+    id: 1,
+    username: 'kenny',
+    sex: 6
+  },
   'GET /api/user': {
     id: 1,
     username: 'kenny',

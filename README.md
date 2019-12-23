@@ -1,6 +1,13 @@
 mocker-api
 ---
 
+[![](https://img.shields.io/github/issues/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/issues)
+[![](https://img.shields.io/github/forks/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/network)
+[![](https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/stargazers)
+[![](https://img.shields.io/github/release/jaywcjlove/mocker-api)](https://github.com/jaywcjlove/mocker-api/releases)
+[![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
+
+
 [Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [License](#license)
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.

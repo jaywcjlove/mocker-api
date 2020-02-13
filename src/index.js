@@ -1,13 +1,13 @@
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
-const pathToRegexp = require('path-to-regexp');
+const toRegexp = require('path-to-regexp');
 const clearModule = require('clear-module');
 const PATH = require('path');
-const parse = require('url').parse;
+const URL = require('url');
 const chokidar = require('chokidar');
 const color = require('colors-cli/safe');
 
-const proxyHTTP = httpProxy.createProxyServer({});
+const pathToRegexp = toRegexp.pathToRegexp;
 let mocker = {};
 
 function pathMatch(options) {
@@ -47,6 +47,7 @@ module.exports = function (app, watchFile, conf = {}) {
   }
   const {
     changeHost = true,
+    pathRewrite = {},
     proxy: proxyConf = {},
     httpProxy: httpProxyConf = {},
     bodyParserConf= {},
@@ -89,7 +90,11 @@ module.exports = function (app, watchFile, conf = {}) {
     const mockerKey = Object.keys(mocker).find((kname) => {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
-
+    let origin = req.get('Origin') || '*'
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
     if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
@@ -100,12 +105,16 @@ module.exports = function (app, watchFile, conf = {}) {
 
 
     if (mocker[mockerKey]) {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-
-      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON });//默认使用json解析
-      const contentType = req.get('Content-Type');
-      if(bodyParserConf && bodyParserConf[contentType]) { // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
-        switch(bodyParserConf[contentType]){//获取bodyParser的方法
+      let bodyParserMethd = bodyParser.json({ ...bodyParserJSON }); // 默认使用json解析
+      let contentType = req.get('Content-Type');
+      /**
+       * `application/x-www-form-urlencoded; charset=UTF-8` => `application/x-www-form-urlencoded`
+       * Issue: https://github.com/jaywcjlove/mocker-api/issues/50
+       */
+      contentType = contentType && contentType.replace(/;.*$/, '');
+      if(bodyParserConf && bodyParserConf[contentType]) {
+        // 如果存在bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
+        switch(bodyParserConf[contentType]){// 获取bodyParser的方法
           case 'raw': bodyParserMethd = bodyParser.raw({...bodyParserRaw }); break;
           case 'text': bodyParserMethd = bodyParser.text({...bodyParserText }); break;
           case 'urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...bodyParserUrlencoded }); break;
@@ -124,7 +133,8 @@ module.exports = function (app, watchFile, conf = {}) {
       bodyParserMethd(req, res, function () {
         const result = mocker[mockerKey];
         if (typeof result === 'function') {
-          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(' ')[1])(parse(req.url).pathname);
+          const rgxStr = ~mockerKey.indexOf(' ') ? ' ' : '';
+          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(new RegExp(rgxStr))[1])(URL.parse(req.url).pathname);
           result(req, res, next);
         } else {
           res.json(result);
@@ -132,12 +142,26 @@ module.exports = function (app, watchFile, conf = {}) {
       });
     } else if (proxyKey && proxyConf[proxyKey]) {
       const currentProxy = proxyConf[proxyKey];
-      const url = parse(currentProxy);
+      const url = URL.parse(currentProxy);
       if (changeHost) {
         req.headers.host = url.host;
       }
       const { options: proxyOptions = {}, listeners: proxyListeners = {} } = httpProxyConf;
+      /**
+       * rewrite target's url path. Object-keys will be used as RegExp to match paths.
+       * https://github.com/jaywcjlove/mocker-api/issues/62
+       */
+      Object.keys(pathRewrite).forEach(rgxStr => {
+        const rePath = req.path.replace(new RegExp(rgxStr), pathRewrite[rgxStr]);
+        const currentPath = [rePath];
+        if (req.url.indexOf('?') > 0) {
+          currentPath.push(req.url.replace(/(.*)\?/, ''));
+        }
+        req.query = URL.parse(req.url, true).query;
+        req.url = req.originalUrl = currentPath.join('?');
+      });
 
+      const proxyHTTP = httpProxy.createProxyServer({});
       Object.keys(proxyListeners).forEach(event => {
         proxyHTTP.on(event, proxyListeners[event]);
       });

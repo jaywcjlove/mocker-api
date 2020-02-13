@@ -1,11 +1,16 @@
 mocker-api
 ---
 
+[![](https://img.shields.io/github/issues/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/issues)
+[![](https://img.shields.io/github/forks/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/network)
+[![](https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/stargazers)
+[![](https://img.shields.io/github/release/jaywcjlove/mocker-api)](https://github.com/jaywcjlove/mocker-api/releases)
+[![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
+
+
+[Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [License](#license)
+
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
-
-⚠️ [~~webpack-api-mocker~~](https://www.npmjs.com/package/webpack-api-mocker) => [**`mocker-api`**](https://www.npmjs.com/package/mocker-api)
-
-> ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ has become powerful and can be used independently of webpack. **This is new name [`mocker-api`](https://npm.im/mocker-api).** ~~[`webpack-api-mocker`](https://github.com/jaywcjlove/webpack-api-mocker/tree/webpack-api-mocker)~~ can still be used, New content will be posted on [**`mocker-api`**](https://npm.im/mocker-api).
 
 - [Using with command](#using-with-command)
 - [Using with express](#using-with-express)
@@ -55,7 +60,13 @@ const proxy = {
   _proxy: {
     proxy: {
       '/repos/(.*)': 'https://api.github.com/',
-      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
+      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018',
+      '/api/repos/(.*)': 'http://127.0.0.1:3721/'
+    },
+    // rewrite target's url path. Object-keys will be used as RegExp to match paths.
+    // https://github.com/jaywcjlove/mocker-api/issues/62
+    pathRewrite: {
+      '^/api/repos/': '/repos/',
     },
     changeHost: true,
     // modify the http-proxy options
@@ -71,6 +82,13 @@ const proxy = {
     },    
   },
   // =====================
+  // The default GET request.
+  // https://github.com/jaywcjlove/mocker-api/pull/63
+  '/api/user': {
+    id: 1,
+    username: 'kenny',
+    sex: 6
+  },
   'GET /api/user': {
     id: 1,
     username: 'kenny',
@@ -132,6 +150,7 @@ module.exports = proxy;
 ## Options 
 
 - `proxy` => `{}` Proxy settings.
+- `pathRewrite` => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
 - `changeHost` => `{}` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
 - [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser
@@ -170,6 +189,7 @@ apiMocker(app, mocker[,proxy])
 Multi entry `mocker` file watching
 
 ```js
+const apiMocker = require('mocker-api');
 const mockerFile = ['./mock/index.js'];
 // or
 // const mockerFile = './mock/index.js';
@@ -303,10 +323,6 @@ Mock API proxying made simple.
 }
 ```
 
-### Changelog
-#### 1.7.7
-* fix issue https://github.com/jaywcjlove/mocker-api/issues/34
-
-### License
+## License
 
 MIT © Kenny Wong

@@ -18,6 +18,13 @@ export interface MockerOption {
     [key: string]: string;
   };
   /**
+   * rewrite target's url path. Object-keys will be used as RegExp to match paths.
+   * https://github.com/jaywcjlove/mocker-api/issues/62
+   */
+  pathRewrite?: {
+    [key: string]: string;
+  }
+  /**
    * `changeHost` => `Boolean` Setting req headers host.
    */
   changeHost?: boolean;

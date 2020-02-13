@@ -16,7 +16,8 @@
   "files": [
     "bin",
     "src",
-    "utils"
+    "utils",
+    "index.d.ts"
   ],
   "keywords": [
     "express",

@@ -325,4 +325,4 @@ Mock API proxying made simple.
 
 ## License
 
-MIT © Kenny Wong
+[MIT © Kenny Wong](./LICENSE)

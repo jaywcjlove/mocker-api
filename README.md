@@ -185,7 +185,7 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 ## apiMocker
 
 ```js
-apiMocker(app, mocker[, options])
+apiMocker(app, mockerFilePath[, options])
 ```
 
 Multi entry `mocker` file watching

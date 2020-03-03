@@ -158,6 +158,7 @@ module.exports = proxy;
 - [`bodyParserRaw`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserrawoptions) Raw body parser
 - [`bodyParserUrlencoded`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions) URL-encoded form body parser
 - `bodyParserConf` => `{}` bodyParser settings. eg： `bodyParserConf : {'text/plain': 'text','text/html': 'text'}` will parsed `Content-Type='text/plain' and Content-Type='text/html'` with `bodyParser.text`  
+- [`watchOptions`](https://github.com/paulmillr/chokidar#api) => `object` Options object as defined [chokidar api options](https://github.com/paulmillr/chokidar#api)
 
 ⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
 

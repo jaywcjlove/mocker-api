@@ -1,6 +1,7 @@
 import express from 'express';
 import { ServerOptions } from 'http-proxy';
 import { OptionsJson, OptionsText, OptionsUrlencoded, Options } from 'body-parser';
+import { WatchOptions } from 'chokidar';
 
 export interface MockerOption {
   /**
@@ -41,6 +42,7 @@ export interface MockerOption {
   bodyParserRaw?: Options;
   bodyParserUrlencoded?: OptionsUrlencoded;
   bodyParserJSON?: OptionsJson;
+  watchOptions?: WatchOptions;
 }
 
 declare function mockerAPI(app: express.Application, path: string | string[], opts: MockerOption): void;

@@ -55,10 +55,11 @@ module.exports = function (app, watchFile, conf = {}) {
     bodyParserText = {},
     bodyParserRaw = {},
     bodyParserUrlencoded = {},
+    watchOptions = {},
   } = mocker._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
-  const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))));
+  const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), watchOptions);
 
   watcher.on('all', (event, path) => {
     if (event === 'change' || event === 'add') {

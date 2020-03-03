@@ -185,7 +185,7 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 ## apiMocker
 
 ```js
-apiMocker(app, mocker[,proxy])
+apiMocker(app, mocker[, options])
 ```
 
 Multi entry `mocker` file watching
@@ -195,7 +195,7 @@ const apiMocker = require('mocker-api');
 const mockerFile = ['./mock/index.js'];
 // or
 // const mockerFile = './mock/index.js';
-apiMocker(app, mockerFile, proxy)
+apiMocker(app, mockerFile, options)
 ```
 
 ## Using With Command

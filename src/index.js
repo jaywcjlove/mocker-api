@@ -193,7 +193,7 @@ module.exports = function (app, watchFile, conf = {}) {
   function getConfig() {
     return watchFiles.reduce((mocker, file) => {
       const mockerItem = require(file);
-      return Object.assign(mocker, mockerItem);
+      return Object.assign(mocker, mockerItem.default ? mockerItem.default : mockerItem);
     }, {})
   }
   return (req, res, next) => {

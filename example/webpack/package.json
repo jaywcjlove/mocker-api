@@ -10,7 +10,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "html-webpack-plugin": "4.0.1",
+    "html-webpack-plugin": "4.0.2",
     "mocker-api": "file:../../",
     "webpack": "4.42.1",
     "webpack-cli": "3.3.11",

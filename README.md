@@ -171,7 +171,7 @@ module.exports = proxy;
 You can use functional tool to enhance mock. [#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
 
 ```js
-const delay = require('mocker-api/utils/delay');
+const delay = require('mocker-api/lib/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {

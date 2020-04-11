@@ -1,5 +1,5 @@
 {
-  "version": "1.14.0",
+  "version": "2.0.0",
   "description": "This is dev support mock RESTful API.",
   "bin": {
     "mocker": "lib/bin/mocker.js"

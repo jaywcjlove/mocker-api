@@ -7,20 +7,9 @@
 [![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
 
 
-[Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [License](#license)
+[Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [Example](#example) · [License](#license)
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
-
-- [Quick Start](#quick-start)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Options](#options)
-- [Delayed Response](#delayed-response)
-- [apiMocker](#apimocker)
-- [Using With Command](#using-with-command)
-- [Using With Express](#using-with-express)
-- [Using With Webpack](#using-with-webpack)
-- [License](#license)
 
 **Features:**  
 
@@ -212,7 +201,9 @@ const mockerFile = ['./mock/index.js'];
 apiMocker(app, mockerFile, options)
 ```
 
-## Using With Command
+## Example
+
+### Using With Command
 
 [Base example](example/base)
 
@@ -240,7 +231,7 @@ Or you can put it the `package.json` config as a current project dependency.
 }
 ```
 
-## Using With [Express](https://github.com/expressjs/express)
+### Using With [Express](https://github.com/expressjs/express)
 
 [Express example](example/express)
 
@@ -257,7 +248,7 @@ const app = express();
 app.listen(8080);
 ```
 
-## Using With [Webpack](https://github.com/webpack/webpack)
+### Using With [Webpack](https://github.com/webpack/webpack)
 
 [webpack example](example/webpack)
 

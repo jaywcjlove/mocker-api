@@ -1,5 +1,5 @@
-// const { login } = require('./user');
-const delay = require('mocker-api/utils/delay');
+const { login } = require('./user');
+const delay = require('mocker-api/lib/delay');
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -12,6 +12,9 @@ const proxy = {
   //   },
   //   changeHost: true,
   // },
+  'GET /api/wcj': {
+    www: 223
+  },
   'GET /api/userinfo/:id': (req, res) => {
     console.log('-1--->', req.params)
     return res.json({

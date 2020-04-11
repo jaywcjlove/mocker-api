@@ -1,21 +1,21 @@
 #!/usr/bin/env node
-const path = require('path');
-const prepareUrls = require('local-ip-url/prepareUrls');
-const detect = require('detect-port');
-const color = require('colors-cli/safe');
-const express = require('express');
-const apiMocker = require('../');
-
-if (!process.argv.slice(2).length) {
-  console.log(color.red('Error: Need to pass parameters!'));
-  console.log(`E.g: ${color.yellow('mocker <File path>')}\n`);
-  return;
-}
-let mockpath = process.argv[2];
-
-mockpath = require.resolve(path.resolve(mockpath));
+import path from 'path';
+import prepareUrls from 'local-ip-url/prepareUrls';
+import detect from 'detect-port';
+import color from 'colors-cli/safe';
+import express from 'express';
+import apiMocker from '../';
 
 (async () => {
+  if (!process.argv.slice(2).length) {
+    console.log(color.red('Error: Need to pass parameters!'));
+    console.log(`E.g: ${color.yellow('mocker <File path>')}\n`);
+    return;
+  }
+  let mockpath = process.argv[2];
+
+  mockpath = require.resolve(path.resolve(mockpath));
+
   const HOST = process.env.HOST || '0.0.0.0';
   let DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3721;
   const PORT = await detect(DEFAULT_PORT);
@@ -23,7 +23,7 @@ mockpath = require.resolve(path.resolve(mockpath));
   if (DEFAULT_PORT !== PORT) {
     DEFAULT_PORT = PORT;
   }
-  process.env.PORT = DEFAULT_PORT;
+  process.env.PORT = String(DEFAULT_PORT);
   const app = express();
 
   app.all('/*', (req, res, next) => {
@@ -48,7 +48,7 @@ mockpath = require.resolve(path.resolve(mockpath));
   /**
    * Event listener for HTTP server "error" event.
    */
-  app.on('error', (error) => {
+  app.on('error', (error: any) => {
     if (error.syscall !== 'listen') {
       throw error;
     }

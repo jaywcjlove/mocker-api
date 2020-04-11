@@ -1,4 +1,4 @@
-const delay = require('mocker-api/utils/delay');
+const delay = require('mocker-api/lib/delay');
 const user = require('./user.mock');
 
 // 是否禁用代理

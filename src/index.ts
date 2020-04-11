@@ -1,21 +1,59 @@
-const bodyParser = require('body-parser');
-const httpProxy = require('http-proxy');
-const toRegexp = require('path-to-regexp');
-const clearModule = require('clear-module');
-const PATH = require('path');
-const URL = require('url');
-const chokidar = require('chokidar');
-const color = require('colors-cli/safe');
+import URL from 'url';
+import PATH from 'path';
+import { Request, Response, NextFunction, Express } from 'express';
+import bodyParser from 'body-parser';
+import httpProxy from 'http-proxy';
+import * as toRegexp from 'path-to-regexp';
+import { TokensToRegexpOptions, ParseOptions, Key } from 'path-to-regexp';
+import clearModule from 'clear-module';
+import chokidar from 'chokidar';
+import color from 'colors-cli/safe';
+
+
+export type MockerResultFunction = ((req: Request, res: Response, next?: NextFunction) => void);
+export type MockerResult = string | { [key: string]: any } | MockerResultFunction;
+
+export interface Mocker {
+  _proxy?: MockerOption;
+  [key: string]: MockerResult;
+}
+
+export interface MockerOption {
+  changeHost?: boolean;
+  pathRewrite?: {
+    [key: string]: 'string';
+  },
+  proxy?: {
+    [key: string]: 'string';
+  },
+  httpProxy?: {
+    options?: httpProxy.ServerOptions;
+    listeners?: {
+      [key: string]: () => void;
+    }
+  };
+  bodyParserConf?: {
+    [key: string]: 'raw' | 'text' | 'urlencoded' | 'json';
+  };
+  bodyParserJSON?: bodyParser.OptionsJson;
+  bodyParserText?: bodyParser.OptionsText;
+  bodyParserRaw?: bodyParser.Options;
+  bodyParserUrlencoded?: bodyParser.OptionsUrlencoded;
+  watchOptions?: chokidar.WatchOptions;
+  header?: {
+    [key: string]: string | number | string[];
+  }
+}
 
 const pathToRegexp = toRegexp.pathToRegexp;
-let mocker = {};
+let mocker: Mocker = {};
 
-function pathMatch(options) {
+function pathMatch(options: TokensToRegexpOptions & ParseOptions) {
   options = options || {};
-  return function (path) {
-    var keys = [];
+  return function (path: string) {
+    var keys: (Key & TokensToRegexpOptions & ParseOptions & { repeat: boolean })[] = [];
     var re = pathToRegexp(path, keys, options);
-    return function (pathname, params) {
+    return function (pathname: string, params?: any) {
       var m = re.exec(pathname);
       if (!m) return false;
       params = params || {};
@@ -32,7 +70,7 @@ function pathMatch(options) {
   }
 }
 
-module.exports = function (app, watchFile, conf = {}) {
+export default function (app: Express, watchFile: string | string[], conf: MockerOption = {}) {
   const watchFiles = Array.isArray(watchFile) ? watchFile : [watchFile];
   if (watchFiles.some(file => !file)) {
     throw new Error('Mocker file does not exist!.');
@@ -40,8 +78,9 @@ module.exports = function (app, watchFile, conf = {}) {
 
   mocker = getConfig();
 
+
   if (!mocker) {
-    return (req, res, next) => {
+    return (req: Request, res: Response, next: NextFunction) => {
       next();
     }
   }
@@ -56,8 +95,8 @@ module.exports = function (app, watchFile, conf = {}) {
     bodyParserRaw = {},
     bodyParserUrlencoded = {},
     watchOptions = {},
-    accessControlOptions = {}
-  } = mocker._proxy || conf;
+    header = {}
+  } = {...conf, ...(mocker._proxy || {})}
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
   const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), watchOptions);
@@ -77,7 +116,8 @@ module.exports = function (app, watchFile, conf = {}) {
   })
   // 监听文件修改重新加载代码
   // 配置热更新
-  app.all('/*', (req, res, next) => {
+  app.all('/*', (req: Request, res: Response, next: NextFunction) => {
+    
     /**
      * Get Proxy key
      */
@@ -89,19 +129,19 @@ module.exports = function (app, watchFile, conf = {}) {
      * => `GET /api/:owner/:repo/raw/:ref`
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
-    const mockerKey = Object.keys(mocker).find((kname) => {
+    const mockerKey: string = Object.keys(mocker).find((kname) => {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
     /**
      * Access Control Allow options.
      * https://github.com/jaywcjlove/mocker-api/issues/61
      */
-    const accessOptions = {
+    const accessOptions: MockerOption['header'] = {
       'Access-Control-Allow-Origin': req.get('Origin') || '*',
       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
       'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
-      'Access-Control-Allow-Credentials': true,
-      ...accessControlOptions,
+      'Access-Control-Allow-Credentials': 'true',
+      ...header,
     }
     Object.keys(accessOptions).forEach(keyName => {
       res.setHeader(keyName, accessOptions[keyName]);
@@ -157,7 +197,7 @@ module.exports = function (app, watchFile, conf = {}) {
       if (changeHost) {
         req.headers.host = url.host;
       }
-      const { options: proxyOptions = {}, listeners: proxyListeners = {} } = httpProxyConf;
+      const { options: proxyOptions = {}, listeners: proxyListeners = {} }: MockerOption['httpProxy'] = httpProxyConf;
       /**
        * rewrite target's url path. Object-keys will be used as RegExp to match paths.
        * https://github.com/jaywcjlove/mocker-api/issues/62
@@ -184,7 +224,7 @@ module.exports = function (app, watchFile, conf = {}) {
   });
 
   // The old module's resources to be released.
-  function cleanCache(modulePath) {
+  function cleanCache(modulePath: string) {
     // The entry file does not have a .js suffix,
     // causing the module's resources not to be released.
     // https://github.com/jaywcjlove/webpack-api-mocker/issues/30
@@ -207,7 +247,7 @@ module.exports = function (app, watchFile, conf = {}) {
       return Object.assign(mocker, mockerItem.default ? mockerItem.default : mockerItem);
     }, {})
   }
-  return (req, res, next) => {
+  return (req: Request, res: Response, next: NextFunction) => {
     next();
   }
 }

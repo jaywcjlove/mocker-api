@@ -43,6 +43,9 @@ export interface MockerOption {
   bodyParserUrlencoded?: OptionsUrlencoded;
   bodyParserJSON?: OptionsJson;
   watchOptions?: WatchOptions;
+  accessControlOptions?: {
+    [key: string]: any;
+  };
 }
 
 declare function mockerAPI(app: express.Application, path: string | string[], opts: MockerOption): void;

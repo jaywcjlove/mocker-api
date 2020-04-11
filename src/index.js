@@ -56,6 +56,7 @@ module.exports = function (app, watchFile, conf = {}) {
     bodyParserRaw = {},
     bodyParserUrlencoded = {},
     watchOptions = {},
+    accessControlOptions = {}
   } = mocker._proxy || conf;
   // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
   // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
@@ -91,11 +92,20 @@ module.exports = function (app, watchFile, conf = {}) {
     const mockerKey = Object.keys(mocker).find((kname) => {
       return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
     });
-    let origin = req.get('Origin') || '*'
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
-    res.setHeader('Access-Control-Allow-Credentials', true);
+    /**
+     * Access Control Allow options.
+     * https://github.com/jaywcjlove/mocker-api/issues/61
+     */
+    const accessOptions = {
+      'Access-Control-Allow-Origin': req.get('Origin') || '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
+      'Access-Control-Allow-Credentials': true,
+      ...accessControlOptions,
+    }
+    Object.keys(accessOptions).forEach(keyName => {
+      res.setHeader(keyName, accessOptions[keyName]);
+    });
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
     if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'

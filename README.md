@@ -11,10 +11,16 @@
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
-- [Using with command](#using-with-command)
-- [Using with express](#using-with-express)
-- [Using with webpack](#using-with-webpack)
-- [Load data example](example/loadData)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Options](#options)
+- [Delayed Response](#delayed-response)
+- [apiMocker](#apimocker)
+- [Using With Command](#using-with-command)
+- [Using With Express](#using-with-express)
+- [Using With Webpack](#using-with-webpack)
+- [License](#license)
 
 **Features:**  
 
@@ -160,6 +166,14 @@ module.exports = proxy;
 - [`bodyParserUrlencoded`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions) URL-encoded form body parser
 - `bodyParserConf` => `{}` bodyParser settings. eg： `bodyParserConf : {'text/plain': 'text','text/html': 'text'}` will parsed `Content-Type='text/plain' and Content-Type='text/html'` with `bodyParser.text`  
 - [`watchOptions`](https://github.com/paulmillr/chokidar#api) => `object` Options object as defined [chokidar api options](https://github.com/paulmillr/chokidar#api)
+- `accessControlOptions` => `{}` Access Control Allow options.
+  ```js
+  {
+    accessControlOptions: {
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+    }
+  }
+  ```
 
 ⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
 

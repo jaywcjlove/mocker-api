@@ -1,6 +1,6 @@
 import URL from 'url';
 import PATH from 'path';
-import { Request, Response, NextFunction, Express } from 'express';
+import { Request, Response, NextFunction, Application } from 'express';
 import bodyParser from 'body-parser';
 import httpProxy from 'http-proxy';
 import * as toRegexp from 'path-to-regexp';
@@ -70,7 +70,7 @@ function pathMatch(options: TokensToRegexpOptions & ParseOptions) {
   }
 }
 
-export default function (app: Express, watchFile: string | string[], conf: MockerOption = {}) {
+export default function (app: Application, watchFile: string | string[], conf: MockerOption = {}) {
   const watchFiles = Array.isArray(watchFile) ? watchFile : [watchFile];
   if (watchFiles.some(file => !file)) {
     throw new Error('Mocker file does not exist!.');

@@ -196,6 +196,9 @@ export default function (app: Application, watchFile: string | string[], conf: M
       });
 
       const proxyHTTP = httpProxy.createProxyServer({});
+      proxyHTTP.on('error', (err) => {
+        console.error(`${color.red_b.black(` Proxy Failed: ${err.name}`)} ${err.message || ''} ${err.stack || ''} !!`);
+      });
       Object.keys(proxyListeners).forEach(event => {
         proxyHTTP.on(event, proxyListeners[event]);
       });

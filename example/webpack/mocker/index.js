@@ -8,8 +8,8 @@ const proxy = {
   // Priority processing.
   _proxy: {
     proxy: {
-      // '/repos/(.*)': 'https://api.github.com/',
-      '/repos/jaywcjlove/webpack-api-mocker': 'https://api.github.com/repos/jaywcjlove/webpack-api-mocker',
+      '/repos/(.*)': 'https://api.github.com/',
+      // '/repos/jaywcjlove/webpack-api-mocker': 'https://api.github.com/repos/jaywcjlove/webpack-api-mocker',
     },
     changeHost: true,
   },

@@ -60,6 +60,6 @@
   "devDependencies": {
     "@types/detect-port": "1.1.0",
     "@types/jest": "25.2.1",
-    "tsbb": "1.7.1"
+    "tsbb": "1.7.3"
   }
 }

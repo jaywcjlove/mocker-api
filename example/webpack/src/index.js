@@ -9,11 +9,6 @@ fetch('/api/userinfo/1314-sd', {
     document.getElementById('id').innerHTML = data.id;
   });
 
-fetch('/repos/hello',)
-  .then(response => response.json())
-  .then(data => {
-    document.getElementById('mock').innerText = data.text;
-  });
 
 fetch('/repos/jaywcjlove/webpack-api-mocker')
   .then(response => response.json())

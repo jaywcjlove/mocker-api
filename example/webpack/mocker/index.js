@@ -6,14 +6,16 @@ const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
   // Priority processing.
-  // _proxy: {
-  //   proxy: {
-  //     '/repos/(.*)': 'https://api.github.com/',
-  //   },
-  //   changeHost: true,
-  // },
-  'GET /api/wcj': {
-    www: 223
+  _proxy: {
+    proxy: {
+      // '/repos/(.*)': 'https://api.github.com/',
+      '/repos/jaywcjlove/webpack-api-mocker': 'https://api.github.com/repos/jaywcjlove/webpack-api-mocker',
+    },
+    changeHost: true,
+  },
+  'GET /repos/jaywcjlove/webpack-api-mocker': {
+    "stargazers_count": 11111,
+    "subscribers_count": 6
   },
   'GET /api/userinfo/:id': (req, res) => {
     console.log('-1--->', req.params)

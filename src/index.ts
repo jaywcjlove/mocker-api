@@ -111,14 +111,17 @@ function pathMatch(options: TokensToRegexpOptions & ParseOptions) {
   }
 }
 
-export default function (app: Application, watchFile: string | string[], conf: MockerOption = {}) {
-  const watchFiles = Array.isArray(watchFile) ? watchFile : [watchFile];
+export default function (app: Application, watchFile: string | string[] | Mocker, conf: MockerOption = {}) {
+  const watchFiles = Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : [];
+
   if (watchFiles.some(file => !file)) {
     throw new Error('Mocker file does not exist!.');
   }
 
-  mocker = getConfig();
-
+  // Mybe watch file or pass parameters
+  // https://github.com/jaywcjlove/mocker-api/issues/116
+  const isWatchFilePath = (Array.isArray(watchFile) && watchFile.every(val => typeof val === 'string')) || typeof watchFile === 'string';
+  mocker = isWatchFilePath ? getConfig() : watchFile;
 
   if (!mocker) {
     return (req: Request, res: Response, next: NextFunction) => {
@@ -155,26 +158,28 @@ export default function (app: Application, watchFile: string | string[], conf: M
   // watchOptions = {},
   // header = {}
 
-  // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
-  // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
-  const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), options.watchOptions);
-
-  watcher.on('all', (event, path) => {
-    if (event === 'change' || event === 'add') {
-      try {
-        // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
-        cleanCache(path);
-        watchFiles.forEach(file => cleanCache(file));
-        mocker = getConfig();
-        if (mocker._proxy) {
-          options = { ...options, ...mocker._proxy };
+  if (isWatchFilePath) {
+    // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
+    // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
+    const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), options.watchOptions);
+  
+    watcher.on('all', (event, path) => {
+      if (event === 'change' || event === 'add') {
+        try {
+          // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取
+          cleanCache(path);
+          watchFiles.forEach(file => cleanCache(file));
+          mocker = getConfig();
+          if (mocker._proxy) {
+            options = { ...options, ...mocker._proxy };
+          }
+          console.log(`${color.green_b.black(' Done: ')} Hot Mocker ${color.green(path.replace(process.cwd(), ''))} file replacement success!`);
+        } catch (ex) {
+          console.error(`${color.red_b.black(' Failed: ')} Hot Mocker ${color.red(path.replace(process.cwd(), ''))} file replacement failed!!`);
         }
-        console.log(`${color.green_b.black(' Done: ')} Hot Mocker ${color.green(path.replace(process.cwd(), ''))} file replacement success!`);
-      } catch (ex) {
-        console.error(`${color.red_b.black(' Failed: ')} Hot Mocker ${color.red(path.replace(process.cwd(), ''))} file replacement failed!!`);
       }
-    }
-  })
+    })
+  }
   // 监听文件修改重新加载代码
   // 配置热更新
   app.all('/*', (req: Request, res: Response, next: NextFunction) => {

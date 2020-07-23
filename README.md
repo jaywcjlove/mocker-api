@@ -189,6 +189,7 @@ module.exports = (noProxy ? {} : delay(proxy, 1000));
 
 ```js
 apiMocker(app, mockerFilePath[, options])
+apiMocker(app, Mocker[, options])
 ```
 
 Multi entry `mocker` file watching
@@ -245,6 +246,24 @@ const express = require('express');
 const app = express();
 
 + apiMocker(app, path.resolve('./mocker/index.js'))
+app.listen(8080);
+```
+
+or
+
+```diff
+const express = require('express');
++ const apiMocker = require('mocker-api');
+
+const app = express();
+
++ apiMocker(app, {
++   'GET /api/user': {
++     id: 1,
++     sex: 0
++   }
++ });
+
 app.listen(8080);
 ```
 

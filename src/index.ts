@@ -20,12 +20,8 @@ export interface Mocker {
 
 export interface MockerOption {
   changeHost?: boolean;
-  pathRewrite?: {
-    [key: string]: 'string';
-  },
-  proxy?: {
-    [key: string]: 'string';
-  },
+  pathRewrite?: Record<string, string>,
+  proxy?: Record<string, string>,
   httpProxy?: {
     options?: httpProxy.ServerOptions;
     listeners?: {

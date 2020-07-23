@@ -1,5 +1,7 @@
 import URL from 'url';
 import PATH from 'path';
+import * as net from "net";
+import * as http from "http";
 import { Request, Response, NextFunction, Application } from 'express';
 import bodyParser from 'body-parser';
 import httpProxy from 'http-proxy';
@@ -9,6 +11,7 @@ import clearModule from 'clear-module';
 import chokidar from 'chokidar';
 import color from 'colors-cli/safe';
 
+type ProxyTargetUrl = string | Partial<URL.Url>;
 
 export type MockerResultFunction = ((req: Request, res: Response, next?: NextFunction) => void);
 export type MockerResult = string | { [key: string]: any } | MockerResultFunction;
@@ -18,15 +21,57 @@ export interface Mocker {
   [key: string]: MockerResult;
 }
 
+export type HttpProxyListeners = {
+  start: (
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    target: ProxyTargetUrl
+  ) => void;
+  proxyReq: (
+    proxyReq: http.ClientRequest,
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    options: httpProxy.ServerOptions
+  ) => void
+  proxyRes: (
+    proxyRes: http.IncomingMessage,
+    req: http.IncomingMessage,
+    res: http.ServerResponse
+  ) => void
+  proxyReqWs: (
+    proxyReq: http.ClientRequest,
+    req: http.IncomingMessage,
+    socket: net.Socket,
+    options: httpProxy.ServerOptions,
+    head: any
+  ) => void
+  econnreset: (
+    err: Error,
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    target: ProxyTargetUrl
+  ) => void
+  end: (
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    proxyRes: http.IncomingMessage
+  ) => void
+  close: (
+    proxyRes: http.IncomingMessage,
+    proxySocket: net.Socket,
+    proxyHead: any
+  ) => void
+} & {
+  [key: string]: () => void;
+}
+
 export interface MockerOption {
   changeHost?: boolean;
   pathRewrite?: Record<string, string>,
   proxy?: Record<string, string>,
   httpProxy?: {
     options?: httpProxy.ServerOptions;
-    listeners?: {
-      [key: string]: () => void;
-    }
+    listeners?: HttpProxyListeners
   };
   bodyParserConf?: {
     [key: string]: 'raw' | 'text' | 'urlencoded' | 'json';
@@ -176,7 +221,7 @@ export default function (app: Application, watchFile: string | string[], conf: M
       if (options.changeHost) {
         req.headers.host = url.host;
       }
-      const { options: proxyOptions = {}, listeners: proxyListeners = {} }: MockerOption['httpProxy'] = options.httpProxy;
+      const { options: proxyOptions = {}, listeners: proxyListeners = {} as HttpProxyListeners }: MockerOption['httpProxy'] = options.httpProxy;
       /**
        * rewrite target's url path. Object-keys will be used as RegExp to match paths.
        * https://github.com/jaywcjlove/mocker-api/issues/62

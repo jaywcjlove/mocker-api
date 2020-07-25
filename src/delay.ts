@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { Mocker, MockerResultFunction } from './';
+import { MockerProxyRoute, MockerResultFunction } from './';
 
-export default function name(proxy: Mocker, timer: number = 0) {
+export default function delay(proxy: MockerProxyRoute, timer: number = 0) {
   const mockApi: { [key: string]: any } | ((req: Request, res: Response, next: NextFunction) => void) = {};
   Object.keys(proxy).forEach((key) => {
     const result = proxy[key];

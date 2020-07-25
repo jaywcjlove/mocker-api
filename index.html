@@ -1,0 +1,434 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>mocker-api</title>
+	<meta name="description" content="Documentation for mocker-api">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">mocker-api</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>mocker-api</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h2><p align="center"><b>Mocker API</b></p></h2>
+				<p><a href="https://github.com/jaywcjlove/mocker-api/issues"><img src="https://img.shields.io/github/issues/jaywcjlove/mocker-api.svg" alt=""></a>
+					<a href="https://github.com/jaywcjlove/mocker-api/network"><img src="https://img.shields.io/github/forks/jaywcjlove/mocker-api.svg" alt=""></a>
+					<a href="https://github.com/jaywcjlove/mocker-api/stargazers"><img src="https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg" alt=""></a>
+					<a href="https://github.com/jaywcjlove/mocker-api/releases"><img src="https://img.shields.io/github/release/jaywcjlove/mocker-api" alt=""></a>
+				<a href="https://www.npmjs.com/package/mocker-api"><img src="https://img.shields.io/npm/v/mocker-api.svg" alt=""></a></p>
+				<p><a href="#quick-start">Quick Start</a> · <a href="#usage">Usage</a> · <a href="#options">Options</a> · <a href="#delayed-response">Delayed</a> · <a href="#example">Example</a> · <a href="#license">License</a></p>
+				<p><code>mocker-api</code> that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.</p>
+				<p><strong>Features:</strong>  </p>
+				<p>🔥 Built in support for hot Mocker file replacement.<br>🚀 Quickly and easily configure the API via JSON.<br>🌱 Mock API proxying made simple.<br>💥 Can be used independently without relying on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
+				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
+					<h2>Quick Start</h2>
+				</a>
+				<pre><code class="language-bash">mkdir mocker-app &amp;&amp; <span class="hljs-built_in">cd</span> mocker-app
+
+<span class="hljs-comment"># Create a mocker configuration file based on rules</span>
+touch api.js
+
+<span class="hljs-comment"># Global install dependent.</span>
+npm install mocker-api -g
+<span class="hljs-comment"># Run server</span>
+mocker ./api.js</code></pre>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<p>you can put it the <code>package.json</code> config as a current project dependency.</p>
+				<pre><code class="language-bash">npm install mocker-api --save-dev</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p><code>mocker-api</code> dev support mock, configured in <code>mocker/index.js</code>.</p>
+				<p>you can modify the <a href="https://www.npmjs.com/package/http-proxy">http-proxy</a> options and add the event listeners by adding the httpProxy configuration</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> proxy = {
+  <span class="hljs-comment">// Priority processing.</span>
+  <span class="hljs-comment">// apiMocker(app, path, option)</span>
+  <span class="hljs-comment">// This is the option parameter setting for apiMocker</span>
+  <span class="hljs-attr">_proxy</span>: {
+    <span class="hljs-attr">proxy</span>: {
+      <span class="hljs-comment">// Turn a path string such as `/user/:name` into a regular expression.</span>
+      <span class="hljs-comment">// https://www.npmjs.com/package/path-to-regexp</span>
+      <span class="hljs-string">&#x27;/repos/(.*)&#x27;</span>: <span class="hljs-string">&#x27;https://api.github.com/&#x27;</span>,
+      <span class="hljs-string">&#x27;/:owner/:repo/raw/:ref/(.*)&#x27;</span>: <span class="hljs-string">&#x27;http://127.0.0.1:2018&#x27;</span>,
+      <span class="hljs-string">&#x27;/api/repos/(.*)&#x27;</span>: <span class="hljs-string">&#x27;http://127.0.0.1:3721/&#x27;</span>
+    },
+    <span class="hljs-comment">// rewrite target&#x27;s url path. Object-keys will be used as RegExp to match paths.</span>
+    <span class="hljs-comment">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
+    <span class="hljs-attr">pathRewrite</span>: {
+      <span class="hljs-string">&#x27;^/api/repos/&#x27;</span>: <span class="hljs-string">&#x27;/repos/&#x27;</span>,
+    },
+    <span class="hljs-attr">changeHost</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-comment">// modify the http-proxy options</span>
+    <span class="hljs-attr">httpProxy</span>: {
+      <span class="hljs-attr">options</span>: {
+        <span class="hljs-attr">ignorePath</span>: <span class="hljs-literal">true</span>,
+      },
+      <span class="hljs-attr">listeners</span>: {
+        <span class="hljs-attr">proxyReq</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">proxyReq, req, res, options</span>) </span>{
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;proxyReq&#x27;</span>);
+        },
+      },
+    },    
+  },
+  <span class="hljs-comment">// =====================</span>
+  <span class="hljs-comment">// The default GET request.</span>
+  <span class="hljs-comment">// https://github.com/jaywcjlove/mocker-api/pull/63</span>
+  <span class="hljs-string">&#x27;/api/user&#x27;</span>: {
+    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+  },
+  <span class="hljs-string">&#x27;GET /api/user&#x27;</span>: {
+    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+  },
+  <span class="hljs-string">&#x27;GET /api/user/list&#x27;</span>: [
+    {
+      <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+      <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+    }, {
+      <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+      <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+    }
+  ],
+  <span class="hljs-string">&#x27;GET /api/:owner/:repo/raw/:ref/(.*)&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { owner, repo, ref } = req.params;
+    <span class="hljs-comment">// http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md</span>
+    <span class="hljs-comment">// owner =&gt; admin</span>
+    <span class="hljs-comment">// repo =&gt; webpack-mock-api</span>
+    <span class="hljs-comment">// ref =&gt; master</span>
+    <span class="hljs-comment">// req.params[0] =&gt; add/ddd.md</span>
+    <span class="hljs-keyword">return</span> res.json({
+      <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+      owner, repo, ref,
+      <span class="hljs-attr">path</span>: req.params[<span class="hljs-number">0</span>]
+    });
+  },
+  <span class="hljs-string">&#x27;POST /api/login/account&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> { password, username } = req.body;
+    <span class="hljs-keyword">if</span> (password === <span class="hljs-string">&#x27;888888&#x27;</span> &amp;&amp; username === <span class="hljs-string">&#x27;admin&#x27;</span>) {
+      <span class="hljs-keyword">return</span> res.json({
+        <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;ok&#x27;</span>,
+        <span class="hljs-attr">code</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">token</span>: <span class="hljs-string">&quot;sdfsdfsdfdsf&quot;</span>,
+        <span class="hljs-attr">data</span>: {
+          <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+          <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+          <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+        }
+      });
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">403</span>).json({
+        <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;error&#x27;</span>,
+        <span class="hljs-attr">code</span>: <span class="hljs-number">403</span>
+      });
+    }
+  },
+  <span class="hljs-string">&#x27;DELETE /api/user/:id&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;----&gt;&#x27;</span>, req.body)
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;----&gt;&#x27;</span>, req.params.id)
+    res.send({ <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;ok&#x27;</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;删除成功！&#x27;</span> });
+  }
+}
+<span class="hljs-built_in">module</span>.exports = proxy;</code></pre>
+				<a href="#options" id="options" style="color: inherit; text-decoration: none;">
+					<h2>Options</h2>
+				</a>
+				<ul>
+					<li><a href="https://www.npmjs.com/package/path-to-regexp"><code>proxy</code></a> =&gt; <code>{}</code> Proxy settings, Turn a path string such as <code>/user/:name</code> into a regular expression.</li>
+					<li><a href="https://github.com/jaywcjlove/mocker-api/issues/62"><code>pathRewrite</code></a> =&gt; <code>{}</code> rewrite target&#39;s url path. Object-keys will be used as RegExp to match paths. <a href="https://github.com/jaywcjlove/mocker-api/issues/62">#62</a></li>
+					<li><code>changeHost</code> =&gt; <code>Boolean</code> Setting req headers host.</li>
+					<li><code>httpProxy</code> =&gt; <code>{}</code> Set the <a href="https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events">listen event</a> and <a href="https://github.com/nodejitsu/node-http-proxy#options">configuration</a> of <a href="https://github.com/nodejitsu/node-http-proxy">http-proxy</a>    </li>
+					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions"><code>bodyParserJSON</code></a> JSON body parser</li>
+					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparsertextoptions"><code>bodyParserText</code></a> Text body parser</li>
+					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserrawoptions"><code>bodyParserRaw</code></a> Raw body parser</li>
+					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions"><code>bodyParserUrlencoded</code></a> URL-encoded form body parser</li>
+					<li><code>bodyParserConf</code> =&gt; <code>{}</code> bodyParser settings. eg： <code>bodyParserConf : {&#39;text/plain&#39;: &#39;text&#39;,&#39;text/html&#39;: &#39;text&#39;}</code> will parsed <code>Content-Type=&#39;text/plain&#39; and Content-Type=&#39;text/html&#39;</code> with <code>bodyParser.text</code>  </li>
+					<li><a href="https://github.com/paulmillr/chokidar#api"><code>watchOptions</code></a> =&gt; <code>object</code> Options object as defined <a href="https://github.com/paulmillr/chokidar#api">chokidar api options</a></li>
+					<li><code>header</code> =&gt; <code>{}</code> Access Control Allow options.<pre><code class="language-js">{
+  <span class="hljs-attr">header</span>: {
+    <span class="hljs-string">&#x27;Access-Control-Allow-Methods&#x27;</span>: <span class="hljs-string">&#x27;POST, GET, OPTIONS, PUT, DELETE&#x27;</span>,
+  }
+}</code></pre>
+					</li>
+				</ul>
+				<p>⚠️ No wildcard asterisk <del><code>*</code></del> - use parameters instead <code>(.*)</code>, suport <code>v1.7.3+</code></p>
+				<a href="#delayed-response" id="delayed-response" style="color: inherit; text-decoration: none;">
+					<h2>Delayed Response</h2>
+				</a>
+				<p>You can use functional tool to enhance mock. <a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> delay = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mocker-api/lib/delay&#x27;</span>);
+<span class="hljs-keyword">const</span> noProxy = process.env.NO_PROXY === <span class="hljs-string">&#x27;true&#x27;</span>;
+
+<span class="hljs-keyword">const</span> proxy = {
+  <span class="hljs-string">&#x27;GET /api/user&#x27;</span>: {
+    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
+    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
+  },
+  <span class="hljs-comment">// ...</span>
+}
+<span class="hljs-built_in">module</span>.exports = (noProxy ? {} : delay(proxy, <span class="hljs-number">1000</span>));</code></pre>
+				<a href="#apimocker" id="apimocker" style="color: inherit; text-decoration: none;">
+					<h2>apiMocker</h2>
+				</a>
+				<pre><code class="language-js">apiMocker(app, mockerFilePath[, options])
+apiMocker(app, Mocker[, options])</code></pre>
+				<p>Multi entry <code>mocker</code> file watching</p>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> apiMocker = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mocker-api&#x27;</span>);
+<span class="hljs-keyword">const</span> mockerFile = [<span class="hljs-string">&#x27;./mock/index.js&#x27;</span>];
+<span class="hljs-comment">// or</span>
+<span class="hljs-comment">// const mockerFile = &#x27;./mock/index.js&#x27;;</span>
+apiMocker(app, mockerFile, options)</code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<a href="#using-with-command" id="using-with-command" style="color: inherit; text-decoration: none;">
+					<h3>Using With Command</h3>
+				</a>
+				<p><a href="example/base">Base example</a></p>
+				<blockquote>
+					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>. </p>
+				</blockquote>
+				<pre><code class="language-bash"><span class="hljs-comment"># Global install dependent.</span>
+npm install mocker-api -g
+<span class="hljs-comment"># Run server</span>
+mocker ./mocker/index.js</code></pre>
+				<p>Or you can put it the <code>package.json</code> config as a current project dependency.</p>
+				<pre><code class="language-diff">{
+  &quot;name&quot;: &quot;base-example&quot;,
+  &quot;scripts&quot;: {
+<span class="hljs-addition">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span>
+  },
+  &quot;devDependencies&quot;: {
+<span class="hljs-addition">+    &quot;mocker-api&quot;: &quot;^1.6.4&quot;</span>
+  },
+  &quot;license&quot;: &quot;MIT&quot;
+}</code></pre>
+				<a href="#using-with-express" id="using-with-express" style="color: inherit; text-decoration: none;">
+					<h3>Using With <a href="https://github.com/expressjs/express">Express</a></h3>
+				</a>
+				<p><a href="example/express">Express example</a></p>
+				<blockquote>
+					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
+				</blockquote>
+				<pre><code class="language-diff">const express = require(&#x27;express&#x27;);
+<span class="hljs-addition">+ const path = require(&#x27;path&#x27;);</span>
+<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+
+const app = express();
+
+<span class="hljs-addition">+ apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;))</span>
+app.listen(8080);</code></pre>
+				<p>or</p>
+				<pre><code class="language-diff">const express = require(&#x27;express&#x27;);
+<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+
+const app = express();
+
+<span class="hljs-addition">+ apiMocker(app, {</span>
+<span class="hljs-addition">+   &#x27;GET /api/user&#x27;: {</span>
+<span class="hljs-addition">+     id: 1,</span>
+<span class="hljs-addition">+     sex: 0</span>
+<span class="hljs-addition">+   }</span>
+<span class="hljs-addition">+ });</span>
+
+app.listen(8080);</code></pre>
+				<a href="#using-with-webpack" id="using-with-webpack" style="color: inherit; text-decoration: none;">
+					<h3>Using With <a href="https://github.com/webpack/webpack">Webpack</a></h3>
+				</a>
+				<p><a href="example/webpack">webpack example</a></p>
+				<p>To use api mocker on your <a href="https://github.com/webpack/webpack">Webpack</a> projects, simply add a setup options to your <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> options:</p>
+				<p>Change your config file to tell the dev server where to look for files: <code>webpack.config.js</code>.</p>
+				<pre><code class="language-diff">const HtmlWebpackPlugin = require(&#x27;html-webpack-plugin&#x27;);
+<span class="hljs-addition">+ const path = require(&#x27;path&#x27;);</span>
+<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+
+module.exports = {
+  entry: {
+    app: &#x27;./src/index.js&#x27;,
+    print: &#x27;./src/print.js&#x27;
+  },
+  devtool: &#x27;inline-source-map&#x27;,
+<span class="hljs-addition">+ devServer: {</span>
+<span class="hljs-addition">+   ...</span>
+<span class="hljs-addition">+   before(app){</span>
+<span class="hljs-addition">+     apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {</span>
+<span class="hljs-addition">+       proxy: {</span>
+<span class="hljs-addition">+         &#x27;/repos/*&#x27;: &#x27;https://api.github.com/&#x27;,</span>
+<span class="hljs-addition">+         &#x27;/:owner/:repo/raw/:ref/*&#x27;: &#x27;http://127.0.0.1:2018&#x27;</span>
+<span class="hljs-addition">+       },</span>
+<span class="hljs-addition">+       changeHost: true,</span>
+<span class="hljs-addition">+     })</span>
+<span class="hljs-addition">+   }</span>
+<span class="hljs-addition">+ },</span>
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: &#x27;Development&#x27;
+    })
+  ],
+  output: {
+    filename: &#x27;[name].bundle.js&#x27;,
+    path: require.resolve(__dirname, &#x27;dist&#x27;)
+  }
+};</code></pre>
+				<p>Must have a file suffix! For example: <code>./mocker/index.js</code>.</p>
+				<p>Let&#39;s add a script to easily run the dev server as well: <code>package.json</code></p>
+				<pre><code class="language-diff">  {
+    &quot;name&quot;: &quot;development&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;main&quot;: &quot;webpack.config.js&quot;,
+    &quot;scripts&quot;: {
+      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+<span class="hljs-addition">+     &quot;start&quot;: &quot;webpack-dev-server --open&quot;,</span>
+      &quot;build&quot;: &quot;webpack&quot;
+    },
+    &quot;keywords&quot;: [],
+    &quot;author&quot;: &quot;&quot;,
+    &quot;license&quot;: &quot;MIT&quot;,
+    &quot;devDependencies&quot;: {
+      ....
+    }
+  }</code></pre>
+				<p>Mock API proxying made simple.</p>
+				<pre><code class="language-diff">{
+  before(app){
+<span class="hljs-addition">+   apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {</span>
+<span class="hljs-addition">+     proxy: {</span>
+<span class="hljs-addition">+       &#x27;/repos/*&#x27;: &#x27;https://api.github.com/&#x27;,</span>
+<span class="hljs-addition">+     },</span>
+<span class="hljs-addition">+     changeHost: true,</span>
+<span class="hljs-addition">+   })</span>
+  }
+}</code></pre>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="./LICENSE">MIT © Kenny Wong</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/httpproxylisteners.html" class="tsd-kind-icon">Http<wbr>Proxy<wbr>Listeners</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/mockeroption.html" class="tsd-kind-icon">Mocker<wbr>Option</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/mockerproxyroute.html" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#mockerresult" class="tsd-kind-icon">Mocker<wbr>Result</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#mockerresultfunction" class="tsd-kind-icon">Mocker<wbr>Result<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#proxytargeturl" class="tsd-kind-icon">Proxy<wbr>Target<wbr>Url</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#mocker" class="tsd-kind-icon">mocker</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#pathtoregexp" class="tsd-kind-icon">path<wbr>ToRegexp</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#default" class="tsd-kind-icon">default</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#delay" class="tsd-kind-icon">delay</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#pathmatch" class="tsd-kind-icon">path<wbr>Match</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

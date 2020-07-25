@@ -27,4 +27,11 @@ jobs:
     - run: npm install
     - run: npm run build
     - run: npm run coverage
+    - run: npm run doc
+    - name: Build and Deploy
+      uses: peaceiris/actions-gh-pages@v2.5.0
+      env:
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: ./typedoc
 

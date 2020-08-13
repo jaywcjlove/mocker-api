@@ -32,7 +32,7 @@ export type MockerResult = string | number| Array<any> | Record<string, any> | M
  * }
  * ```
  */
-export interface MockerProxyRoute extends Record<string, MockerResult> {
+export type MockerProxyRoute = Record<string, MockerResult> & {
   /**
    * This is the option parameter setting for apiMocker
    * Priority processing.

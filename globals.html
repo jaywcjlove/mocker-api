@@ -72,12 +72,12 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/httpproxylisteners.html" class="tsd-kind-icon">Http<wbr>Proxy<wbr>Listeners</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/mockeroption.html" class="tsd-kind-icon">Mocker<wbr>Option</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/mockerproxyroute.html" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias"><a href="globals.html#mockerproxyroute" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#mockerresult" class="tsd-kind-icon">Mocker<wbr>Result</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#mockerresultfunction" class="tsd-kind-icon">Mocker<wbr>Result<wbr>Function</a></li>
 								<li class="tsd-kind-type-alias"><a href="globals.html#proxytargeturl" class="tsd-kind-icon">Proxy<wbr>Target<wbr>Url</a></li>
@@ -104,12 +104,41 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="mockerproxyroute" class="tsd-anchor"></a>
+					<h3>Mocker<wbr>Proxy<wbr>Route</h3>
+					<div class="tsd-signature tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="globals.html#mockerresult" class="tsd-signature-type">MockerResult</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>_proxy<span class="tsd-signature-symbol">?: </span><a href="interfaces/mockeroption.html" class="tsd-signature-type">MockerOption</a><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L35">src/index.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Setting a proxy router.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-json">{
+  &#x27;/api/user&#x27;: {
+    id: 1,
+    username: &#x27;kenny&#x27;,
+    sex: 6
+  },
+  &#x27;DELETE /api/user/:id&#x27;: (req, res) =&gt; {
+    res.send({ status: &#x27;ok&#x27;, message: &#x27;删除成功！&#x27; });
+  }
+}</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
 					<a name="mockerresult" class="tsd-anchor"></a>
 					<h3>Mocker<wbr>Result</h3>
 					<div class="tsd-signature tsd-kind-icon">Mocker<wbr>Result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#mockerresultfunction" class="tsd-signature-type">MockerResultFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L16">src/index.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L16">src/index.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -119,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">Mocker<wbr>Result<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Request</span>, res<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, next<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L15">src/index.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L15">src/index.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -156,7 +185,7 @@
 					<div class="tsd-signature tsd-kind-icon">Proxy<wbr>Target<wbr>Url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Url</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L14">src/index.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L14">src/index.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,10 +195,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="mocker" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagLet">Let</span> mocker</h3>
-					<div class="tsd-signature tsd-kind-icon">mocker<span class="tsd-signature-symbol">:</span> <a href="interfaces/mockerproxyroute.html" class="tsd-signature-type">MockerProxyRoute</a></div>
+					<div class="tsd-signature tsd-kind-icon">mocker<span class="tsd-signature-symbol">:</span> <a href="globals.html#mockerproxyroute" class="tsd-signature-type">MockerProxyRoute</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L176">src/index.ts:176</a></li>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L176">src/index.ts:176</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -179,7 +208,7 @@
 					<div class="tsd-signature tsd-kind-icon">path<wbr>ToRegexp<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">pathToRegexp</span><span class="tsd-signature-symbol"> = toRegexp.pathToRegexp</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L175">src/index.ts:175</a></li>
+							<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L175">src/index.ts:175</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -190,13 +219,13 @@
 					<a name="default" class="tsd-anchor"></a>
 					<h3>default</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>app<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Application</span>, watchFile<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/mockerproxyroute.html" class="tsd-signature-type">MockerProxyRoute</a>, conf<span class="tsd-signature-symbol">?: </span><a href="interfaces/mockeroption.html" class="tsd-signature-type">MockerOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
+						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>app<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Application</span>, watchFile<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#mockerproxyroute" class="tsd-signature-type">MockerProxyRoute</a>, conf<span class="tsd-signature-symbol">?: </span><a href="interfaces/mockeroption.html" class="tsd-signature-type">MockerOption</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">(Anonymous function)</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L198">src/index.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L198">src/index.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -205,7 +234,7 @@
 									<h5>app: <span class="tsd-signature-type">Application</span></h5>
 								</li>
 								<li>
-									<h5>watchFile: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/mockerproxyroute.html" class="tsd-signature-type">MockerProxyRoute</a></h5>
+									<h5>watchFile: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#mockerproxyroute" class="tsd-signature-type">MockerProxyRoute</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> conf: <a href="interfaces/mockeroption.html" class="tsd-signature-type">MockerOption</a><span class="tsd-signature-symbol"> = {}</span></h5>
@@ -219,13 +248,13 @@
 					<a name="delay" class="tsd-anchor"></a>
 					<h3>delay</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">delay<span class="tsd-signature-symbol">(</span>proxy<span class="tsd-signature-symbol">: </span><a href="interfaces/mockerproxyroute.html" class="tsd-signature-type">MockerProxyRoute</a>, timer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#mockerresult" class="tsd-signature-type">MockerResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">delay<span class="tsd-signature-symbol">(</span>proxy<span class="tsd-signature-symbol">: </span><a href="globals.html#mockerproxyroute" class="tsd-signature-type">MockerProxyRoute</a>, timer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#mockerresult" class="tsd-signature-type">MockerResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/delay.ts#L22">src/delay.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/delay.ts#L22">src/delay.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,7 +277,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>proxy: <a href="interfaces/mockerproxyroute.html" class="tsd-signature-type">MockerProxyRoute</a></h5>
+									<h5>proxy: <a href="globals.html#mockerproxyroute" class="tsd-signature-type">MockerProxyRoute</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> timer: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
@@ -268,7 +297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/d62b44b/src/index.ts#L178">src/index.ts:178</a></li>
+									<li>Defined in <a href="https://github.com/jaywcjlove/mocker-api/blob/a630439/src/index.ts#L178">src/index.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -299,8 +328,8 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/mockeroption.html" class="tsd-kind-icon">Mocker<wbr>Option</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mockerproxyroute.html" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#mockerproxyroute" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#mockerresult" class="tsd-kind-icon">Mocker<wbr>Result</a>

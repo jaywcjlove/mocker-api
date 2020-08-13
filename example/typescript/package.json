@@ -1,0 +1,17 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc -p ./ --types --outDir lib --watch",
+    "build": "tsc -p ./ --types --outDir lib"
+  },
+  "author": "jaywcjlove",
+  "license": "ISC",
+  "devDependencies": {
+    "mocker-api": "file:../../",
+    "express": "4.17.1",
+    "typescript": "3.9.7"
+  }
+}

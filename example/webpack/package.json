@@ -12,7 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "html-webpack-plugin": "4.3.0",
-    "mocker-api": "2.3.1",
+    "mocker-api": "2.3.2",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0"

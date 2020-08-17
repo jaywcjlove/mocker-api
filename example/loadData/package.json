@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "devDependencies": {
-    "mocker-api": "2.3.2"
+    "mocker-api": "2.3.5"
   },
   "license": "MIT"
 }

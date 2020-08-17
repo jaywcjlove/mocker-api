@@ -2,9 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const apiMocker = require('mocker-api');
 
-
-console.log('apiMocker:', apiMocker);
-
 module.exports = {
   mode: 'development',
   entry: {

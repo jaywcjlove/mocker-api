@@ -1,4 +1,4 @@
-name: GitHub Actions Build and Deploy react-baidu-map
+name: GitHub Actions Build and Deploy mocker-api
 on:
   push:
     branches:
@@ -24,14 +24,14 @@ jobs:
     #     restore-keys: |
     #       ${{ runner.os }}-node-
 
-    - run: npm install
-    - run: npm run build
-    - run: npm run coverage
-    - run: npm run doc
+    - run: yarn install
+    - run: yarn run build
+    - run: yarn run coverage
+    - run: yarn run doc
     - name: Build and Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./typedoc
+        PUBLISH_DIR: ./packages/core/typedoc
 

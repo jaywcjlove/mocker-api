@@ -349,6 +349,15 @@ Mock API proxying made simple.
 }
 ```
 
+### Development
+
+```shell
+$ yarn install
+$ yarn run build
+$ yarn run watch
+$ yarn run test
+```
+
 ## License
 
 [MIT © Kenny Wong](./LICENSE)

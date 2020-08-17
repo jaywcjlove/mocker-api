@@ -1,6 +1,7 @@
 {
-  "name": "example",
+  "name": "webpack",
   "version": "1.0.0",
+  "private": true,
   "description": "Mocker API Example",
   "scripts": {
     "start": "webpack-dev-server --progress --open",
@@ -11,10 +12,9 @@
   "license": "MIT",
   "devDependencies": {
     "html-webpack-plugin": "4.3.0",
-    "mocker-api": "file:../../",
+    "mocker-api": "2.3.1",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0"
-  },
-  "dependencies": {}
+  }
 }

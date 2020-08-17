@@ -2,7 +2,7 @@
   "name": "express-demo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "nodemon index.js"
   },
@@ -18,6 +18,6 @@
     "nodemon": "^2.0.0"
   },
   "devDependencies": {
-    "mocker-api": "file:../../"
+    "mocker-api": "2.3.1"
   }
 }

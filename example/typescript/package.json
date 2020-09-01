@@ -12,7 +12,7 @@
   "author": "jaywcjlove",
   "license": "ISC",
   "dependencies": {
-    "@types/express": "4.17.7",
+    "@types/express": "4.17.8",
     "mocker-api": "2.3.5",
     "express": "4.17.1"
   },

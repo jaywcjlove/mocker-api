@@ -59,19 +59,19 @@ export interface HttpProxyListeners extends Record<string, any> {
     req: http.IncomingMessage,
     res: http.ServerResponse,
     options: httpProxy.ServerOptions
-  ) => void
+  ) => void;
   proxyRes?: (
     proxyRes: http.IncomingMessage,
     req: http.IncomingMessage,
     res: http.ServerResponse
-  ) => void
+  ) => void;
   proxyReqWs?: (
     proxyReq: http.ClientRequest,
     req: http.IncomingMessage,
     socket: net.Socket,
     options: httpProxy.ServerOptions,
     head: any
-  ) => void
+  ) => void;
   econnreset?: (
     err: Error,
     req: http.IncomingMessage,
@@ -90,7 +90,7 @@ export interface HttpProxyListeners extends Record<string, any> {
     proxyRes: http.IncomingMessage,
     proxySocket: net.Socket,
     proxyHead: any
-  ) => void
+  ) => void;
 }
 
 export interface MockerOption {
@@ -339,11 +339,11 @@ export default function (app: Application, watchFile: string | string[] | Mocker
 
     } else if (mocker[mockerKey]) {
       let bodyParserMethd = bodyParser.json({ ...options.bodyParserJSON }); // 默认使用json解析
-      let contentType = req.get('Content-Type');
       /**
        * `application/x-www-form-urlencoded; charset=UTF-8` => `application/x-www-form-urlencoded`
        * Issue: https://github.com/jaywcjlove/mocker-api/issues/50
        */
+      let contentType = req.get('Content-Type');
       contentType = contentType && contentType.replace(/;.*$/, '');
       if(options.bodyParserConf && options.bodyParserConf[contentType]) {
         // 如果存在options.bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
@@ -378,7 +378,10 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     }
   });
 
-  // The old module's resources to be released.
+  /**
+   * The old module's resources to be released.
+   * @param modulePath 
+   */
   function cleanCache(modulePath: string) {
     // The entry file does not have a .js suffix,
     // causing the module's resources not to be released.
@@ -395,7 +398,9 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     // https://github.com/jaywcjlove/mocker-api/issues/42
     clearModule(modulePath);
   }
-  // Merge multiple Mockers
+  /**
+   * Merge multiple Mockers
+   */
   function getConfig() {
     return watchFiles.reduce((mocker, file) => {
       const mockerItem = require(file);

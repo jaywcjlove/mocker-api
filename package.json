@@ -29,6 +29,6 @@
     "@types/jest": "26.0.14",
     "tsbb": "1.7.7",
     "typescript": "3.9.7",
-    "typedoc": "0.19.1"
+    "typedoc": "0.19.2"
   }
 }

@@ -46,6 +46,6 @@
     "express": "4.17.1",
     "http-proxy": "1.18.1",
     "local-ip-url": "1.0.3",
-    "path-to-regexp": "6.1.0"
+    "path-to-regexp": "6.2.0"
   }
 }

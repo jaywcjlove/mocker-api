@@ -18,6 +18,19 @@ interface MockerConfig {
   const DEFAULTMOCKPATH = './mock';
 
   const argvs = minimist(process.argv.slice(2));
+
+  if (argvs.h || argvs.help) {
+    console.log('\n  Usage: mocker <path> [--config] [--help|h]')
+    console.log('\n  Displays help information.')
+    console.log('\n  Options:')
+    console.log('    --config <path>', 'Simple configuration')
+    console.log('\n  Example:')
+    console.log('    mocker mock/index.js')
+    console.log('    mocker mock/m1.js test/m2.js')
+    console.log('    mocker mock/m1.js --config mocker.config.json')
+    return;
+  }
+
   const paths = argvs['_'];
 
   let mockPath = paths || DEFAULTMOCKPATH;

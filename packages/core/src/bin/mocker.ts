@@ -26,6 +26,8 @@ interface MockerConfig {
     console.log('    --config <path>', 'Simple configuration')
     console.log('\n  Example:')
     console.log('    mocker mock/index.js')
+    console.log('    mocker mock/index.js --port 7788')
+    console.log('    mocker mock/index.js --host 0.0.0.0')
     console.log('    mocker mock/m1.js test/m2.js')
     console.log('    mocker mock/m1.js --config mocker.config.json')
     return;
@@ -55,6 +57,14 @@ interface MockerConfig {
     mockerConfig.port = await detect(mockerConfig.port);
   } else {
     mockerConfig = require(path.resolve(mockConfigPath));
+  }
+
+  if (argvs.port) {
+    mockerConfig.port = argvs.port;
+  }
+
+  if (argvs.host) {
+    mockerConfig.host = argvs.host;
   }
 
   const DEFAULT_PORT = mockerConfig.port;

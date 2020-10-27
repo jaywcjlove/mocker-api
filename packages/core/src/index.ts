@@ -198,7 +198,7 @@ function pathMatch(options: TokensToRegexpOptions & ParseOptions) {
 }
 
 export default function (app: Application, watchFile: string | string[] | MockerProxyRoute, conf: MockerOption = {}) {
-  const watchFiles = Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : [];
+  const watchFiles = (Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : []).map(str => PATH.resolve(str));
 
   if (watchFiles.some(file => !file)) {
     throw new Error('Mocker file does not exist!.');
@@ -245,6 +245,7 @@ export default function (app: Application, watchFile: string | string[] | Mocker
   // header = {}
 
   if (isWatchFilePath) {
+    console.log('isWatchFilePath:', isWatchFilePath)
     // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
     // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
     const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), options.watchOptions);

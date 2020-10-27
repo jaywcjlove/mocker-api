@@ -19,7 +19,8 @@ interface MockerConfig {
 
   const argvs = minimist(process.argv.slice(2));
   const paths = argvs['_'];
-  let mockPath = paths[0] || DEFAULTMOCKPATH;
+
+  let mockPath = paths || DEFAULTMOCKPATH;
   let mockConfigPath = DEFAULTMOCKERCONFIGPATH;
   let mockerConfig: MockerConfig = {
       host: process.env.HOST || '0.0.0.0',
@@ -33,20 +34,17 @@ interface MockerConfig {
   }
 
   if (argvs.config) {
-      mockConfigPath = paths.config;
+    mockConfigPath = argvs.config;
   }
 
   if (!existsSync(path.resolve(mockConfigPath))) {
-      mockerConfig.host = process.env.HOST ? process.env.HOST : mockerConfig.host;
-      mockerConfig.port = await detect(mockerConfig.port);
+    mockerConfig.host = process.env.HOST ? process.env.HOST : mockerConfig.host;
+    mockerConfig.port = await detect(mockerConfig.port);
   } else {
-      mockerConfig = require(path.resolve(mockConfigPath));
+    mockerConfig = require(path.resolve(mockConfigPath));
   }
 
-  const mockDir = require.resolve(path.resolve(mockPath));
-
   const DEFAULT_PORT = mockerConfig.port;
-
   const app = express();
 
   app.all('/*', (req, res, next) => {
@@ -56,8 +54,7 @@ interface MockerConfig {
     res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
     next();
   });
-
-  apiMocker(app, mockDir);
+  apiMocker(app, mockPath);
 
   app.listen(DEFAULT_PORT, () => {
     const localIpUrl = prepareUrls({

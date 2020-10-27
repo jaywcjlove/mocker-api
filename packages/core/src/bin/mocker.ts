@@ -7,17 +7,22 @@ import color from 'colors-cli/safe';
 import express from 'express';
 import minimist from 'minimist';
 import apiMocker, { MockerOption } from '../';
+import { version } from '../../package.json';
 
 interface MockerConfig extends MockerOption {
   host: string;
   port: number;
 }
 
-(async () => {
-  const DEFAULTMOCKERCONFIGPATH = './mocker.config.json';
-  const DEFAULTMOCKPATH = './mock';
-  const PKGPATH = path.resolve('package.json');
+const DEFAULT_MOCKER_CONFIG_PATH = './mocker.config.json';
+const DEFAULT_MOCK_PATH = ['./mock'];
+const PKG_PATH = './package.json';
+const DEFAULT_CONFIG: MockerConfig = {
+  host: '0.0.0.0',
+  port: 3721
+};
 
+(async () => {
   const argvs = minimist(process.argv.slice(2));
 
   if (argvs.h || argvs.help) {
@@ -31,23 +36,27 @@ interface MockerConfig extends MockerOption {
     console.log('    mocker mock/index.js --host 0.0.0.0')
     console.log('    mocker mock/m1.js test/m2.js')
     console.log('    mocker mock/m1.js --config mocker.config.json')
+    console.log('\n');
     return;
   }
 
-  const paths = argvs['_'];
+  if (argvs.v || argvs.version) {
+    console.log(version);
+    return
+  }
 
-  let mockPath = paths || DEFAULTMOCKPATH;
-  let mockConfigPath = DEFAULTMOCKERCONFIGPATH;
-  let mockerConfig: MockerConfig = {
-      host: process.env.HOST || '0.0.0.0',
-      port: Number(process.env.PORT) || 3721
-  };
+  const paths = argvs['_'];
 
   if (paths.length === 0) {
     console.log(color.red('Error: Need to pass parameters!'));
     console.log(`E.g: ${color.yellow('mocker <File path>')}\n`);
     return;
   }
+
+  const entryFiles = paths || DEFAULT_MOCK_PATH;
+
+  let mockConfigPath = argvs.config || DEFAULT_MOCKER_CONFIG_PATH;
+  let mockerConfig = DEFAULT_CONFIG;
 
   if (argvs.config) {
     mockConfigPath = argvs.config;
@@ -64,20 +73,19 @@ interface MockerConfig extends MockerOption {
    * Support setting configuration on package.json
    * https://github.com/jaywcjlove/mocker-api/issues/144
    */
-  if (existsSync(PKGPATH)) {
-    const pkgConf = require(PKGPATH);
+  if (existsSync(PKG_PATH)) {
+    const pkgConf = require(PKG_PATH);
     if (pkgConf.mocker) {
-      mockerConfig.port = pkgConf.mocker.port || mockerConfig.port;
-      mockerConfig.host = pkgConf.mocker.host || mockerConfig.host;
+      Object.assign(mockerConfig, pkgConf.mocker);
     }
-  }
-
-  if (argvs.port) {
-    mockerConfig.port = argvs.port;
   }
 
   if (argvs.host) {
     mockerConfig.host = argvs.host;
+  }
+
+  if (argvs.port) {
+    mockerConfig.port = argvs.port;
   }
 
   const DEFAULT_PORT = mockerConfig.port;
@@ -94,7 +102,7 @@ interface MockerConfig extends MockerOption {
 
   delete mockerConfig.port;
   delete mockerConfig.host;
-  apiMocker(app, mockPath, { ...mockerConfig });
+  apiMocker(app, entryFiles, { ...mockerConfig });
 
   app.listen(DEFAULT_PORT, () => {
     const localIpUrl = prepareUrls({

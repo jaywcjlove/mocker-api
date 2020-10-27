@@ -164,7 +164,7 @@ module.exports = proxy;
   }
   ```
 
-⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, suport `v1.7.3+`
+⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, support `v1.7.3+`
 
 ## Delayed Response
 

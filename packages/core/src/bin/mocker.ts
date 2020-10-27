@@ -1,29 +1,52 @@
 #!/usr/bin/env node
 import path from 'path';
+import { existsSync } from 'fs';
 import prepareUrls from 'local-ip-url/prepareUrls';
 import detect from 'detect-port';
 import color from 'colors-cli/safe';
 import express from 'express';
+import minimist from 'minimist';
 import apiMocker from '../';
 
+interface MockerConfig {
+    host: string;
+    port: number;
+}
+
 (async () => {
-  if (!process.argv.slice(2).length) {
+  const DEFAULTMOCKERCONFIGPATH = './mocker.config.json';
+  const DEFAULTMOCKPATH = './mock';
+
+  const argvs = minimist(process.argv.slice(2));
+  const paths = argvs['_'];
+  let mockPath = paths[0] || DEFAULTMOCKPATH;
+  let mockConfigPath = DEFAULTMOCKERCONFIGPATH;
+  let mockerConfig: MockerConfig = {
+      host: process.env.HOST || '0.0.0.0',
+      port: Number(process.env.PORT) || 3721
+  };
+
+  if (paths.length === 0) {
     console.log(color.red('Error: Need to pass parameters!'));
     console.log(`E.g: ${color.yellow('mocker <File path>')}\n`);
     return;
   }
-  let mockpath = process.argv[2];
 
-  mockpath = require.resolve(path.resolve(mockpath));
-
-  const HOST = process.env.HOST || '0.0.0.0';
-  let DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3721;
-  const PORT = await detect(DEFAULT_PORT);
-
-  if (DEFAULT_PORT !== PORT) {
-    DEFAULT_PORT = PORT;
+  if (argvs.config) {
+      mockConfigPath = paths.config;
   }
-  process.env.PORT = String(DEFAULT_PORT);
+
+  if (!existsSync(path.resolve(mockConfigPath))) {
+      mockerConfig.host = process.env.HOST ? process.env.HOST : mockerConfig.host;
+      mockerConfig.port = await detect(mockerConfig.port);
+  } else {
+      mockerConfig = require(path.resolve(mockConfigPath));
+  }
+
+  const mockDir = require.resolve(path.resolve(mockPath));
+
+  const DEFAULT_PORT = mockerConfig.port;
+
   const app = express();
 
   app.all('/*', (req, res, next) => {
@@ -34,13 +57,12 @@ import apiMocker from '../';
     next();
   });
 
-  apiMocker(app, mockpath);
+  apiMocker(app, mockDir);
 
   app.listen(DEFAULT_PORT, () => {
     const localIpUrl = prepareUrls({
       protocol: 'http',
-      host: HOST,
-      port: DEFAULT_PORT,
+      ...mockerConfig
     });
     console.log(`> Server Listening at Local: ${color.green(localIpUrl.localUrl)}`);
     console.log(`>           On Your Network: ${color.green(localIpUrl.lanUrl)}\n`);
@@ -52,7 +74,7 @@ import apiMocker from '../';
     if (error.syscall !== 'listen') {
       throw error;
     }
-    const bind = typeof PORT === 'string' ? 'Pipe ' + PORT : 'Port ' + PORT;
+    const bind = typeof DEFAULT_PORT === 'string' ? `Pipe ${DEFAULT_PORT}` : `Port ${DEFAULT_PORT}`;
     // handle specific listen errors with friendly messages
     switch (error.code) {
       case 'EACCES':

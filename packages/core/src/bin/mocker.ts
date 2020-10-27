@@ -6,16 +6,17 @@ import detect from 'detect-port';
 import color from 'colors-cli/safe';
 import express from 'express';
 import minimist from 'minimist';
-import apiMocker from '../';
+import apiMocker, { MockerOption } from '../';
 
-interface MockerConfig {
-    host: string;
-    port: number;
+interface MockerConfig extends MockerOption {
+  host: string;
+  port: number;
 }
 
 (async () => {
   const DEFAULTMOCKERCONFIGPATH = './mocker.config.json';
   const DEFAULTMOCKPATH = './mock';
+  const PKGPATH = path.resolve('package.json');
 
   const argvs = minimist(process.argv.slice(2));
 
@@ -59,6 +60,18 @@ interface MockerConfig {
     mockerConfig = require(path.resolve(mockConfigPath));
   }
 
+  /**
+   * Support setting configuration on package.json
+   * https://github.com/jaywcjlove/mocker-api/issues/144
+   */
+  if (existsSync(PKGPATH)) {
+    const pkgConf = require(PKGPATH);
+    if (pkgConf.mocker) {
+      mockerConfig.port = pkgConf.mocker.port || mockerConfig.port;
+      mockerConfig.host = pkgConf.mocker.host || mockerConfig.host;
+    }
+  }
+
   if (argvs.port) {
     mockerConfig.port = argvs.port;
   }
@@ -68,6 +81,7 @@ interface MockerConfig {
   }
 
   const DEFAULT_PORT = mockerConfig.port;
+  const DEFAULT_HOST = mockerConfig.host;
   const app = express();
 
   app.all('/*', (req, res, next) => {
@@ -77,12 +91,16 @@ interface MockerConfig {
     res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
     next();
   });
-  apiMocker(app, mockPath);
+
+  delete mockerConfig.port;
+  delete mockerConfig.host;
+  apiMocker(app, mockPath, { ...mockerConfig });
 
   app.listen(DEFAULT_PORT, () => {
     const localIpUrl = prepareUrls({
       protocol: 'http',
-      ...mockerConfig
+      host: DEFAULT_HOST,
+      port: DEFAULT_PORT,
     });
     console.log(`> Server Listening at Local: ${color.green(localIpUrl.localUrl)}`);
     console.log(`>           On Your Network: ${color.green(localIpUrl.lanUrl)}\n`);

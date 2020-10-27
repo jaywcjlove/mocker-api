@@ -7,6 +7,9 @@
     "api": "mocker ./mocker"
   },
   "keywords": [],
+  "mocker": {
+    "port": 7788
+  },
   "author": "",
   "devDependencies": {
     "mocker-api": "2.5.0"

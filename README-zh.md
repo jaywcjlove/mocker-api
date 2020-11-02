@@ -7,7 +7,7 @@
 [![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
 
 
-[快速开始](#快速开始) · [使用](#使用) · [参数设置](#参数设置) · [延迟响应](#延迟响应) · [实例](#实例) · [License](#license)
+[English](./README.md) · [快速开始](#快速开始) · [使用](#使用) · [参数设置](#参数设置) · [延迟响应](#延迟响应) · [实例](#实例) · [License](#license)
 
 `mocker-api` 为 REST API 创建模拟。 当您尝试在没有实际 REST API 服务器的情况下测试应用程序时，这将很有帮助。
 

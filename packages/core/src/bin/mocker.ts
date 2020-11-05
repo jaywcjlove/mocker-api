@@ -14,9 +14,10 @@ interface MockerConfig extends MockerOption {
   port: number;
 }
 
-const DEFAULT_MOCKER_CONFIG_PATH = './mocker.config.json';
+const CWD = process.cwd();
+const PKG_PATH = path.resolve(CWD, './package.json');
+const DEFAULT_MOCKER_CONFIG_PATH = path.resolve(CWD, './mocker.config.json');
 const DEFAULT_MOCK_PATH = ['./mock'];
-const PKG_PATH = './package.json';
 const DEFAULT_CONFIG: MockerConfig = {
   host: '0.0.0.0',
   port: 3721

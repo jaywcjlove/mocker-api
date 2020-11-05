@@ -28,8 +28,9 @@ touch api.js
 
 # Global install dependent.
 npm install mocker-api -g
-# Run server
-mocker ./api.js
+
+# Run server at localhost:8000
+mocker ./api.js --host localhost --port 8000
 ```
 
 ## Installation

@@ -70,7 +70,7 @@
 					<a href="https://github.com/jaywcjlove/mocker-api/stargazers"><img src="https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg" alt=""></a>
 					<a href="https://github.com/jaywcjlove/mocker-api/releases"><img src="https://img.shields.io/github/release/jaywcjlove/mocker-api" alt=""></a>
 				<a href="https://www.npmjs.com/package/mocker-api"><img src="https://img.shields.io/npm/v/mocker-api.svg" alt=""></a></p>
-				<p><a href="./README-zh.md">中文</a> · <a href="#quick-start">Quick Start</a> · <a href="#usage">Usage</a> · <a href="#options">Options</a> · <a href="#delayed-response">Delayed</a> · <a href="#example">Example</a> · <a href="#license">License</a></p>
+				<p><a href="https://github.com/jaywcjlove/mocker-api/blob/master/README-zh.md">中文</a> · <a href="#quick-start">Quick Start</a> · <a href="#usage">Usage</a> · <a href="#options">Options</a> · <a href="#delayed-response">Delayed</a> · <a href="#example">Example</a> · <a href="#license">License</a></p>
 				<p><code>mocker-api</code> that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.</p>
 				<p><strong>Features:</strong>  </p>
 				<p>🔥 Built in support for hot Mocker file replacement.<br>🚀 Quickly and easily configure the API via JSON.<br>🌱 Mock API proxying made simple.<br>💥 Can be used independently without relying on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
@@ -84,8 +84,13 @@ touch api.js
 
 <span class="hljs-comment"># Global install dependent.</span>
 npm install mocker-api -g
-<span class="hljs-comment"># Run server</span>
-mocker ./api.js</code></pre>
+
+<span class="hljs-comment"># Default port: 3721</span>
+mocker ./api.js
+
+<span class="hljs-comment"># Designated port</span>
+<span class="hljs-comment"># Run server at localhost:8000</span>
+mocker ./api.js --host localhost --port 8000</code></pre>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -371,7 +376,7 @@ module.exports = {
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
-				<p><a href="./LICENSE">MIT © Kenny Wong</a></p>
+				<p><a href="https://github.com/jaywcjlove/mocker-api/blob/master/LICENSE">MIT © Kenny Wong</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

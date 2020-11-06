@@ -7,7 +7,7 @@
 [![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
 
 
-[中文](./README-zh.md) · [Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [Example](#example) · [License](#license)
+[中文](https://github.com/jaywcjlove/mocker-api/blob/master/README-zh.md) · [Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [Example](#example) · [License](#license)
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 
@@ -29,6 +29,10 @@ touch api.js
 # Global install dependent.
 npm install mocker-api -g
 
+# Default port: 3721
+mocker ./api.js
+
+# Designated port
 # Run server at localhost:8000
 mocker ./api.js --host localhost --port 8000
 ```
@@ -361,4 +365,4 @@ $ yarn run test
 
 ## License
 
-[MIT © Kenny Wong](./LICENSE)
+[MIT © Kenny Wong](https://github.com/jaywcjlove/mocker-api/blob/master/LICENSE)

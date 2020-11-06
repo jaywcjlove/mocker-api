@@ -30,6 +30,9 @@ touch api.js
 npm install mocker-api -g
 # 运行服务
 mocker ./api.js
+
+# Run server at localhost:8000
+mocker ./api.js --host localhost --port 8000
 ```
 
 ## 安装
@@ -360,4 +363,4 @@ $ yarn run test
 
 ## License
 
-[MIT © Kenny Wong](./LICENSE)
+[MIT © Kenny Wong](https://github.com/jaywcjlove/mocker-api/blob/master/LICENSE)

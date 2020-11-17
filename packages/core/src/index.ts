@@ -291,7 +291,7 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     const accessOptions: MockerOption['header'] = {
       'Access-Control-Allow-Origin': req.get('Origin') || '*',
       'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-      'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
+      'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With,' + (req.header('access-control-request-headers') || ''),
       'Access-Control-Allow-Credentials': 'true',
       ...options.header,
     }

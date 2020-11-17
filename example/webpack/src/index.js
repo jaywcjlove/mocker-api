@@ -9,6 +9,12 @@ fetch('/api/userinfo/1314-sd', {
     document.getElementById('id').innerHTML = data.id;
   });
 
+fetch('/repos/jaywcjlove/github-rank',)
+  .then(response => response.json())
+  .then(data => {
+    console.log('data:1', data)
+    document.getElementById('mock').innerText = `from github api: webpack-api-mocker star count: ${data.stargazers_count}`;
+  });
 
 fetch('/repos/jaywcjlove/webpack-api-mocker')
   .then(response => response.json())

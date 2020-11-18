@@ -306,7 +306,10 @@ export default function (app: Application, watchFile: string | string[] | Mocker
       return res.sendStatus(200);
     }
 
-    if (proxyKey && options.proxy[proxyKey]) {
+    // if mockerKey match proxyRegExp use mock process instead of proxy
+    const mockerKeyIsMatchProxyKey = new RegExp(proxyKey).test(mockerKey)
+
+    if (mockerKeyIsMatchProxyKey && proxyKey && options.proxy[proxyKey]) {
       const currentProxy = options.proxy[proxyKey];
       const url = URL.parse(currentProxy);
       if (options.changeHost) {

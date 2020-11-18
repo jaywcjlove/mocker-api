@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "api": "mocker ./mocker"
+    "api": "mocker ./mocker",
+    "apix": "node ../../packages/core/lib/bin/mocker ./mocker"
   },
   "keywords": [],
   "mocker": {

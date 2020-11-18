@@ -5,6 +5,16 @@ const user = require('./user.mock');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {
+  _proxy: {
+    proxy: {
+      "/(.*)": "https://api.github.com/",
+    },
+    changeHost: true,
+  },
+  // 注释它则走 默认代理
+  "GET /repos/jaywcjlove/mocker-api": {
+    mock: true,
+  },
   ...user,
   // 'GET /api/userinfo/:id': (req, res) => {
   //   console.log('---->', req.params)
@@ -90,5 +100,5 @@ const proxy = {
     res.send({ status: 'ok', message: '删除成功！' });
   },
 }
-module.exports = (noProxy ? {} : delay(proxy, 1000));
-// module.exports = proxy;
+// module.exports = (noProxy ? {} : delay(proxy, 1000));
+module.exports = proxy;

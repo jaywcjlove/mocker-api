@@ -7,7 +7,6 @@ import color from 'colors-cli/safe';
 import express from 'express';
 import minimist from 'minimist';
 import apiMocker, { MockerOption } from '../';
-import { version } from '../../package.json';
 
 interface MockerConfig extends MockerOption {
   host: string;
@@ -40,6 +39,8 @@ const DEFAULT_CONFIG: MockerConfig = {
     console.log('\n');
     return;
   }
+  // Fix type errors
+  const { version } = require('../../package.json');
 
   if (argvs.v || argvs.version) {
     console.log(version);

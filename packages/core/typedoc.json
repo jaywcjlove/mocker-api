@@ -1,5 +1,7 @@
 {
-  "inputFiles": ["./src/index.ts", "./src/delay.ts"],
+  "inputFiles": [
+    "./src/index.ts", "./src/delay.ts"
+  ],
   "out": "typedoc",
   "name": "mocker-api",
   "mode": "file"

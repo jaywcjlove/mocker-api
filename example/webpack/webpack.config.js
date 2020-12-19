@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const apiMocker = require('mocker-api');
 
 module.exports = {
-  mode: 'development',
   entry: {
     app: './src/index.js',
   },
@@ -11,21 +10,21 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
-  devtool: 'inline-source-map',
   devServer: {
+    port: 8082,
     before(app){
       apiMocker(app, path.resolve('./mocker/index.js'), {
-        // proxy: {
-        //   '/repos/(.*)': 'https://api.github.com/',
-        // },
-        // changeHost: true,
+        proxy: {
+          '/repos/(.*)': 'https://api.github.com/',
+        },
+        changeHost: true,
       })
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve('./public/index.html'),
-      title: 'development'
+      title: 'Webpack App Mocker API'
     })
   ],
 };

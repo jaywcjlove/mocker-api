@@ -288,9 +288,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     app: './src/index.js',
-    print: './src/print.js'
   },
-  devtool: 'inline-source-map',
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
 + devServer: {
 +   ...
 +   before(app){
@@ -305,13 +307,10 @@ module.exports = {
 + },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development'
+      template: path.resolve('./public/index.html'),
+      title: 'Webpack App Mocker API'
     })
   ],
-  output: {
-    filename: '[name].bundle.js',
-    path: require.resolve(__dirname, 'dist')
-  }
 };
 ```
 
@@ -320,23 +319,23 @@ Must have a file suffix! For example: `./mocker/index.js`.
 Let's add a script to easily run the dev server as well: `package.json`
 
 ```diff
-  {
-    "name": "development",
-    "version": "1.0.0",
-    "description": "",
-    "main": "webpack.config.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-+     "start": "webpack-dev-server --open",
-      "build": "webpack"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-      ....
-    }
+{
+  "name": "development",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
++    "start": "webpack serve --progress --mode production",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    ....
   }
+}
 ```
 
 Mock API proxying made simple.

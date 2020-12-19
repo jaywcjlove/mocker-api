@@ -1,10 +1,10 @@
 Mocker API Example
 ---
 
-
 ```bash
 npm install
 npm run start
+open http://localhost:8082
 ```
 
 ## test

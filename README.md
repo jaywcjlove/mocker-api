@@ -333,7 +333,11 @@ Let's add a script to easily run the dev server as well: `package.json`
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    ....
+    "html-webpack-plugin": "4.5.0",
+    "mocker-api": "2.7.4",
+    "webpack": "5.11.0",
+    "webpack-cli": "4.2.0",
+    "webpack-dev-server": "3.11.0"
   }
 }
 ```

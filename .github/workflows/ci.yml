@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@master
-
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: 10
 
     # - name: Cache dependencies
     #   uses: actions/cache@v1
@@ -28,7 +27,7 @@ jobs:
     - run: yarn run build
     - run: yarn run coverage
     - run: yarn run doc
-    - name: Build and Deploy
+    - name: Deploy
       uses: peaceiris/actions-gh-pages@v2.5.0
       env:
         ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}

@@ -27,7 +27,7 @@
   "author": "Kenny Wong <wowohoo@qq.com>",
   "devDependencies": {
     "@types/jest": "26.0.19",
-    "tsbb": "1.7.8",
+    "tsbb": "1.7.9",
     "typescript": "4.1.3",
     "typedoc": "0.19.1"
   }

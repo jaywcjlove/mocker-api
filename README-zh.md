@@ -355,6 +355,37 @@ Mock API proxying made simple.
 }
 ```
 
+###  在 create-react-app 中使用
+
+[create-react-app example](example/create-react-app)
+
+创建 [`src/setupProxy.js`](https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11) 并放置以下内容：
+
+```diff
++ const apiMocker = require('mocker-api');
++ const path = require('path');
+
+module.exports = function(app) {
++  apiMocker(app, path.resolve('./mocker/index.js'), {
++    proxy: {
++      '/repos/(.*)': 'https://api.github.com/',
++    },
++    changeHost: true,
++  });
+};
+```
+
+```diff
+{
+  .....
+  "devDependencies": {
++    "mocker-api": "2.7.4"
+  },
+  ....
+}
+```
+
+
 ### 开发
 
 ```shell

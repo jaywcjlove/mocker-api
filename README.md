@@ -357,6 +357,36 @@ Mock API proxying made simple.
 }
 ```
 
+### Using With [create-react-app](https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md)
+
+[create-react-app example](example/create-react-app)
+
+create `src/setupProxy.js` and place the following contents in it:
+
+```js
+const apiMocker = require('mocker-api');
+const path = require('path');
+
+module.exports = function(app) {
+  apiMocker(app, path.resolve('./mocker/index.js'), {
+    proxy: {
+      '/repos/(.*)': 'https://api.github.com/',
+    },
+    changeHost: true,
+  });
+};
+```
+
+```diff
+{
+  .....
+  "devDependencies": {
++    "mocker-api": "2.7.4"
+  },
+  ....
+}
+```
+
 ### Development
 
 ```shell

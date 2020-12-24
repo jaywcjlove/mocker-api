@@ -4,7 +4,8 @@
 [![](https://img.shields.io/github/forks/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/network)
 [![](https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/stargazers)
 [![](https://img.shields.io/github/release/jaywcjlove/mocker-api)](https://github.com/jaywcjlove/mocker-api/releases)
-[![](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
+[![NPM version](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
+[![Build and Deploy](https://github.com/jaywcjlove/mocker-api/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/jaywcjlove/mocker-api/actions)
 
 
 [English](./README.md) · [快速开始](#快速开始) · [使用](#使用) · [参数设置](#参数设置) · [延迟响应](#延迟响应) · [实例](#实例) · [License](#license)

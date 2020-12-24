@@ -237,9 +237,11 @@ Or you can put it the `package.json` config as a current project dependency.
 }
 ```
 
-### Using With [Express](https://github.com/expressjs/express)
+### Using With Express
 
 [Express example](example/express)
+
+To use api mocker on your [express](https://github.com/expressjs/express) projects.
 
 >⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
@@ -272,7 +274,7 @@ const app = express();
 app.listen(8080);
 ```
 
-### Using With [Webpack](https://github.com/webpack/webpack)
+### Using With Webpack
 
 [webpack example](example/webpack)
 
@@ -357,11 +359,11 @@ Mock API proxying made simple.
 }
 ```
 
-### Using With [create-react-app](https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md)
+### Using With create-react-app
 
 [create-react-app example](example/create-react-app)
 
-create `src/setupProxy.js` and place the following contents in it:
+To use api mocker on your [create-react-app](https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md) projects. create [`src/setupProxy.js`](https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11) and place the following contents in it:
 
 ```diff
 + const apiMocker = require('mocker-api');

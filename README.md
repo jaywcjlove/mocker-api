@@ -363,17 +363,17 @@ Mock API proxying made simple.
 
 create `src/setupProxy.js` and place the following contents in it:
 
-```js
-const apiMocker = require('mocker-api');
-const path = require('path');
+```diff
++ const apiMocker = require('mocker-api');
++ const path = require('path');
 
 module.exports = function(app) {
-  apiMocker(app, path.resolve('./mocker/index.js'), {
-    proxy: {
-      '/repos/(.*)': 'https://api.github.com/',
-    },
-    changeHost: true,
-  });
++  apiMocker(app, path.resolve('./mocker/index.js'), {
++    proxy: {
++      '/repos/(.*)': 'https://api.github.com/',
++    },
++    changeHost: true,
++  });
 };
 ```
 

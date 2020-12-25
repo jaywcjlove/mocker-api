@@ -230,7 +230,7 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "mocker-api": "^1.6.4"
++    "mocker-api": "2.7.5"
   },
   "license": "MIT"
 }
@@ -333,7 +333,7 @@ Let's add a script to easily run the dev server as well: `package.json`
     "license": "MIT",
     "devDependencies": {
       "html-webpack-plugin": "4.5.0",
-      "mocker-api": "2.7.4",
+      "mocker-api": "2.7.5",
       "webpack": "5.11.0",
       "webpack-cli": "4.2.0",
       "webpack-dev-server": "3.11.0"
@@ -380,7 +380,7 @@ module.exports = function(app) {
 {
   .....
   "devDependencies": {
-+    "mocker-api": "2.7.4"
++    "mocker-api": "2.7.5"
   },
   ....
 }

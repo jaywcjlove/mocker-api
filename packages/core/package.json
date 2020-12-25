@@ -6,6 +6,7 @@
     "mocker": "lib/bin/mocker.js"
   },
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaywcjlove/mocker-api.git"

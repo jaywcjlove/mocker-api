@@ -5,6 +5,7 @@ node_modules
 npm-debug.log*
 coverage
 typedoc
+docs
 
 # misc
 .DS_Store

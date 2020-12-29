@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for mocker-api">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -40,8 +41,6 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -51,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>mocker-api</h1>
 		</div>
 	</div>
@@ -78,19 +72,19 @@
 				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
 					<h2>Quick Start</h2>
 				</a>
-				<pre><code class="language-bash">mkdir mocker-app &amp;&amp; <span class="hljs-built_in">cd</span> mocker-app
+				<pre><code class="language-bash">mkdir mocker-app &amp;&amp; cd mocker-app
 
-<span class="hljs-comment"># Create a mocker configuration file based on rules</span>
+# Create a mocker configuration file based on rules
 touch api.js
 
-<span class="hljs-comment"># Global install dependent.</span>
+# Global install dependent.
 npm install mocker-api -g
 
-<span class="hljs-comment"># Default port: 3721</span>
+# Default port: 3721
 mocker ./api.js
 
-<span class="hljs-comment"># Designated port</span>
-<span class="hljs-comment"># Run server at localhost:8000</span>
+# Designated port
+# Run server at localhost:8000
 mocker ./api.js --host localhost --port 8000</code></pre>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
@@ -102,100 +96,101 @@ mocker ./api.js --host localhost --port 8000</code></pre>
 				</a>
 				<p><code>mocker-api</code> dev support mock, configured in <code>mocker/index.js</code>.</p>
 				<p>you can modify the <a href="https://www.npmjs.com/package/http-proxy">http-proxy</a> options and add the event listeners by adding the httpProxy configuration</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> proxy = {
-  <span class="hljs-comment">// Priority processing.</span>
-  <span class="hljs-comment">// apiMocker(app, path, option)</span>
-  <span class="hljs-comment">// This is the option parameter setting for apiMocker</span>
-  <span class="hljs-attr">_proxy</span>: {
-    <span class="hljs-attr">proxy</span>: {
-      <span class="hljs-comment">// Turn a path string such as `/user/:name` into a regular expression.</span>
-      <span class="hljs-comment">// https://www.npmjs.com/package/path-to-regexp</span>
-      <span class="hljs-string">&#x27;/repos/(.*)&#x27;</span>: <span class="hljs-string">&#x27;https://api.github.com/&#x27;</span>,
-      <span class="hljs-string">&#x27;/:owner/:repo/raw/:ref/(.*)&#x27;</span>: <span class="hljs-string">&#x27;http://127.0.0.1:2018&#x27;</span>,
-      <span class="hljs-string">&#x27;/api/repos/(.*)&#x27;</span>: <span class="hljs-string">&#x27;http://127.0.0.1:3721/&#x27;</span>
-    },
-    <span class="hljs-comment">// rewrite target&#x27;s url path. Object-keys will be used as RegExp to match paths.</span>
-    <span class="hljs-comment">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
-    <span class="hljs-attr">pathRewrite</span>: {
-      <span class="hljs-string">&#x27;^/api/repos/&#x27;</span>: <span class="hljs-string">&#x27;/repos/&#x27;</span>,
-    },
-    <span class="hljs-attr">changeHost</span>: <span class="hljs-literal">true</span>,
-    <span class="hljs-comment">// modify the http-proxy options</span>
-    <span class="hljs-attr">httpProxy</span>: {
-      <span class="hljs-attr">options</span>: {
-        <span class="hljs-attr">ignorePath</span>: <span class="hljs-literal">true</span>,
-      },
-      <span class="hljs-attr">listeners</span>: {
-        <span class="hljs-attr">proxyReq</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">proxyReq, req, res, options</span>) </span>{
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;proxyReq&#x27;</span>);
-        },
-      },
-    },    
-  },
-  <span class="hljs-comment">// =====================</span>
-  <span class="hljs-comment">// The default GET request.</span>
-  <span class="hljs-comment">// https://github.com/jaywcjlove/mocker-api/pull/63</span>
-  <span class="hljs-string">&#x27;/api/user&#x27;</span>: {
-    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-  },
-  <span class="hljs-string">&#x27;GET /api/user&#x27;</span>: {
-    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-  },
-  <span class="hljs-string">&#x27;GET /api/user/list&#x27;</span>: [
-    {
-      <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-      <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-      <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-    }, {
-      <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>,
-      <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-      <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-    }
-  ],
-  <span class="hljs-string">&#x27;GET /api/:owner/:repo/raw/:ref/(.*)&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
-    <span class="hljs-keyword">const</span> { owner, repo, ref } = req.params;
-    <span class="hljs-comment">// http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md</span>
-    <span class="hljs-comment">// owner =&gt; admin</span>
-    <span class="hljs-comment">// repo =&gt; webpack-mock-api</span>
-    <span class="hljs-comment">// ref =&gt; master</span>
-    <span class="hljs-comment">// req.params[0] =&gt; add/ddd.md</span>
-    <span class="hljs-keyword">return</span> res.json({
-      <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-      owner, repo, ref,
-      <span class="hljs-attr">path</span>: req.params[<span class="hljs-number">0</span>]
-    });
-  },
-  <span class="hljs-string">&#x27;POST /api/login/account&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
-    <span class="hljs-keyword">const</span> { password, username } = req.body;
-    <span class="hljs-keyword">if</span> (password === <span class="hljs-string">&#x27;888888&#x27;</span> &amp;&amp; username === <span class="hljs-string">&#x27;admin&#x27;</span>) {
-      <span class="hljs-keyword">return</span> res.json({
-        <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;ok&#x27;</span>,
-        <span class="hljs-attr">code</span>: <span class="hljs-number">0</span>,
-        <span class="hljs-attr">token</span>: <span class="hljs-string">&quot;sdfsdfsdfdsf&quot;</span>,
-        <span class="hljs-attr">data</span>: {
-          <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-          <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-          <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-        }
-      });
-    } <span class="hljs-keyword">else</span> {
-      <span class="hljs-keyword">return</span> res.status(<span class="hljs-number">403</span>).json({
-        <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;error&#x27;</span>,
-        <span class="hljs-attr">code</span>: <span class="hljs-number">403</span>
-      });
-    }
-  },
-  <span class="hljs-string">&#x27;DELETE /api/user/:id&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;----&gt;&#x27;</span>, req.body)
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;----&gt;&#x27;</span>, req.params.id)
-    res.send({ <span class="hljs-attr">status</span>: <span class="hljs-string">&#x27;ok&#x27;</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">&#x27;删除成功！&#x27;</span> });
-  }
-}
-<span class="hljs-built_in">module</span>.exports = proxy;</code></pre>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">proxy</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Priority processing.</span>
+<span style="color: #000000">  </span><span style="color: #008000">// apiMocker(app, path, option)</span>
+<span style="color: #000000">  </span><span style="color: #008000">// This is the option parameter setting for apiMocker</span>
+<span style="color: #000000">  </span><span style="color: #001080">_proxy:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">proxy:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #008000">// Turn a path string such as `/user/:name` into a regular expression.</span>
+<span style="color: #000000">      </span><span style="color: #008000">// https://www.npmjs.com/package/path-to-regexp</span>
+<span style="color: #000000">      </span><span style="color: #A31515">&#039;/repos/(.*)&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;https://api.github.com/&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #A31515">&#039;/:owner/:repo/raw/:ref/(.*)&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;http://127.0.0.1:2018&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #A31515">&#039;/api/repos/(.*)&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;http://127.0.0.1:3721/&#039;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #008000">// rewrite target&#039;s url path. Object-keys will be used as RegExp to match paths.</span>
+<span style="color: #000000">    </span><span style="color: #008000">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
+<span style="color: #000000">    </span><span style="color: #001080">pathRewrite:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #A31515">&#039;^/api/repos/&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;/repos/&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">changeHost:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// modify the http-proxy options</span>
+<span style="color: #000000">    </span><span style="color: #001080">httpProxy:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">options:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">ignorePath:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">      </span><span style="color: #001080">listeners:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #795E26">proxyReq</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">proxyReq</span><span style="color: #000000">, </span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">, </span><span style="color: #001080">options</span><span style="color: #000000">) {</span>
+<span style="color: #000000">          </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;proxyReq&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">      },</span>
+<span style="color: #000000">    },    </span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #008000">// =====================</span>
+<span style="color: #000000">  </span><span style="color: #008000">// The default GET request.</span>
+<span style="color: #000000">  </span><span style="color: #008000">// https://github.com/jaywcjlove/mocker-api/pull/63</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;/api/user&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;GET /api/user&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;GET /api/user/list&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">    {</span>
+<span style="color: #000000">      </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">    }, {</span>
+<span style="color: #000000">      </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  ],</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;GET /api/:owner/:repo/raw/:ref/(.*)&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">owner</span><span style="color: #000000">, </span><span style="color: #0070C1">repo</span><span style="color: #000000">, </span><span style="color: #0070C1">ref</span><span style="color: #000000"> } = </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">params</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #008000">// http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md</span>
+<span style="color: #000000">    </span><span style="color: #008000">// owner =&gt; admin</span>
+<span style="color: #000000">    </span><span style="color: #008000">// repo =&gt; webpack-mock-api</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ref =&gt; master</span>
+<span style="color: #000000">    </span><span style="color: #008000">// req.params[0] =&gt; add/ddd.md</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">json</span><span style="color: #000000">({</span>
+<span style="color: #000000">      </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">owner</span><span style="color: #000000">, </span><span style="color: #001080">repo</span><span style="color: #000000">, </span><span style="color: #001080">ref</span><span style="color: #000000">,</span>
+<span style="color: #000000">      </span><span style="color: #001080">path:</span><span style="color: #000000"> </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">params</span><span style="color: #000000">[</span><span style="color: #098658">0</span><span style="color: #000000">]</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;POST /api/login/account&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">password</span><span style="color: #000000">, </span><span style="color: #0070C1">username</span><span style="color: #000000"> } = </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">body</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">if</span><span style="color: #000000"> (</span><span style="color: #001080">password</span><span style="color: #000000"> === </span><span style="color: #A31515">&#039;888888&#039;</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #001080">username</span><span style="color: #000000"> === </span><span style="color: #A31515">&#039;admin&#039;</span><span style="color: #000000">) {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">json</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">status:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ok&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">code:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">token:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;sdfsdfsdfdsf&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">data:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">          </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">          </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">          </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">      });</span>
+<span style="color: #000000">    } </span><span style="color: #AF00DB">else</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">status</span><span style="color: #000000">(</span><span style="color: #098658">403</span><span style="color: #000000">).</span><span style="color: #795E26">json</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">status:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">code:</span><span style="color: #000000"> </span><span style="color: #098658">403</span>
+<span style="color: #000000">      });</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;DELETE /api/user/:id&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;----&gt;&#039;</span><span style="color: #000000">, </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">body</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;----&gt;&#039;</span><span style="color: #000000">, </span><span style="color: #001080">req</span><span style="color: #000000">.</span><span style="color: #001080">params</span><span style="color: #000000">.</span><span style="color: #001080">id</span><span style="color: #000000">)</span>
+<span style="color: #000000">    </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">({ </span><span style="color: #001080">status:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ok&#039;</span><span style="color: #000000">, </span><span style="color: #001080">message:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;删除成功！&#039;</span><span style="color: #000000"> });</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+<span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> = </span><span style="color: #001080">proxy</span><span style="color: #000000">;</span>
+</code></pre>
 				<a href="#options" id="options" style="color: inherit; text-decoration: none;">
 					<h2>Options</h2>
 				</a>
@@ -210,11 +205,12 @@ mocker ./api.js --host localhost --port 8000</code></pre>
 					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserurlencodedoptions"><code>bodyParserUrlencoded</code></a> URL-encoded form body parser</li>
 					<li><code>bodyParserConf</code> =&gt; <code>{}</code> bodyParser settings. eg： <code>bodyParserConf : {&#39;text/plain&#39;: &#39;text&#39;,&#39;text/html&#39;: &#39;text&#39;}</code> will parsed <code>Content-Type=&#39;text/plain&#39; and Content-Type=&#39;text/html&#39;</code> with <code>bodyParser.text</code>  </li>
 					<li><a href="https://github.com/paulmillr/chokidar#api"><code>watchOptions</code></a> =&gt; <code>object</code> Options object as defined <a href="https://github.com/paulmillr/chokidar#api">chokidar api options</a></li>
-					<li><code>header</code> =&gt; <code>{}</code> Access Control Allow options.<pre><code class="language-js">{
-  <span class="hljs-attr">header</span>: {
-    <span class="hljs-string">&#x27;Access-Control-Allow-Methods&#x27;</span>: <span class="hljs-string">&#x27;POST, GET, OPTIONS, PUT, DELETE&#x27;</span>,
-  }
-}</code></pre>
+					<li><code>header</code> =&gt; <code>{}</code> Access Control Allow options.<pre><code class="language-js"><span style="color: #000000">{</span>
+<span style="color: #000000">  header: {</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&#039;Access-Control-Allow-Methods&#039;</span><span style="color: #000000">: </span><span style="color: #A31515">&#039;POST, GET, OPTIONS, PUT, DELETE&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
 					</li>
 				</ul>
 				<p>⚠️ No wildcard asterisk <del><code>*</code></del> - use parameters instead <code>(.*)</code>, support <code>v1.7.3+</code></p>
@@ -222,29 +218,32 @@ mocker ./api.js --host localhost --port 8000</code></pre>
 					<h2>Delayed Response</h2>
 				</a>
 				<p>You can use functional tool to enhance mock. <a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> delay = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mocker-api/lib/delay&#x27;</span>);
-<span class="hljs-keyword">const</span> noProxy = process.env.NO_PROXY === <span class="hljs-string">&#x27;true&#x27;</span>;
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">delay</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;mocker-api/lib/delay&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">noProxy</span><span style="color: #000000"> = </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">env</span><span style="color: #000000">.</span><span style="color: #0070C1">NO_PROXY</span><span style="color: #000000"> === </span><span style="color: #A31515">&#039;true&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> proxy = {
-  <span class="hljs-string">&#x27;GET /api/user&#x27;</span>: {
-    <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
-    <span class="hljs-attr">username</span>: <span class="hljs-string">&#x27;kenny&#x27;</span>,
-    <span class="hljs-attr">sex</span>: <span class="hljs-number">6</span>
-  },
-  <span class="hljs-comment">// ...</span>
-}
-<span class="hljs-built_in">module</span>.exports = (noProxy ? {} : delay(proxy, <span class="hljs-number">1000</span>));</code></pre>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">proxy</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">  </span><span style="color: #A31515">&#039;GET /api/user&#039;</span><span style="color: #001080">:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">id:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">username:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;kenny&#039;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">sex:</span><span style="color: #000000"> </span><span style="color: #098658">6</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #008000">// ...</span>
+<span style="color: #000000">}</span>
+<span style="color: #267F99">module</span><span style="color: #000000">.</span><span style="color: #267F99">exports</span><span style="color: #000000"> = (</span><span style="color: #001080">noProxy</span><span style="color: #000000"> ? {} : </span><span style="color: #795E26">delay</span><span style="color: #000000">(</span><span style="color: #001080">proxy</span><span style="color: #000000">, </span><span style="color: #098658">1000</span><span style="color: #000000">));</span>
+</code></pre>
 				<a href="#apimocker" id="apimocker" style="color: inherit; text-decoration: none;">
 					<h2>apiMocker</h2>
 				</a>
-				<pre><code class="language-js">apiMocker(app, mockerFilePath[, options])
-apiMocker(app, Mocker[, options])</code></pre>
+				<pre><code class="language-js"><span style="color: #795E26">apiMocker</span><span style="color: #000000">(</span><span style="color: #001080">app</span><span style="color: #000000">, </span><span style="color: #001080">mockerFilePath</span><span style="color: #000000">[, </span><span style="color: #001080">options</span><span style="color: #000000">])</span>
+<span style="color: #795E26">apiMocker</span><span style="color: #000000">(</span><span style="color: #001080">app</span><span style="color: #000000">, </span><span style="color: #001080">Mocker</span><span style="color: #000000">[, </span><span style="color: #001080">options</span><span style="color: #000000">])</span>
+</code></pre>
 				<p>Multi entry <code>mocker</code> file watching</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> apiMocker = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;mocker-api&#x27;</span>);
-<span class="hljs-keyword">const</span> mockerFile = [<span class="hljs-string">&#x27;./mock/index.js&#x27;</span>];
-<span class="hljs-comment">// or</span>
-<span class="hljs-comment">// const mockerFile = &#x27;./mock/index.js&#x27;;</span>
-apiMocker(app, mockerFile, options)</code></pre>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">apiMocker</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;mocker-api&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">mockerFile</span><span style="color: #000000"> = [</span><span style="color: #A31515">&#039;./mock/index.js&#039;</span><span style="color: #000000">];</span>
+<span style="color: #008000">// or</span>
+<span style="color: #008000">// const mockerFile = &#039;./mock/index.js&#039;;</span>
+<span style="color: #795E26">apiMocker</span><span style="color: #000000">(</span><span style="color: #001080">app</span><span style="color: #000000">, </span><span style="color: #001080">mockerFile</span><span style="color: #000000">, </span><span style="color: #001080">options</span><span style="color: #000000">)</span>
+</code></pre>
 				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 					<h2>Example</h2>
 				</a>
@@ -255,21 +254,22 @@ apiMocker(app, mockerFile, options)</code></pre>
 				<blockquote>
 					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>. </p>
 				</blockquote>
-				<pre><code class="language-bash"><span class="hljs-comment"># Global install dependent.</span>
+				<pre><code class="language-bash"># Global install dependent.
 npm install mocker-api -g
-<span class="hljs-comment"># Run server</span>
+# Run server
 mocker ./mocker/index.js</code></pre>
 				<p>Or you can put it the <code>package.json</code> config as a current project dependency.</p>
-				<pre><code class="language-diff">{
-  &quot;name&quot;: &quot;base-example&quot;,
-  &quot;scripts&quot;: {
-<span class="hljs-addition">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span>
-  },
-  &quot;devDependencies&quot;: {
-<span class="hljs-addition">+    &quot;mocker-api&quot;: &quot;^1.6.4&quot;</span>
-  },
-  &quot;license&quot;: &quot;MIT&quot;
-}</code></pre>
+				<pre><code class="language-diff"><span style="color: #000000">{</span>
+<span style="color: #000000">  &quot;name&quot;: &quot;base-example&quot;,</span>
+<span style="color: #000000">  &quot;scripts&quot;: {</span>
+<span style="color: #098658">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  &quot;devDependencies&quot;: {</span>
+<span style="color: #098658">+    &quot;mocker-api&quot;: &quot;^1.6.4&quot;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  &quot;license&quot;: &quot;MIT&quot;</span>
+<span style="color: #000000">}</span>
+</code></pre>
 				<a href="#using-with-express" id="using-with-express" style="color: inherit; text-decoration: none;">
 					<h3>Using With <a href="https://github.com/expressjs/express">Express</a></h3>
 				</a>
@@ -277,103 +277,108 @@ mocker ./mocker/index.js</code></pre>
 				<blockquote>
 					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
 				</blockquote>
-				<pre><code class="language-diff">const express = require(&#x27;express&#x27;);
-<span class="hljs-addition">+ const path = require(&#x27;path&#x27;);</span>
-<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+				<pre><code class="language-diff"><span style="color: #000000">const express = require(&#039;express&#039;);</span>
+<span style="color: #098658">+ const path = require(&#039;path&#039;);</span>
+<span style="color: #098658">+ const apiMocker = require(&#039;mocker-api&#039;);</span>
 
-const app = express();
+<span style="color: #000000">const app = express();</span>
 
-<span class="hljs-addition">+ apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;))</span>
-app.listen(8080);</code></pre>
+<span style="color: #098658">+ apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;))</span>
+<span style="color: #000000">app.listen(8080);</span>
+</code></pre>
 				<p>or</p>
-				<pre><code class="language-diff">const express = require(&#x27;express&#x27;);
-<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+				<pre><code class="language-diff"><span style="color: #000000">const express = require(&#039;express&#039;);</span>
+<span style="color: #098658">+ const apiMocker = require(&#039;mocker-api&#039;);</span>
 
-const app = express();
+<span style="color: #000000">const app = express();</span>
 
-<span class="hljs-addition">+ apiMocker(app, {</span>
-<span class="hljs-addition">+   &#x27;GET /api/user&#x27;: {</span>
-<span class="hljs-addition">+     id: 1,</span>
-<span class="hljs-addition">+     sex: 0</span>
-<span class="hljs-addition">+   }</span>
-<span class="hljs-addition">+ });</span>
+<span style="color: #098658">+ apiMocker(app, {</span>
+<span style="color: #098658">+   &#039;GET /api/user&#039;: {</span>
+<span style="color: #098658">+     id: 1,</span>
+<span style="color: #098658">+     sex: 0</span>
+<span style="color: #098658">+   }</span>
+<span style="color: #098658">+ });</span>
 
-app.listen(8080);</code></pre>
+<span style="color: #000000">app.listen(8080);</span>
+</code></pre>
 				<a href="#using-with-webpack" id="using-with-webpack" style="color: inherit; text-decoration: none;">
 					<h3>Using With <a href="https://github.com/webpack/webpack">Webpack</a></h3>
 				</a>
 				<p><a href="example/webpack">webpack example</a></p>
 				<p>To use api mocker on your <a href="https://github.com/webpack/webpack">Webpack</a> projects, simply add a setup options to your <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> options:</p>
 				<p>Change your config file to tell the dev server where to look for files: <code>webpack.config.js</code>.</p>
-				<pre><code class="language-diff">const HtmlWebpackPlugin = require(&#x27;html-webpack-plugin&#x27;);
-<span class="hljs-addition">+ const path = require(&#x27;path&#x27;);</span>
-<span class="hljs-addition">+ const apiMocker = require(&#x27;mocker-api&#x27;);</span>
+				<pre><code class="language-diff"><span style="color: #000000">const HtmlWebpackPlugin = require(&#039;html-webpack-plugin&#039;);</span>
+<span style="color: #098658">+ const path = require(&#039;path&#039;);</span>
+<span style="color: #098658">+ const apiMocker = require(&#039;mocker-api&#039;);</span>
 
-module.exports = {
-  entry: {
-    app: &#x27;./src/index.js&#x27;,
-    print: &#x27;./src/print.js&#x27;
-  },
-  devtool: &#x27;inline-source-map&#x27;,
-<span class="hljs-addition">+ devServer: {</span>
-<span class="hljs-addition">+   ...</span>
-<span class="hljs-addition">+   before(app){</span>
-<span class="hljs-addition">+     apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {</span>
-<span class="hljs-addition">+       proxy: {</span>
-<span class="hljs-addition">+         &#x27;/repos/*&#x27;: &#x27;https://api.github.com/&#x27;,</span>
-<span class="hljs-addition">+         &#x27;/:owner/:repo/raw/:ref/*&#x27;: &#x27;http://127.0.0.1:2018&#x27;</span>
-<span class="hljs-addition">+       },</span>
-<span class="hljs-addition">+       changeHost: true,</span>
-<span class="hljs-addition">+     })</span>
-<span class="hljs-addition">+   }</span>
-<span class="hljs-addition">+ },</span>
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: &#x27;Development&#x27;
-    })
-  ],
-  output: {
-    filename: &#x27;[name].bundle.js&#x27;,
-    path: require.resolve(__dirname, &#x27;dist&#x27;)
-  }
-};</code></pre>
+<span style="color: #000000">module.exports = {</span>
+<span style="color: #000000">  entry: {</span>
+<span style="color: #000000">    app: &#039;./src/index.js&#039;,</span>
+<span style="color: #000000">    print: &#039;./src/print.js&#039;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  devtool: &#039;inline-source-map&#039;,</span>
+<span style="color: #098658">+ devServer: {</span>
+<span style="color: #098658">+   ...</span>
+<span style="color: #098658">+   before(app){</span>
+<span style="color: #098658">+     apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;), {</span>
+<span style="color: #098658">+       proxy: {</span>
+<span style="color: #098658">+         &#039;/repos/*&#039;: &#039;https://api.github.com/&#039;,</span>
+<span style="color: #098658">+         &#039;/:owner/:repo/raw/:ref/*&#039;: &#039;http://127.0.0.1:2018&#039;</span>
+<span style="color: #098658">+       },</span>
+<span style="color: #098658">+       changeHost: true,</span>
+<span style="color: #098658">+     })</span>
+<span style="color: #098658">+   }</span>
+<span style="color: #098658">+ },</span>
+<span style="color: #000000">  plugins: [</span>
+<span style="color: #000000">    new HtmlWebpackPlugin({</span>
+<span style="color: #000000">      title: &#039;Development&#039;</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">  ],</span>
+<span style="color: #000000">  output: {</span>
+<span style="color: #000000">    filename: &#039;[name].bundle.js&#039;,</span>
+<span style="color: #000000">    path: require.resolve(__dirname, &#039;dist&#039;)</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
+</code></pre>
 				<p>Must have a file suffix! For example: <code>./mocker/index.js</code>.</p>
 				<p>Let&#39;s add a script to easily run the dev server as well: <code>package.json</code></p>
-				<pre><code class="language-diff">  {
-    &quot;name&quot;: &quot;development&quot;,
-    &quot;version&quot;: &quot;1.0.0&quot;,
-    &quot;description&quot;: &quot;&quot;,
-    &quot;main&quot;: &quot;webpack.config.js&quot;,
-    &quot;scripts&quot;: {
-      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
-<span class="hljs-addition">+     &quot;start&quot;: &quot;webpack-dev-server --open&quot;,</span>
-      &quot;build&quot;: &quot;webpack&quot;
-    },
-    &quot;keywords&quot;: [],
-    &quot;author&quot;: &quot;&quot;,
-    &quot;license&quot;: &quot;MIT&quot;,
-    &quot;devDependencies&quot;: {
-      ....
-    }
-  }</code></pre>
+				<pre><code class="language-diff"><span style="color: #000000">  {</span>
+<span style="color: #000000">    &quot;name&quot;: &quot;development&quot;,</span>
+<span style="color: #000000">    &quot;version&quot;: &quot;1.0.0&quot;,</span>
+<span style="color: #000000">    &quot;description&quot;: &quot;&quot;,</span>
+<span style="color: #000000">    &quot;main&quot;: &quot;webpack.config.js&quot;,</span>
+<span style="color: #000000">    &quot;scripts&quot;: {</span>
+<span style="color: #000000">      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span>
+<span style="color: #098658">+     &quot;start&quot;: &quot;webpack-dev-server --open&quot;,</span>
+<span style="color: #000000">      &quot;build&quot;: &quot;webpack&quot;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    &quot;keywords&quot;: [],</span>
+<span style="color: #000000">    &quot;author&quot;: &quot;&quot;,</span>
+<span style="color: #000000">    &quot;license&quot;: &quot;MIT&quot;,</span>
+<span style="color: #000000">    &quot;devDependencies&quot;: {</span>
+<span style="color: #000000">      ....</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">  }</span>
+</code></pre>
 				<p>Mock API proxying made simple.</p>
-				<pre><code class="language-diff">{
-  before(app){
-<span class="hljs-addition">+   apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {</span>
-<span class="hljs-addition">+     proxy: {</span>
-<span class="hljs-addition">+       &#x27;/repos/*&#x27;: &#x27;https://api.github.com/&#x27;,</span>
-<span class="hljs-addition">+     },</span>
-<span class="hljs-addition">+     changeHost: true,</span>
-<span class="hljs-addition">+   })</span>
-  }
-}</code></pre>
+				<pre><code class="language-diff"><span style="color: #000000">{</span>
+<span style="color: #000000">  before(app){</span>
+<span style="color: #098658">+   apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;), {</span>
+<span style="color: #098658">+     proxy: {</span>
+<span style="color: #098658">+       &#039;/repos/*&#039;: &#039;https://api.github.com/&#039;,</span>
+<span style="color: #098658">+     },</span>
+<span style="color: #098658">+     changeHost: true,</span>
+<span style="color: #098658">+   })</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
 				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
 					<h3>Development</h3>
 				</a>
-				<pre><code class="language-shell"><span class="hljs-meta">$</span><span class="bash"> yarn install</span>
-<span class="hljs-meta">$</span><span class="bash"> yarn run build</span>
-<span class="hljs-meta">$</span><span class="bash"> yarn run watch</span>
-<span class="hljs-meta">$</span><span class="bash"> yarn run <span class="hljs-built_in">test</span></span></code></pre>
+				<pre><code class="language-shell">$ yarn install
+$ yarn run build
+$ yarn run watch
+$ yarn run test</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
@@ -383,46 +388,19 @@ module.exports = {
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/delay.html">delay</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/index.html">index</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/httpproxylisteners.html" class="tsd-kind-icon">Http<wbr>Proxy<wbr>Listeners</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/mockeroption.html" class="tsd-kind-icon">Mocker<wbr>Option</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#mockerproxyroute" class="tsd-kind-icon">Mocker<wbr>Proxy<wbr>Route</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#mockerresult" class="tsd-kind-icon">Mocker<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#mockerresultfunction" class="tsd-kind-icon">Mocker<wbr>Result<wbr>Function</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#proxytargeturl" class="tsd-kind-icon">Proxy<wbr>Target<wbr>Url</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#mocker" class="tsd-kind-icon">mocker</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#pathtoregexp" class="tsd-kind-icon">path<wbr>ToRegexp</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#default" class="tsd-kind-icon">default</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#delay" class="tsd-kind-icon">delay</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#pathmatch" class="tsd-kind-icon">path<wbr>Match</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -433,7 +411,11 @@ module.exports = {
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>

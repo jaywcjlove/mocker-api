@@ -10,7 +10,7 @@
     "build": "npm run build:ts && npm run build:types",
     "build:types": "yarn workspace mocker-api tsbb types",
     "build:ts": "yarn workspace mocker-api tsbb build",
-    "doc": "yarn workspace mocker-api typedoc",
+    "doc": "yarn workspace mocker-api typedoc src/index.ts src/delay.ts --name mocker-api",
     "watch": "npm run watch:ts & yarn run watch:types",
     "watch:ts": "yarn workspace mocker-api tsbb watch",
     "watch:types": "npm run build:types -- --watch",

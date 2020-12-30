@@ -72,25 +72,27 @@
 				<a href="#quick-start" id="quick-start" style="color: inherit; text-decoration: none;">
 					<h2>Quick Start</h2>
 				</a>
-				<pre><code class="language-bash">mkdir mocker-app &amp;&amp; cd mocker-app
+				<pre><code class="language-bash"><span style="color: #000000">mkdir mocker-app &amp;&amp; </span><span style="color: #795E26">cd</span><span style="color: #000000"> mocker-app</span>
 
-# Create a mocker configuration file based on rules
-touch api.js
+<span style="color: #008000"># Create a mocker configuration file based on rules</span>
+<span style="color: #000000">touch api.js</span>
 
-# Global install dependent.
-npm install mocker-api -g
+<span style="color: #008000"># Global install dependent.</span>
+<span style="color: #000000">npm install mocker-api -g</span>
 
-# Default port: 3721
-mocker ./api.js
+<span style="color: #008000"># Default port: 3721</span>
+<span style="color: #000000">mocker ./api.js</span>
 
-# Designated port
-# Run server at localhost:8000
-mocker ./api.js --host localhost --port 8000</code></pre>
+<span style="color: #008000"># Designated port</span>
+<span style="color: #008000"># Run server at localhost:8000</span>
+<span style="color: #000000">mocker ./api.js --host localhost --port 8000</span>
+</code></pre>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
 				<p>you can put it the <code>package.json</code> config as a current project dependency.</p>
-				<pre><code class="language-bash">npm install mocker-api --save-dev</code></pre>
+				<pre><code class="language-bash"><span style="color: #000000">npm install mocker-api --save-dev</span>
+</code></pre>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -254,10 +256,11 @@ mocker ./api.js --host localhost --port 8000</code></pre>
 				<blockquote>
 					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>. </p>
 				</blockquote>
-				<pre><code class="language-bash"># Global install dependent.
-npm install mocker-api -g
-# Run server
-mocker ./mocker/index.js</code></pre>
+				<pre><code class="language-bash"><span style="color: #008000"># Global install dependent.</span>
+<span style="color: #000000">npm install mocker-api -g</span>
+<span style="color: #008000"># Run server</span>
+<span style="color: #000000">mocker ./mocker/index.js</span>
+</code></pre>
 				<p>Or you can put it the <code>package.json</code> config as a current project dependency.</p>
 				<pre><code class="language-diff"><span style="color: #000000">{</span>
 <span style="color: #000000">  &quot;name&quot;: &quot;base-example&quot;,</span>
@@ -375,10 +378,11 @@ mocker ./mocker/index.js</code></pre>
 				<a href="#development" id="development" style="color: inherit; text-decoration: none;">
 					<h3>Development</h3>
 				</a>
-				<pre><code class="language-shell">$ yarn install
-$ yarn run build
-$ yarn run watch
-$ yarn run test</code></pre>
+				<pre><code class="language-shell"><span style="color: #000000">$ yarn install</span>
+<span style="color: #000000">$ yarn run build</span>
+<span style="color: #000000">$ yarn run watch</span>
+<span style="color: #000000">$ yarn run </span><span style="color: #795E26">test</span>
+</code></pre>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>

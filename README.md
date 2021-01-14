@@ -301,8 +301,8 @@ module.exports = {
 +   before(app){
 +     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
-+         '/repos/*': 'https://api.github.com/',
-+         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
++         '/repos/(.*)': 'https://api.github.com/',
++         '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
 +       },
 +       changeHost: true,
 +     })
@@ -352,7 +352,7 @@ Mock API proxying made simple.
   before(app){
 +   apiMocker(app, path.resolve('./mocker/index.js'), {
 +     proxy: {
-+       '/repos/*': 'https://api.github.com/',
++       '/repos/(.*)': 'https://api.github.com/',
 +     },
 +     changeHost: true,
 +   })

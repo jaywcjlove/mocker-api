@@ -234,6 +234,9 @@ Or you can put it the `package.json` config as a current project dependency.
   "devDependencies": {
 +    "mocker-api": "2.7.5"
   },
++  "mocker": {
++    "port": 7788
++  },
   "license": "MIT"
 }
 ```

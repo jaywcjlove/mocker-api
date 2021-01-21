@@ -12,7 +12,7 @@
     "web-vitals": "0.2.4"
   },
   "devDependencies": {
-    "mocker-api": "2.7.5"
+    "mocker-api": "2.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

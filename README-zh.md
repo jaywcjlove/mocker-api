@@ -151,6 +151,7 @@ module.exports = proxy;
 
 - [`proxy`](https://www.npmjs.com/package/path-to-regexp) => `{}` Proxy settings, Turn a path string such as `/user/:name` into a regular expression.
 - [`pathRewrite`](https://github.com/jaywcjlove/mocker-api/issues/62) => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
+- `priority` => `proxy` priority `proxy` or `mocker` [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
 - `changeHost` => `Boolean` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
 - [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser
@@ -230,7 +231,7 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "mocker-api": "2.7.5"
++    "mocker-api": "2.8.0"
   },
   "license": "MIT"
 }
@@ -333,7 +334,7 @@ Let's add a script to easily run the dev server as well: `package.json`
     "license": "MIT",
     "devDependencies": {
       "html-webpack-plugin": "4.5.0",
-      "mocker-api": "2.7.5",
+      "mocker-api": "2.8.0",
       "webpack": "5.11.0",
       "webpack-cli": "4.2.0",
       "webpack-dev-server": "3.11.0"
@@ -380,7 +381,7 @@ module.exports = function(app) {
 {
   .....
   "devDependencies": {
-+    "mocker-api": "2.7.5"
++    "mocker-api": "2.8.0"
   },
   ....
 }

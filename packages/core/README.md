@@ -153,6 +153,7 @@ module.exports = proxy;
 
 - [`proxy`](https://www.npmjs.com/package/path-to-regexp) => `{}` Proxy settings, Turn a path string such as `/user/:name` into a regular expression.
 - [`pathRewrite`](https://github.com/jaywcjlove/mocker-api/issues/62) => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
+- `priority` => `proxy` priority `proxy` or `mocker` [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
 - `changeHost` => `Boolean` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
 - [`bodyParserJSON`](https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions) JSON body parser
@@ -232,15 +233,20 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "mocker-api": "^1.6.4"
++    "mocker-api": "2.8.0"
   },
++  "mocker": {
++    "port": 7788
++  },
   "license": "MIT"
 }
 ```
 
-### Using With [Express](https://github.com/expressjs/express)
+### Using With Express
 
 [Express example](example/express)
+
+To use api mocker on your [express](https://github.com/expressjs/express) projects.
 
 >⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
@@ -273,7 +279,7 @@ const app = express();
 app.listen(8080);
 ```
 
-### Using With [Webpack](https://github.com/webpack/webpack)
+### Using With Webpack
 
 [webpack example](example/webpack)
 
@@ -289,16 +295,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     app: './src/index.js',
-    print: './src/print.js'
   },
-  devtool: 'inline-source-map',
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
 + devServer: {
 +   ...
 +   before(app){
 +     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
-+         '/repos/*': 'https://api.github.com/',
-+         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
++         '/repos/(.*)': 'https://api.github.com/',
++         '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
 +       },
 +       changeHost: true,
 +     })
@@ -306,13 +314,10 @@ module.exports = {
 + },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development'
+      template: path.resolve('./public/index.html'),
+      title: 'Webpack App Mocker API'
     })
   ],
-  output: {
-    filename: '[name].bundle.js',
-    path: require.resolve(__dirname, 'dist')
-  }
 };
 ```
 
@@ -321,23 +326,27 @@ Must have a file suffix! For example: `./mocker/index.js`.
 Let's add a script to easily run the dev server as well: `package.json`
 
 ```diff
-  {
-    "name": "development",
-    "version": "1.0.0",
-    "description": "",
-    "main": "webpack.config.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-+     "start": "webpack-dev-server --open",
-      "build": "webpack"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "devDependencies": {
-      ....
-    }
+{
+  "name": "development",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
++    "start": "webpack serve --progress --mode production",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "html-webpack-plugin": "4.5.0",
+    "mocker-api": "2.7.5",
+    "webpack": "5.11.0",
+    "webpack-cli": "4.2.0",
+    "webpack-dev-server": "3.11.0"
   }
+}
 ```
 
 Mock API proxying made simple.
@@ -347,11 +356,41 @@ Mock API proxying made simple.
   before(app){
 +   apiMocker(app, path.resolve('./mocker/index.js'), {
 +     proxy: {
-+       '/repos/*': 'https://api.github.com/',
++       '/repos/(.*)': 'https://api.github.com/',
 +     },
 +     changeHost: true,
 +   })
   }
+}
+```
+
+### Using With create-react-app
+
+[create-react-app example](example/create-react-app)
+
+To use api mocker on your [create-react-app](https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md) projects. create [`src/setupProxy.js`](https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11) and place the following contents in it:
+
+```diff
++ const apiMocker = require('mocker-api');
++ const path = require('path');
+
+module.exports = function(app) {
++  apiMocker(app, path.resolve('./mocker/index.js'), {
++    proxy: {
++      '/repos/(.*)': 'https://api.github.com/',
++    },
++    changeHost: true,
++  });
+};
+```
+
+```diff
+{
+  .....
+  "devDependencies": {
++    "mocker-api": "2.8.0"
+  },
+  ....
 }
 ```
 

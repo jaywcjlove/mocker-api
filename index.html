@@ -199,6 +199,7 @@
 				<ul>
 					<li><a href="https://www.npmjs.com/package/path-to-regexp"><code>proxy</code></a> =&gt; <code>{}</code> Proxy settings, Turn a path string such as <code>/user/:name</code> into a regular expression.</li>
 					<li><a href="https://github.com/jaywcjlove/mocker-api/issues/62"><code>pathRewrite</code></a> =&gt; <code>{}</code> rewrite target&#39;s url path. Object-keys will be used as RegExp to match paths. <a href="https://github.com/jaywcjlove/mocker-api/issues/62">#62</a></li>
+					<li><code>priority</code> =&gt; <code>proxy</code> priority <code>proxy</code> or <code>mocker</code> <a href="https://github.com/jaywcjlove/mocker-api/issues/151">#151</a></li>
 					<li><code>changeHost</code> =&gt; <code>Boolean</code> Setting req headers host.</li>
 					<li><code>httpProxy</code> =&gt; <code>{}</code> Set the <a href="https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events">listen event</a> and <a href="https://github.com/nodejitsu/node-http-proxy#options">configuration</a> of <a href="https://github.com/nodejitsu/node-http-proxy">http-proxy</a>    </li>
 					<li><a href="https://github.com/expressjs/body-parser/tree/56a2b73c26b2238bc3050ad90af9ab9c62f4eb97#bodyparserjsonoptions"><code>bodyParserJSON</code></a> JSON body parser</li>
@@ -268,15 +269,19 @@
 <span style="color: #098658">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span>
 <span style="color: #000000">  },</span>
 <span style="color: #000000">  &quot;devDependencies&quot;: {</span>
-<span style="color: #098658">+    &quot;mocker-api&quot;: &quot;^1.6.4&quot;</span>
+<span style="color: #098658">+    &quot;mocker-api&quot;: &quot;2.8.0&quot;</span>
 <span style="color: #000000">  },</span>
+<span style="color: #098658">+  &quot;mocker&quot;: {</span>
+<span style="color: #098658">+    &quot;port&quot;: 7788</span>
+<span style="color: #098658">+  },</span>
 <span style="color: #000000">  &quot;license&quot;: &quot;MIT&quot;</span>
 <span style="color: #000000">}</span>
 </code></pre>
 				<a href="#using-with-express" id="using-with-express" style="color: inherit; text-decoration: none;">
-					<h3>Using With <a href="https://github.com/expressjs/express">Express</a></h3>
+					<h3>Using With Express</h3>
 				</a>
 				<p><a href="example/express">Express example</a></p>
+				<p>To use api mocker on your <a href="https://github.com/expressjs/express">express</a> projects.</p>
 				<blockquote>
 					<p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
 				</blockquote>
@@ -305,7 +310,7 @@
 <span style="color: #000000">app.listen(8080);</span>
 </code></pre>
 				<a href="#using-with-webpack" id="using-with-webpack" style="color: inherit; text-decoration: none;">
-					<h3>Using With <a href="https://github.com/webpack/webpack">Webpack</a></h3>
+					<h3>Using With Webpack</h3>
 				</a>
 				<p><a href="example/webpack">webpack example</a></p>
 				<p>To use api mocker on your <a href="https://github.com/webpack/webpack">Webpack</a> projects, simply add a setup options to your <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> options:</p>
@@ -317,16 +322,18 @@
 <span style="color: #000000">module.exports = {</span>
 <span style="color: #000000">  entry: {</span>
 <span style="color: #000000">    app: &#039;./src/index.js&#039;,</span>
-<span style="color: #000000">    print: &#039;./src/print.js&#039;</span>
 <span style="color: #000000">  },</span>
-<span style="color: #000000">  devtool: &#039;inline-source-map&#039;,</span>
+<span style="color: #000000">  output: {</span>
+<span style="color: #000000">    filename: &#039;[name].bundle.js&#039;,</span>
+<span style="color: #000000">    path: path.resolve(__dirname, &#039;dist&#039;)</span>
+<span style="color: #000000">  },</span>
 <span style="color: #098658">+ devServer: {</span>
 <span style="color: #098658">+   ...</span>
 <span style="color: #098658">+   before(app){</span>
 <span style="color: #098658">+     apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;), {</span>
 <span style="color: #098658">+       proxy: {</span>
-<span style="color: #098658">+         &#039;/repos/*&#039;: &#039;https://api.github.com/&#039;,</span>
-<span style="color: #098658">+         &#039;/:owner/:repo/raw/:ref/*&#039;: &#039;http://127.0.0.1:2018&#039;</span>
+<span style="color: #098658">+         &#039;/repos/(.*)&#039;: &#039;https://api.github.com/&#039;,</span>
+<span style="color: #098658">+         &#039;/:owner/:repo/raw/:ref/(.*)&#039;: &#039;http://127.0.0.1:2018&#039;</span>
 <span style="color: #098658">+       },</span>
 <span style="color: #098658">+       changeHost: true,</span>
 <span style="color: #098658">+     })</span>
@@ -334,45 +341,71 @@
 <span style="color: #098658">+ },</span>
 <span style="color: #000000">  plugins: [</span>
 <span style="color: #000000">    new HtmlWebpackPlugin({</span>
-<span style="color: #000000">      title: &#039;Development&#039;</span>
+<span style="color: #000000">      template: path.resolve(&#039;./public/index.html&#039;),</span>
+<span style="color: #000000">      title: &#039;Webpack App Mocker API&#039;</span>
 <span style="color: #000000">    })</span>
 <span style="color: #000000">  ],</span>
-<span style="color: #000000">  output: {</span>
-<span style="color: #000000">    filename: &#039;[name].bundle.js&#039;,</span>
-<span style="color: #000000">    path: require.resolve(__dirname, &#039;dist&#039;)</span>
-<span style="color: #000000">  }</span>
 <span style="color: #000000">};</span>
 </code></pre>
 				<p>Must have a file suffix! For example: <code>./mocker/index.js</code>.</p>
 				<p>Let&#39;s add a script to easily run the dev server as well: <code>package.json</code></p>
-				<pre><code class="language-diff"><span style="color: #000000">  {</span>
-<span style="color: #000000">    &quot;name&quot;: &quot;development&quot;,</span>
-<span style="color: #000000">    &quot;version&quot;: &quot;1.0.0&quot;,</span>
-<span style="color: #000000">    &quot;description&quot;: &quot;&quot;,</span>
-<span style="color: #000000">    &quot;main&quot;: &quot;webpack.config.js&quot;,</span>
-<span style="color: #000000">    &quot;scripts&quot;: {</span>
-<span style="color: #000000">      &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span>
-<span style="color: #098658">+     &quot;start&quot;: &quot;webpack-dev-server --open&quot;,</span>
-<span style="color: #000000">      &quot;build&quot;: &quot;webpack&quot;</span>
-<span style="color: #000000">    },</span>
-<span style="color: #000000">    &quot;keywords&quot;: [],</span>
-<span style="color: #000000">    &quot;author&quot;: &quot;&quot;,</span>
-<span style="color: #000000">    &quot;license&quot;: &quot;MIT&quot;,</span>
-<span style="color: #000000">    &quot;devDependencies&quot;: {</span>
-<span style="color: #000000">      ....</span>
-<span style="color: #000000">    }</span>
+				<pre><code class="language-diff"><span style="color: #000000">{</span>
+<span style="color: #000000">  &quot;name&quot;: &quot;development&quot;,</span>
+<span style="color: #000000">  &quot;version&quot;: &quot;1.0.0&quot;,</span>
+<span style="color: #000000">  &quot;description&quot;: &quot;&quot;,</span>
+<span style="color: #000000">  &quot;main&quot;: &quot;webpack.config.js&quot;,</span>
+<span style="color: #000000">  &quot;scripts&quot;: {</span>
+<span style="color: #000000">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span>
+<span style="color: #098658">+    &quot;start&quot;: &quot;webpack serve --progress --mode production&quot;,</span>
+<span style="color: #000000">    &quot;build&quot;: &quot;webpack --mode production&quot;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  &quot;keywords&quot;: [],</span>
+<span style="color: #000000">  &quot;author&quot;: &quot;&quot;,</span>
+<span style="color: #000000">  &quot;license&quot;: &quot;MIT&quot;,</span>
+<span style="color: #000000">  &quot;devDependencies&quot;: {</span>
+<span style="color: #000000">    &quot;html-webpack-plugin&quot;: &quot;4.5.0&quot;,</span>
+<span style="color: #000000">    &quot;mocker-api&quot;: &quot;2.7.5&quot;,</span>
+<span style="color: #000000">    &quot;webpack&quot;: &quot;5.11.0&quot;,</span>
+<span style="color: #000000">    &quot;webpack-cli&quot;: &quot;4.2.0&quot;,</span>
+<span style="color: #000000">    &quot;webpack-dev-server&quot;: &quot;3.11.0&quot;</span>
 <span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
 </code></pre>
 				<p>Mock API proxying made simple.</p>
 				<pre><code class="language-diff"><span style="color: #000000">{</span>
 <span style="color: #000000">  before(app){</span>
 <span style="color: #098658">+   apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;), {</span>
 <span style="color: #098658">+     proxy: {</span>
-<span style="color: #098658">+       &#039;/repos/*&#039;: &#039;https://api.github.com/&#039;,</span>
+<span style="color: #098658">+       &#039;/repos/(.*)&#039;: &#039;https://api.github.com/&#039;,</span>
 <span style="color: #098658">+     },</span>
 <span style="color: #098658">+     changeHost: true,</span>
 <span style="color: #098658">+   })</span>
 <span style="color: #000000">  }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#using-with-create-react-app" id="using-with-create-react-app" style="color: inherit; text-decoration: none;">
+					<h3>Using With create-react-app</h3>
+				</a>
+				<p><a href="example/create-react-app">create-react-app example</a></p>
+				<p>To use api mocker on your <a href="https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md">create-react-app</a> projects. create <a href="https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11"><code>src/setupProxy.js</code></a> and place the following contents in it:</p>
+				<pre><code class="language-diff"><span style="color: #098658">+ const apiMocker = require(&#039;mocker-api&#039;);</span>
+<span style="color: #098658">+ const path = require(&#039;path&#039;);</span>
+
+<span style="color: #000000">module.exports = function(app) {</span>
+<span style="color: #098658">+  apiMocker(app, path.resolve(&#039;./mocker/index.js&#039;), {</span>
+<span style="color: #098658">+    proxy: {</span>
+<span style="color: #098658">+      &#039;/repos/(.*)&#039;: &#039;https://api.github.com/&#039;,</span>
+<span style="color: #098658">+    },</span>
+<span style="color: #098658">+    changeHost: true,</span>
+<span style="color: #098658">+  });</span>
+<span style="color: #000000">};</span>
+</code></pre>
+				<pre><code class="language-diff"><span style="color: #000000">{</span>
+<span style="color: #000000">  .....</span>
+<span style="color: #000000">  &quot;devDependencies&quot;: {</span>
+<span style="color: #098658">+    &quot;mocker-api&quot;: &quot;2.8.0&quot;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  ....</span>
 <span style="color: #000000">}</span>
 </code></pre>
 				<a href="#development" id="development" style="color: inherit; text-decoration: none;">

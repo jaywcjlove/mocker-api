@@ -201,8 +201,8 @@ export default function (app: Application, watchFile: string | string[] | Mocker
       next();
     }
   }
-  let options = {...conf, ...(mocker._proxy || {})}
-  const defaultOptions = {
+  let options: MockerOption = {...conf, ...(mocker._proxy || {})}
+  const defaultOptions: MockerOption = {
     changeHost: true,
     pathRewrite: {},
     proxy: {},
@@ -215,7 +215,8 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     bodyParserRaw: {},
     bodyParserUrlencoded: {},
     watchOptions: {},
-    header: {}
+    header: {},
+    priority: 'proxy',
   }
 
   options = { ...defaultOptions, ...options };

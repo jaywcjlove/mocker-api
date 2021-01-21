@@ -6,10 +6,11 @@ import { Request, Response, NextFunction, Application } from 'express';
 import bodyParser from 'body-parser';
 import httpProxy from 'http-proxy';
 import * as toRegexp from 'path-to-regexp';
-import { TokensToRegexpOptions, ParseOptions, Key } from 'path-to-regexp';
 import clearModule from 'clear-module';
 import chokidar from 'chokidar';
 import color from 'colors-cli/safe';
+import { proxyHandle } from './proxyHandle';
+import { mockerHandle } from './mockerHandle';
 
 export type ProxyTargetUrl = string | Partial<URL.Url>;
 export type MockerResultFunction = ((req: Request, res: Response, next?: NextFunction) => void);
@@ -95,6 +96,12 @@ export interface HttpProxyListeners extends Record<string, any> {
 
 export interface MockerOption {
   /**
+   * priority 'proxy' or 'mocker'
+   * @default `proxy`
+   * @issue [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
+   */
+  priority?: 'proxy' | 'mocker';
+  /**
    * `Boolean` Setting req headers host.
    */
   changeHost?: boolean;
@@ -175,28 +182,6 @@ export interface MockerOption {
 const pathToRegexp = toRegexp.pathToRegexp;
 let mocker: MockerProxyRoute = {};
 
-function pathMatch(options: TokensToRegexpOptions & ParseOptions) {
-  options = options || {};
-  return function (path: string) {
-    var keys: (Key & TokensToRegexpOptions & ParseOptions & { repeat: boolean })[] = [];
-    var re = pathToRegexp(path, keys, options);
-    return function (pathname: string, params?: any) {
-      var m = re.exec(pathname);
-      if (!m) return false;
-      params = params || {};
-      var key, param;
-      for (var i = 0; i < keys.length; i++) {
-        key = keys[i];
-        param = m[i + 1];
-        if (!param) continue;
-        params[key.name] = decodeURIComponent(param);
-        if (key.repeat) params[key.name] = params[key.name].split(key.delimiter)
-      }
-      return params;
-    }
-  }
-}
-
 export default function (app: Application, watchFile: string | string[] | MockerProxyRoute, conf: MockerOption = {}) {
   const watchFiles = (Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : []).map(str => PATH.resolve(str));
 
@@ -204,8 +189,10 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     throw new Error('Mocker file does not exist!.');
   }
 
-  // Mybe watch file or pass parameters
-  // https://github.com/jaywcjlove/mocker-api/issues/116
+  /**
+   * Mybe watch file or pass parameters
+   * https://github.com/jaywcjlove/mocker-api/issues/116
+   */
   const isWatchFilePath = (Array.isArray(watchFile) && watchFile.every(val => typeof val === 'string')) || typeof watchFile === 'string';
   mocker = isWatchFilePath ? getConfig() : watchFile;
 
@@ -306,76 +293,24 @@ export default function (app: Application, watchFile: string | string[] | Mocker
       return res.sendStatus(200);
     }
 
-    if (proxyKey && options.proxy[proxyKey]) {
-      const currentProxy = options.proxy[proxyKey];
-      const url = URL.parse(currentProxy);
-      if (options.changeHost) {
-        req.headers.host = url.host;
-      }
-      const { options: proxyOptions = {}, listeners: proxyListeners = {} as HttpProxyListeners }: MockerOption['httpProxy'] = options.httpProxy;
-      /**
-       * rewrite target's url path. Object-keys will be used as RegExp to match paths.
-       * https://github.com/jaywcjlove/mocker-api/issues/62
-       */
-      Object.keys(options.pathRewrite).forEach(rgxStr => {
-        const rePath = req.path.replace(new RegExp(rgxStr), options.pathRewrite[rgxStr]);
-        const currentPath = [rePath];
-        if (req.url.indexOf('?') > 0) {
-          currentPath.push(req.url.replace(/(.*)\?/, ''));
-        }
-        req.query = URL.parse(req.url, true).query;
-        req.url = req.originalUrl = currentPath.join('?');
-      });
-
-      const proxyHTTP = httpProxy.createProxyServer({});
-      proxyHTTP.on('error', (err) => {
-        console.error(`${color.red_b.black(` Proxy Failed: ${err.name}`)} ${err.message || ''} ${err.stack || ''} !!`);
-      });
-      Object.keys(proxyListeners).forEach(event => {
-        proxyHTTP.on(event, proxyListeners[event]);
-      });
-
-      proxyHTTP.web(req, res, Object.assign({ target: url.href }, proxyOptions));
-
-    } else if (mocker[mockerKey]) {
-      let bodyParserMethd = bodyParser.json({ ...options.bodyParserJSON }); // 默认使用json解析
-      /**
-       * `application/x-www-form-urlencoded; charset=UTF-8` => `application/x-www-form-urlencoded`
-       * Issue: https://github.com/jaywcjlove/mocker-api/issues/50
-       */
-      let contentType = req.get('Content-Type');
-      contentType = contentType && contentType.replace(/;.*$/, '');
-      if(options.bodyParserConf && options.bodyParserConf[contentType]) {
-        // 如果存在options.bodyParserConf配置 {'text/plain': 'text','text/html': 'text'}
-        switch(options.bodyParserConf[contentType]){// 获取bodyParser的方法
-          case 'raw': bodyParserMethd = bodyParser.raw({...options.bodyParserRaw }); break;
-          case 'text': bodyParserMethd = bodyParser.text({...options.bodyParserText }); break;
-          case 'urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...options.bodyParserUrlencoded }); break;
-          case 'json': bodyParserMethd = bodyParser.json({ ...options.bodyParserJSON });//使用json解析 break;
-        }
-      } else {
-        // 兼容原来的代码,默认解析
-        // Compatible with the original code, default parsing
-        switch(contentType){
-          case 'text/plain': bodyParserMethd = bodyParser.raw({...options.bodyParserRaw }); break;
-          case 'text/html': bodyParserMethd = bodyParser.text({...options.bodyParserText }); break;
-          case 'application/x-www-form-urlencoded': bodyParserMethd = bodyParser.urlencoded({extended: false, ...options.bodyParserUrlencoded }); break;
-        }
-      }
-
-      bodyParserMethd(req, res, function () {
-        const result = mocker[mockerKey];
-        if (typeof result === 'function') {
-          const rgxStr = ~mockerKey.indexOf(' ') ? ' ' : '';
-          req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(new RegExp(rgxStr))[1])(URL.parse(req.url).pathname);
-          result(req, res, next);
-        } else {
-          res.json(result);
-        }
-      });
+    /**
+     * priority 'proxy' or 'mocker' [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
+     */
+    if (options.priority === 'mocker') {
+      if (mocker[mockerKey]) {
+        return mockerHandle({ req, res, next, mocker, options, mockerKey})
+      } else if (proxyKey && options.proxy[proxyKey]) {
+        return proxyHandle(req, res, options, proxyKey);
+      } 
     } else {
-      next();
+      if (proxyKey && options.proxy[proxyKey]) {
+        return proxyHandle(req, res, options, proxyKey);
+      } else if (mocker[mockerKey]) {
+        return mockerHandle({ req, res, next, mocker, options, mockerKey})
+      }
     }
+
+    next();
   });
 
   /**

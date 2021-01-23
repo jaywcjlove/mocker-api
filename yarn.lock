@@ -5418,10 +5418,10 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fs-extra@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.0.0.tgz#b6afc31036e247b2466dc99c29ae797d5d4580a3"
-  integrity sha512-pmEYSk3vYsG/bF651KPUXZ+hvjpgWYw/Gc7W9NFUe3ZVLczKKWIij3IKpOrQcdw4TILtibFslZ0UmR8Vvzig4g==
+fs-extra@9.0.1, fs-extra@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
+  integrity sha512-h2iAoN838FqAFJY2/qVpzFXy+EBxfVE220PalAqQLDVsFOHLJrZvut5puAbCdNv6WJk+B8ihI+k0c7JK5erwqQ==
   dependencies:
     at-least-node "^1.0.0"
     graceful-fs "^4.2.0"
@@ -5445,16 +5445,6 @@ fs-extra@^8.1.0:
     graceful-fs "^4.2.0"
     jsonfile "^4.0.0"
     universalify "^0.1.0"
-
-fs-extra@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.0.1.tgz#910da0062437ba4c39fedd863f1675ccfefcb9fc"
-  integrity sha512-h2iAoN838FqAFJY2/qVpzFXy+EBxfVE220PalAqQLDVsFOHLJrZvut5puAbCdNv6WJk+B8ihI+k0c7JK5erwqQ==
-  dependencies:
-    at-least-node "^1.0.0"
-    graceful-fs "^4.2.0"
-    jsonfile "^6.0.1"
-    universalify "^1.0.0"
 
 fs-minipass@^2.0.0:
   version "2.1.0"
@@ -11310,10 +11300,10 @@ ts-pnp@1.2.0, ts-pnp@^1.1.6:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha512-csd+vJOb/gkzvcCHgTGSChYpy5f1/XKNsmvBGO4JXS+z1v2HobugDz4s1IeFXM3wZB44uczs+eazB5Q/ccdhQw==
 
-tsbb@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/tsbb/-/tsbb-2.0.2.tgz#61d09bed12d3ab0d63074da9c9c938f4d6742acf"
-  integrity sha512-E4oCLJG0rDG21G2vhgp/Htn7OTLA0NPefmDAaVjAFAF8xxVRJRwmcOkeSxN7leJrIRAaT6UwSctBQIWThG/VMg==
+tsbb@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/tsbb/-/tsbb-2.0.5.tgz#e61a6a9f1f81b6200e3b94e9c1b0de1a9027d74d"
+  integrity sha512-1zZTm58aIRoWoPxD7RO+4+qlwSRoA/XXm8/eIbCngZ03dxnqYZI8iheQlG38R2kWHWT2Hn9mQVFjmDwjbyImOA==
   dependencies:
     "@jest/types" "26.6.2"
     "@tsbb/babel-preset-tsbb" "1.13.0"
@@ -11324,7 +11314,7 @@ tsbb@2.0.2:
     chalk "4.0.0"
     chokidar "3.4.3"
     execa "4.1.0"
-    fs-extra "9.0.0"
+    fs-extra "9.0.1"
     identity-obj-proxy "3.0.0"
     jest "26.6.3"
     ora "5.1.0"

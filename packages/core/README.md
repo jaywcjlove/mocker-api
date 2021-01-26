@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api/file/README.md">
-    <img alt="Mocker API LOGO" src="https://user-images.githubusercontent.com/1680273/105850254-79939d00-601c-11eb-9450-b4f8aad62972.png">
+    <img alt="Mocker API LOGO" src="https://user-images.githubusercontent.com/1680273/105883915-5845a780-6042-11eb-8eee-614ba512a74a.png">
   </a>
 </p>
 

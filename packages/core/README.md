@@ -255,7 +255,7 @@ Or you can put it the `package.json` config as a current project dependency.
 +    "api": "mocker ./mocker"
   },
   "devDependencies": {
-+    "mocker-api": "2.8.0"
++    "mocker-api": "2.8.1"
   },
 +  "mocker": {
 +    "port": 7788
@@ -410,7 +410,7 @@ module.exports = function(app) {
 {
   .....
   "devDependencies": {
-+    "mocker-api": "2.8.0"
++    "mocker-api": "2.8.1"
   },
   ....
 }

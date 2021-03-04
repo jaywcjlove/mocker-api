@@ -176,7 +176,12 @@ export interface MockerOption {
    * }
    * ```
    */
-  header?: Record<string,string | number | string[]>
+  header?: Record<string,string | number | string[]>,
+  /**
+   * `Boolean` the proxy regular expression support full url path.
+   *  if the proxy regular expression like /test?a=1&b=1 can be matched
+   */
+  withFullUrlPath?: boolean
 }
 
 const pathToRegexp = toRegexp.pathToRegexp;
@@ -217,6 +222,7 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     watchOptions: {},
     header: {},
     priority: 'proxy',
+    withFullUrlPath: false
   }
 
   options = { ...defaultOptions, ...options };
@@ -257,12 +263,14 @@ export default function (app: Application, watchFile: string | string[] | Mocker
   // 监听文件修改重新加载代码
   // 配置热更新
   app.all('/*', (req: Request, res: Response, next: NextFunction) => {
-    
+    const getExecUrlPath = (req: Request) => {
+      return options.withFullUrlPath ? req.url : req.path;
+    } 
     /**
      * Get Proxy key
      */
     const proxyKey = Object.keys(options.proxy).find((kname) => {
-      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
+      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(getExecUrlPath(req));
     });
     /**
      * Get Mocker key
@@ -270,7 +278,7 @@ export default function (app: Application, watchFile: string | string[] | Mocker
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
     const mockerKey: string = Object.keys(mocker).find((kname) => {
-      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(req.path);
+      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(getExecUrlPath(req));
     });
     /**
      * Access Control Allow options.
@@ -289,7 +297,7 @@ export default function (app: Application, watchFile: string | string[] | Mocker
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
     if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
-      && Object.keys(mocker).find((kname) => !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(req.path))
+      && Object.keys(mocker).find((kname) => !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(getExecUrlPath(req)))
     ) {
       return res.sendStatus(200);
     }

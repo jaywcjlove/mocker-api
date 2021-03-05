@@ -175,6 +175,7 @@ module.exports = proxy;
 
 - [`proxy`](https://www.npmjs.com/package/path-to-regexp) => `{}` Proxy settings, Turn a path string such as `/user/:name` into a regular expression.
 - [`pathRewrite`](https://github.com/jaywcjlove/mocker-api/issues/62) => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
+- `withFullUrlPath=false` => `Boolean` the proxy regular expression support full url path. if the proxy regular expression like `/test?a=1&b=1` can be matched. [#25](https://github.com/jaywcjlove/mocker-api/issues/25)
 - `priority` => `proxy` priority `proxy` or `mocker` [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
 - `changeHost` => `Boolean` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    

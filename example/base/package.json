@@ -12,7 +12,7 @@
   },
   "author": "",
   "devDependencies": {
-    "mocker-api": "2.8.1"
+    "mocker-api": "2.8.2"
   },
   "license": "MIT"
 }

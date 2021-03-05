@@ -220,6 +220,7 @@
 				<ul>
 					<li><a href="https://www.npmjs.com/package/path-to-regexp"><code>proxy</code></a> =&gt; <code>{}</code> Proxy settings, Turn a path string such as <code>/user/:name</code> into a regular expression.</li>
 					<li><a href="https://github.com/jaywcjlove/mocker-api/issues/62"><code>pathRewrite</code></a> =&gt; <code>{}</code> rewrite target&#39;s url path. Object-keys will be used as RegExp to match paths. <a href="https://github.com/jaywcjlove/mocker-api/issues/62">#62</a></li>
+					<li><code>withFullUrlPath=false</code> =&gt; <code>Boolean</code> the proxy regular expression support full url path. if the proxy regular expression like <code>/test?a=1&amp;b=1</code> can be matched. <a href="https://github.com/jaywcjlove/mocker-api/issues/25">#25</a></li>
 					<li><code>priority</code> =&gt; <code>proxy</code> priority <code>proxy</code> or <code>mocker</code> <a href="https://github.com/jaywcjlove/mocker-api/issues/151">#151</a></li>
 					<li><code>changeHost</code> =&gt; <code>Boolean</code> Setting req headers host.</li>
 					<li><code>httpProxy</code> =&gt; <code>{}</code> Set the <a href="https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events">listen event</a> and <a href="https://github.com/nodejitsu/node-http-proxy#options">configuration</a> of <a href="https://github.com/nodejitsu/node-http-proxy">http-proxy</a>    </li>

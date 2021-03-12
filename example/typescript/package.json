@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "4.17.11",
-    "mocker-api": "2.8.2",
+    "mocker-api": "2.8.3",
     "express": "4.17.1"
   },
   "devDependencies": {

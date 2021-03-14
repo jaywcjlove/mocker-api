@@ -29,8 +29,15 @@
   </a>
 </p>
 
-
-[中文](https://github.com/jaywcjlove/mocker-api/blob/master/README-zh.md) · [Quick Start](#quick-start) · [Usage](#usage) · [Options](#options) · [Delayed](#delayed-response) · [Example](#example) · [License](#license)
+<p align="center">
+  <a href="https://github.com/jaywcjlove/mocker-api/blob/master/README-zh.md">中文</a> · 
+  <a href="#quick-start">Quick Start</a> · 
+  <a href="#usage">Usage</a> · 
+  <a href="#options">Options</a> · 
+  <a href="#delayed-response">Delayed</a> · 
+  <a href="#example">Example</a> · 
+  <a href="#license">License</a>
+</p>
 
 `mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
 

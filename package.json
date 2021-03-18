@@ -26,7 +26,7 @@
   "license": "MIT",
   "author": "Kenny Wong <wowohoo@qq.com>",
   "devDependencies": {
-    "tsbb": "2.1.1",
+    "tsbb": "2.1.2",
     "typescript": "4.1.5",
     "typedoc": "0.20.30"
   }

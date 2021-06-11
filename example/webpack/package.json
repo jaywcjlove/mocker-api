@@ -13,7 +13,7 @@
   "devDependencies": {
     "@webpack-cli/serve": "1.5.1",
     "html-webpack-plugin": "5.3.1",
-    "mocker-api": "2.8.3",
+    "mocker-api": "2.9.0",
     "webpack": "5.38.1",
     "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2"

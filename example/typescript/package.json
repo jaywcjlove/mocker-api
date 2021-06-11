@@ -10,7 +10,7 @@
     "test": "tsc --noEmit"
   },
   "author": "jaywcjlove",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/express": "4.17.12",
     "mocker-api": "2.8.3",

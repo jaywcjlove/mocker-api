@@ -26,8 +26,8 @@ jobs:
     - run: yarn run coverage
     - run: yarn run doc
 
-    - run: npm install @jsdevtools/npm-publish
-    - run: ./node_modules/.bin/npm-publish --token="${{ secrets.NPM_TOKEN }}" ./packages/core/package.json
+    - run: npm install @jsdevtools/npm-publish -g
+    - run: npm-publish --token="${{ secrets.NPM_TOKEN }}" ./packages/core/package.json
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3

@@ -12,7 +12,7 @@
   "author": "jaywcjlove",
   "license": "MIT",
   "dependencies": {
-    "@types/express": "4.17.12",
+    "@types/express": "4.17.13",
     "mocker-api": "2.9.0",
     "express": "4.17.1"
   },

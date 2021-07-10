@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "4.17.1",
-    "nodemon": "2.0.7"
+    "nodemon": "2.0.12"
   },
   "devDependencies": {
     "mocker-api": "2.9.0"

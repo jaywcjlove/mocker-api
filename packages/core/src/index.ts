@@ -187,7 +187,7 @@ export interface MockerOption {
 const pathToRegexp = toRegexp.pathToRegexp;
 let mocker: MockerProxyRoute = {};
 
-export default function (app: Application, watchFile: string | string[] | MockerProxyRoute, conf: MockerOption = {}) {
+export default function mockerApi(app: Application, watchFile: string | string[] | MockerProxyRoute, conf: MockerOption = {}) {
   const watchFiles = (Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : []).map(str => PATH.resolve(str));
 
   if (watchFiles.some(file => !file)) {

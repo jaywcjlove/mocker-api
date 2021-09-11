@@ -2,18 +2,20 @@
   "name": "mocker-api",
   "private": true,
   "description": "This is dev support mock RESTful API.",
-  "workspaces": [
-    "packages/*",
-    "example/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "example/*"
+    ],
+    "nohoist": [
+      "**/tsbb",
+      "**/tsbb/**"
+    ]
+  },
   "scripts": {
-    "build": "npm run build:ts && npm run build:types",
-    "build:types": "yarn workspace mocker-api tsbb types",
-    "build:ts": "yarn workspace mocker-api tsbb build",
     "doc": "yarn workspace mocker-api typedoc src/index.ts src/delay.ts --name mocker-api",
-    "watch": "npm run watch:ts & yarn run watch:types",
-    "watch:ts": "yarn workspace mocker-api tsbb watch",
-    "watch:types": "npm run build:types -- --watch",
+    "build": "yarn workspace mocker-api tsbb build --no-esm",
+    "watch": "yarn workspace mocker-api tsbb watch --no-esm",
     "test": "yarn workspace mocker-api tsbb test",
     "coverage": "yarn workspace mocker-api tsbb test --coverage",
     "example:base": "yarn workspace base api"
@@ -26,7 +28,7 @@
   "license": "MIT",
   "author": "Kenny Wong <wowohoo@qq.com>",
   "devDependencies": {
-    "tsbb": "2.2.1",
+    "tsbb": "3.1.6",
     "typescript": "4.3.5",
     "typedoc": "0.21.4"
   }

@@ -6,16 +6,14 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "noImplicitAny": true,
+    "strict": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "sourceMap": true,
+    "skipLibCheck": true,
     "outDir": "lib",
-    "baseUrl": "./",
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ]
-    }
+    "types": ["jest", "node"],
+    "baseUrl": "."
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

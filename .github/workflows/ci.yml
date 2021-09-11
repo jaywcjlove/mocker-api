@@ -15,7 +15,7 @@ jobs:
         node-version: 14
 
     - name: Look Changelog
-      uses: jaywcjlove/changelog-generator@v1.4.1
+      uses: jaywcjlove/changelog-generator@v1.4.3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         filter-author: (jaywcjlove|小弟调调™|dependabot\[bot\]|Renovate Bot)
@@ -37,14 +37,14 @@ jobs:
 
     - name: Is a tag created auto?
       id: create_tag
-      uses: jaywcjlove/create-tag-action@v1.1.7
+      uses: jaywcjlove/create-tag-action@v1.2.1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         package-path: ./packages/core/package.json
 
     - name: Generate Changelog
       id: changelog
-      uses: jaywcjlove/changelog-generator@v1.4.1
+      uses: jaywcjlove/changelog-generator@v1.4.3
       if: steps.create_tag.outputs.successful
       with:
         token: ${{ secrets.GITHUB_TOKEN }}

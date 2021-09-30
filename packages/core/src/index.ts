@@ -190,6 +190,8 @@ export interface MockerOption {
 const pathToRegexp = toRegexp.pathToRegexp;
 let mocker: MockerProxyRoute = {};
 
+module.exports = mockerApi
+
 export default function mockerApi(app: Application, watchFile: string | string[] | MockerProxyRoute, conf: MockerOption = {}) {
   const watchFiles = (Array.isArray(watchFile) ? watchFile : typeof watchFile === 'string' ? [watchFile] : []).map(str => PATH.resolve(str));
 

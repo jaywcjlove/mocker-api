@@ -19,7 +19,10 @@ import { MockerProxyRoute, MockerResult, MockerResultFunction } from './';
  * module.exports = (noProxy ? {} : delay(proxy, 1000));
  * ```
  */
- export function delay(proxy: MockerProxyRoute, timer: number = 0): MockerResult {
+
+module.exports = delay;
+
+export default function delay(proxy: MockerProxyRoute, timer: number = 0): MockerResult {
   const mockApi: MockerResult = {};
   Object.keys(proxy).forEach((key) => {
     const result = proxy[key];

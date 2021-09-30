@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node lib/index.js",
     "watch": "tsc -p ./ --types --outDir lib --watch",
     "build": "tsc -p ./ --types --outDir lib",
     "test": "tsc --noEmit"
@@ -17,6 +18,6 @@
     "express": "4.17.1"
   },
   "devDependencies": {
-    "typescript": "4.3.2"
+    "typescript": "4.4.3"
   }
 }

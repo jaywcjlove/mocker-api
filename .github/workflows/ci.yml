@@ -25,17 +25,17 @@ jobs:
     - run: yarn run build
     - run: yarn run coverage
     - run: yarn run doc
+
+    - run: npm i markdown-to-html-cli -g
+    - name: markdown-to-html
+      working-directory: packages/core
+      run: markdown-to-html --output docs/index.html
     
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./packages/core/docs
-
-    - run: npm i markdown-to-html-cli -g
-    - name: markdown-to-html
-      working-directory: packages/core
-      run: markdown-to-html --output docs/index.html
 
     - name: Is a tag created auto?
       id: create_tag

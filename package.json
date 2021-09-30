@@ -13,9 +13,9 @@
     ]
   },
   "scripts": {
-    "doc": "yarn workspace mocker-api typedoc src/index.ts src/delay.ts --name mocker-api",
-    "build": "yarn workspace mocker-api tsbb build --no-esm",
-    "watch": "yarn workspace mocker-api tsbb watch --no-esm",
+    "doc": "yarn workspace mocker-api typedoc src/index.ts src/delay.ts --name mocker-api --out docs/type",
+    "build": "yarn workspace mocker-api tsbb build --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
+    "watch": "yarn workspace mocker-api tsbb watch --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
     "test": "yarn workspace mocker-api tsbb test",
     "coverage": "yarn workspace mocker-api tsbb test --coverage",
     "example:base": "yarn workspace base api"
@@ -28,7 +28,7 @@
   "license": "MIT",
   "author": "Kenny Wong <wowohoo@qq.com>",
   "devDependencies": {
-    "tsbb": "3.1.6",
+    "tsbb": "3.3.7",
     "typescript": "4.3.5",
     "typedoc": "0.22.4"
   }

@@ -1,4 +1,4 @@
-const delay = require('mocker-api/lib/delay');
+const { delay } = require('mocker-api');
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';

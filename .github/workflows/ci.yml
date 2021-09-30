@@ -15,25 +15,27 @@ jobs:
         node-version: 14
 
     - name: Look Changelog
-      uses: jaywcjlove/changelog-generator@v1.4.3
+      uses: jaywcjlove/changelog-generator@v1.4.6
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        filter-author: (jaywcjlove|小弟调调™|dependabot\[bot\]|Renovate Bot)
+        filter-author: (小弟调调™|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
     - run: yarn install
     - run: yarn run build
     - run: yarn run coverage
     - run: yarn run doc
-
-    - run: npm install @jsdevtools/npm-publish -g
-    - run: npm-publish --token="${{ secrets.NPM_TOKEN }}" ./packages/core/package.json
-
+    
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./packages/core/docs
+
+    - run: npm i markdown-to-html-cli -g
+    - name: markdown-to-html
+      working-directory: packages/core
+      run: markdown-to-html --output docs/index.html
 
     - name: Is a tag created auto?
       id: create_tag
@@ -44,12 +46,12 @@ jobs:
 
     - name: Generate Changelog
       id: changelog
-      uses: jaywcjlove/changelog-generator@v1.4.3
+      uses: jaywcjlove/changelog-generator@v1.4.6
       if: steps.create_tag.outputs.successful
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         head-ref: ${{ steps.create_tag.outputs.version }}
-        filter-author: (jaywcjlove|小弟调调™|dependabot\[bot\]|Renovate Bot)
+        filter-author: (小弟调调™|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
     - name: Create Release
@@ -61,9 +63,14 @@ jobs:
         tag: ${{ steps.create_tag.outputs.version }}
         body: |
           [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api@${{steps.create_tag.outputs.versionNumber}}/file/README.md) [![npm version](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/mocker-api)](https://bundlephobia.com/result?p=mocker-api@${{steps.create_tag.outputs.versionNumber}})
+          
           ```bash
           npm i mocker-api@${{steps.create_tag.outputs.versionNumber}}
           ```
 
           ${{ steps.changelog.outputs.compareurl }}
+
           ${{ steps.changelog.outputs.changelog }}
+
+    - run: npm install @jsdevtools/npm-publish -g
+    - run: npm-publish --token="${{ secrets.NPM_TOKEN }}" ./packages/core/package.json

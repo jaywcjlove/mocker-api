@@ -1,4 +1,4 @@
-const delay = require('mocker-api/lib/delay');
+const { delay } = require('mocker-api');
 const user = require('./user.mock');
 
 console.log('user:', user)

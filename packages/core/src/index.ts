@@ -12,6 +12,9 @@ import color from 'colors-cli/safe';
 import { proxyHandle } from './proxyHandle';
 import { mockerHandle } from './mockerHandle';
 
+export * from './delay';
+export * from './utils';
+
 export type ProxyTargetUrl = string | Partial<URL.Url>;
 export type MockerResultFunction = ((req: Request, res: Response, next?: NextFunction) => void);
 export type MockerResult = string | number| Array<any> | Record<string, any> | MockerResultFunction;

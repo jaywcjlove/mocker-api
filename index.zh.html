@@ -16,60 +16,61 @@
 </a><a href="https://gitee.com/jaywcjlove/mocker-api"><img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg">
 </a><a href="https://www.npmjs.com/package/mocker-api"><img alt="npm version" src="https://img.shields.io/npm/v/mocker-api.svg"></a></p>
     <p align="center">
-      <a href="index.zh.html">中文</a> ·
-      <a href="#quick-start">Quick Start</a> ·
-      <a href="#usage">Usage</a> ·
-      <a href="#options">Options</a> ·
-      <a href="#delayed-response">Delayed</a> ·
-      <a href="#example">Example</a> ·
+      <a href="index.html">English</a> ·
+      <a href="#快速开始">快速开始</a> ·
+      <a href="#使用">使用</a> ·
+      <a href="#参数设置">参数设置</a> ·
+      <a href="#延迟响应">延迟响应</a> ·
+      <a href="#实例">实例</a> ·
       <a href="#license">License</a> ·
-      <a href="https://jaywcjlove.github.io/mocker-api/type/">type</a>
+      <a href="https://jaywcjlove.github.io/mocker-api/type/" target="__blank">Type</a>
     </p>
-    <p><code>mocker-api</code> that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.</p>
-    <p><strong>Features:</strong></p>
-    <p>🔥 Built in support for hot Mocker file replacement.<br>🚀 Quickly and easily configure the API via JSON.<br>🌱 Mock API proxying made simple.<br>💥 Can be used independently without relying on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
-    <h2 id="quick-start"><a class="anchor" aria-hidden="true" tabindex="-1" href="#quick-start"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Quick Start</h2>
+    <p><code>mocker-api</code> 为 REST API 创建模拟。 当您尝试在没有实际 REST API 服务器的情况下测试应用程序时，这将很有帮助。</p>
+    <p><strong>特点:</strong></p>
+    <p>
+      🔥 内置对 Mocker 文件热更新支持。<br>🚀 通过JSON快速轻松地配置API。<br>🌱 模拟API代理变得简单。
+      💥 可以独立使用，而无需依赖 <a href="https://github.com/webpack/webpack">webpack</a> 和 <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>。
+    </p>
+    <h2 id="快速开始"><a class="anchor" aria-hidden="true" tabindex="-1" href="#快速开始"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>快速开始</h2>
     <pre class="language-bash"><code class="language-bash"><span class="token function">mkdir</span> mocker-app <span class="token operator">&#x26;&#x26;</span> <span class="token builtin class-name">cd</span> mocker-app
 
-<span class="token comment"># Create a mocker configuration file based on rules</span>
+<span class="token comment"># 根据规则创建模拟程序配置文件</span>
 <span class="token function">touch</span> api.js
 
-<span class="token comment"># Global install dependent.</span>
+<span class="token comment"># 全局安装。</span>
 <span class="token function">npm</span> <span class="token function">install</span> mocker-api -g
-
-<span class="token comment"># Default port: 3721</span>
+<span class="token comment"># 运行服务</span>
 mocker ./api.js
 
-<span class="token comment"># Designated port</span>
 <span class="token comment"># Run server at localhost:8000</span>
 mocker ./api.js --host localhost --port <span class="token number">8000</span>
 </code></pre>
-    <h2 id="installation"><a class="anchor" aria-hidden="true" tabindex="-1" href="#installation"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Installation</h2>
-    <p>you can put it the <code>package.json</code> config as a current project dependency.</p>
+    <h2 id="安装"><a class="anchor" aria-hidden="true" tabindex="-1" href="#安装"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>安装</h2>
+    <p>您可以将其 <code>package.json</code> 配置作为当前项目依赖项。</p>
     <pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> mocker-api --save-dev
 </code></pre>
-    <h2 id="usage"><a class="anchor" aria-hidden="true" tabindex="-1" href="#usage"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Usage</h2>
-    <p><code>mocker-api</code> dev support mock, configured in <code>mocker/index.js</code>.</p>
-    <p>you can modify the <a href="https://www.npmjs.com/package/http-proxy">http-proxy</a> options and add the event listeners by adding the httpProxy configuration</p>
+    <h2 id="使用"><a class="anchor" aria-hidden="true" tabindex="-1" href="#使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>使用</h2>
+    <p><code>mocker-api</code> 支持模拟，在 <code>mocker / index.js</code> 中配置。</p>
+    <p>您可以修改 <a href="https://www.npmjs.com/package/http-proxy">http-proxy</a> 选项并通过添加 <code>httpProxy</code> 配置来添加事件监听器</p>
     <pre class="language-js"><code class="language-js"><span class="token keyword">const</span> proxy <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token comment">// Priority processing.</span>
+  <span class="token comment">// 优先处理。</span>
   <span class="token comment">// apiMocker(app, path, option)</span>
-  <span class="token comment">// This is the option parameter setting for apiMocker</span>
+  <span class="token comment">// 这是 apiMocker 的选项参数设置 `option`</span>
   _proxy<span class="token operator">:</span> <span class="token punctuation">{</span>
     proxy<span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token comment">// Turn a path string such as `/user/:name` into a regular expression.</span>
+      <span class="token comment">// 将路径字符串（例如`/user/:name`）转换为正则表达式。</span>
       <span class="token comment">// https://www.npmjs.com/package/path-to-regexp</span>
       <span class="token string">'/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'https://api.github.com/'</span><span class="token punctuation">,</span>
       <span class="token string">'/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:2018'</span><span class="token punctuation">,</span>
       <span class="token string">'/api/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:3721/'</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    <span class="token comment">// rewrite target's url path. Object-keys will be used as RegExp to match paths.</span>
+    <span class="token comment">// 重写目标网址路径。对象键将用作RegEx来匹配路径。</span>
     <span class="token comment">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
     pathRewrite<span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token string">'^/api/repos/'</span><span class="token operator">:</span> <span class="token string">'/repos/'</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     changeHost<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-    <span class="token comment">// modify the http-proxy options</span>
+    <span class="token comment">// 修改 http-proxy 选项</span>
     httpProxy<span class="token operator">:</span> <span class="token punctuation">{</span>
       options<span class="token operator">:</span> <span class="token punctuation">{</span>
         ignorePath<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
@@ -82,7 +83,7 @@ mocker ./api.js --host localhost --port <span class="token number">8000</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>    
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// =====================</span>
-  <span class="token comment">// The default GET request.</span>
+  <span class="token comment">// 默认的 GET 请求。</span>
   <span class="token comment">// https://github.com/jaywcjlove/mocker-api/pull/63</span>
   <span class="token string">'/api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
@@ -146,11 +147,10 @@ mocker ./api.js --host localhost --port <span class="token number">8000</span>
 <span class="token punctuation">}</span>
 module<span class="token punctuation">.</span><span class="token property-access">exports</span> <span class="token operator">=</span> proxy<span class="token punctuation">;</span>
 </code></pre>
-    <h2 id="options"><a class="anchor" aria-hidden="true" tabindex="-1" href="#options"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Options</h2>
+    <h2 id="参数设置"><a class="anchor" aria-hidden="true" tabindex="-1" href="#参数设置"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>参数设置</h2>
     <ul>
       <li><a href="https://www.npmjs.com/package/path-to-regexp"><code>proxy</code></a> => <code>{}</code> Proxy settings, Turn a path string such as <code>/user/:name</code> into a regular expression.</li>
       <li><a href="https://github.com/jaywcjlove/mocker-api/issues/62"><code>pathRewrite</code></a> => <code>{}</code> rewrite target's url path. Object-keys will be used as RegExp to match paths. <a href="https://github.com/jaywcjlove/mocker-api/issues/62">#62</a></li>
-      <li><code>withFullUrlPath=false</code> => <code>Boolean</code> the proxy regular expression support full url path. if the proxy regular expression like <code>/test?a=1&#x26;b=1</code> can be matched. <a href="https://github.com/jaywcjlove/mocker-api/issues/25">#25</a></li>
       <li><code>priority</code> => <code>proxy</code> priority <code>proxy</code> or <code>mocker</code> <a href="https://github.com/jaywcjlove/mocker-api/issues/151">#151</a></li>
       <li><code>changeHost</code> => <code>Boolean</code> Setting req headers host.</li>
       <li><code>httpProxy</code> => <code>{}</code> Set the <a href="https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events">listen event</a> and <a href="https://github.com/nodejitsu/node-http-proxy#options">configuration</a> of <a href="https://github.com/nodejitsu/node-http-proxy">http-proxy</a></li>
@@ -170,9 +170,9 @@ module<span class="token punctuation">.</span><span class="token property-access
       </li>
     </ul>
     <p>⚠️ No wildcard asterisk <del><code>*</code></del> - use parameters instead <code>(.*)</code>, support <code>v1.7.3+</code></p>
-    <h2 id="delayed-response"><a class="anchor" aria-hidden="true" tabindex="-1" href="#delayed-response"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Delayed Response</h2>
-    <p>You can use functional tool to enhance mock. <a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
-    <pre class="language-js"><code class="language-js"><span class="token keyword">const</span> <span class="token punctuation">{</span> delay <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <h2 id="延迟响应"><a class="anchor" aria-hidden="true" tabindex="-1" href="#延迟响应"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>延迟响应</h2>
+    <p>您可以使用功能性工具来增强模拟效果。<a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
+    <pre class="language-js"><code class="language-js"><span class="token keyword">const</span> delay <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api/lib/delay'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> noProxy <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">NO_PROXY</span> <span class="token operator">===</span> <span class="token string">'true'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> proxy <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -189,15 +189,15 @@ module<span class="token punctuation">.</span><span class="token property-access
     <pre class="language-js"><code class="language-js"><span class="token function">apiMocker</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> mockerFilePath<span class="token punctuation">[</span><span class="token punctuation">,</span> options<span class="token punctuation">]</span><span class="token punctuation">)</span>
 <span class="token function">apiMocker</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> <span class="token maybe-class-name">Mocker</span><span class="token punctuation">[</span><span class="token punctuation">,</span> options<span class="token punctuation">]</span><span class="token punctuation">)</span>
 </code></pre>
-    <p>Multi entry <code>mocker</code> file watching</p>
+    <p>多个模拟文件监听</p>
     <pre class="language-js"><code class="language-js"><span class="token keyword">const</span> apiMocker <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> mockerFile <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'./mock/index.js'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token comment">// or</span>
 <span class="token comment">// const mockerFile = './mock/index.js';</span>
 <span class="token function">apiMocker</span><span class="token punctuation">(</span>app<span class="token punctuation">,</span> mockerFile<span class="token punctuation">,</span> options<span class="token punctuation">)</span>
 </code></pre>
-    <h2 id="example"><a class="anchor" aria-hidden="true" tabindex="-1" href="#example"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Example</h2>
-    <h3 id="using-with-command"><a class="anchor" aria-hidden="true" tabindex="-1" href="#using-with-command"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Using With Command</h3>
+    <h2 id="实例"><a class="anchor" aria-hidden="true" tabindex="-1" href="#实例"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>实例</h2>
+    <h3 id="在命令行中使用"><a class="anchor" aria-hidden="true" tabindex="-1" href="#在命令行中使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>在命令行中使用</h3>
     <p><a href="example/base">Base example</a></p>
     <blockquote>
       <p>⚠️ Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
@@ -216,15 +216,11 @@ mocker ./mocker/index.js
 </span><span class="token prefix unchanged"> </span><span class="token line"> "devDependencies": {
 </span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">    "mocker-api": "2.9.2"
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> },
-</span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">  "mocker": {
-</span><span class="token prefix inserted">+</span><span class="token line">    "port": 7788
-</span><span class="token prefix inserted">+</span><span class="token line">  },
-</span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> "license": "MIT"
+</span><span class="token prefix unchanged"> </span><span class="token line"> "license": "MIT"
 </span></span>}
 </code></pre>
-    <h3 id="using-with-express"><a class="anchor" aria-hidden="true" tabindex="-1" href="#using-with-express"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Using With Express</h3>
+    <h3 id="在-express-中使用"><a class="anchor" aria-hidden="true" tabindex="-1" href="#在-express-中使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>在 <a href="https://github.com/expressjs/express">Express</a> 中使用</h3>
     <p><a href="example/express">Express example</a></p>
-    <p>To use api mocker on your <a href="https://github.com/expressjs/express">express</a> projects.</p>
     <blockquote>
       <p>⚠️ Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
     </blockquote>
@@ -252,7 +248,7 @@ const app = express();
 </span></span>
 app.listen(8080);
 </code></pre>
-    <h3 id="using-with-webpack"><a class="anchor" aria-hidden="true" tabindex="-1" href="#using-with-webpack"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Using With Webpack</h3>
+    <h3 id="在-webpack-中使用"><a class="anchor" aria-hidden="true" tabindex="-1" href="#在-webpack-中使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>在 <a href="https://github.com/webpack/webpack">Webpack</a> 中使用</h3>
     <p><a href="example/webpack">webpack example</a></p>
     <p>To use api mocker on your <a href="https://github.com/webpack/webpack">Webpack</a> projects, simply add a setup options to your <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> options:</p>
     <p>Change your config file to tell the dev server where to look for files: <code>webpack.config.js</code>.</p>
@@ -273,8 +269,8 @@ module.exports = {
 </span><span class="token prefix inserted">+</span><span class="token line">   before(app){
 </span><span class="token prefix inserted">+</span><span class="token line">     apiMocker(app, path.resolve('./mocker/index.js'), {
 </span><span class="token prefix inserted">+</span><span class="token line">       proxy: {
-</span><span class="token prefix inserted">+</span><span class="token line">         '/repos/(.*)': 'https://api.github.com/',
-</span><span class="token prefix inserted">+</span><span class="token line">         '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
+</span><span class="token prefix inserted">+</span><span class="token line">         '/repos/*': 'https://api.github.com/',
+</span><span class="token prefix inserted">+</span><span class="token line">         '/:owner/:repo/raw/:ref/*': 'http://127.0.0.1:2018'
 </span><span class="token prefix inserted">+</span><span class="token line">       },
 </span><span class="token prefix inserted">+</span><span class="token line">       changeHost: true,
 </span><span class="token prefix inserted">+</span><span class="token line">     })
@@ -317,16 +313,16 @@ module.exports = {
 <span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> before(app){
 </span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">   apiMocker(app, path.resolve('./mocker/index.js'), {
 </span><span class="token prefix inserted">+</span><span class="token line">     proxy: {
-</span><span class="token prefix inserted">+</span><span class="token line">       '/repos/(.*)': 'https://api.github.com/',
+</span><span class="token prefix inserted">+</span><span class="token line">       '/repos/*': 'https://api.github.com/',
 </span><span class="token prefix inserted">+</span><span class="token line">     },
 </span><span class="token prefix inserted">+</span><span class="token line">     changeHost: true,
 </span><span class="token prefix inserted">+</span><span class="token line">   })
 </span></span><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> }
 </span></span>}
 </code></pre>
-    <h3 id="using-with-create-react-app"><a class="anchor" aria-hidden="true" tabindex="-1" href="#using-with-create-react-app"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Using With create-react-app</h3>
+    <h3 id="在-create-react-app-中使用"><a class="anchor" aria-hidden="true" tabindex="-1" href="#在-create-react-app-中使用"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>在 create-react-app 中使用</h3>
     <p><a href="example/create-react-app">create-react-app example</a></p>
-    <p>To use api mocker on your <a href="https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md">create-react-app</a> projects. create <a href="https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11"><code>src/setupProxy.js</code></a> and place the following contents in it:</p>
+    <p>创建 <a href="https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11"><code>src/setupProxy.js</code></a> 并放置以下内容：</p>
     <pre class="language-diff"><code class="language-diff"><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line"> const apiMocker = require('mocker-api');
 </span><span class="token prefix inserted">+</span><span class="token line"> const path = require('path');
 </span></span>
@@ -347,7 +343,7 @@ module.exports = function(app) {
 </span><span class="token prefix unchanged"> </span><span class="token line"> ....
 </span></span>}
 </code></pre>
-    <h3 id="development"><a class="anchor" aria-hidden="true" tabindex="-1" href="#development"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>Development</h3>
+    <h3 id="开发"><a class="anchor" aria-hidden="true" tabindex="-1" href="#开发"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>开发</h3>
     <pre class="language-shell"><code class="language-shell">$ <span class="token function">yarn</span> <span class="token function">install</span>
 $ <span class="token function">yarn</span> run build
 $ <span class="token function">yarn</span> run <span class="token function">watch</span>

@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jaywcjlove/mocker-api/blob/master/README-zh.md">中文</a> · 
+  <a href="README-zh.md">中文</a> · 
   <a href="#quick-start">Quick Start</a> · 
   <a href="#usage">Usage</a> · 
   <a href="#options">Options</a> · 

@@ -1,14 +1,37 @@
-<h2><p align="center"><b>Mocker API</b></p></h2>
+<p align="center">
+  <a href="https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api/file/README.md">
+    <img alt="Mocker API LOGO" src="https://user-images.githubusercontent.com/1680273/105883915-5845a780-6042-11eb-8eee-614ba512a74a.png">
+  </a>
+</p>
 
-[![](https://img.shields.io/github/issues/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/issues)
-[![](https://img.shields.io/github/forks/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/network)
-[![](https://img.shields.io/github/stars/jaywcjlove/mocker-api.svg)](https://github.com/jaywcjlove/mocker-api/stargazers)
-[![](https://img.shields.io/github/release/jaywcjlove/mocker-api)](https://github.com/jaywcjlove/mocker-api/releases)
-[![NPM version](https://img.shields.io/npm/v/mocker-api.svg)](https://www.npmjs.com/package/mocker-api)
-[![Build and Deploy](https://github.com/jaywcjlove/mocker-api/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/jaywcjlove/mocker-api/actions)
+<p align="center">
+  <a href="https://github.com/jaywcjlove/mocker-api/actions">
+    <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/workflows/Build%20and%20Deploy/badge.svg">
+  </a>
+  <a href="https://www.npmjs.com/package/mocker-api">
+    <img alt="Download" src="https://img.shields.io/npm/dm/mocker-api.svg?style=flat">
+  </a>
+  <a href="https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api/file/README.md">
+    <img src="https://img.shields.io/badge/Open%20in-unpkg-blue" alt="Open in unpkg">
+  </a>
+  <a href="https://gitee.com/jaywcjlove/mocker-api">
+    <img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg">
+  </a>
+  <a href="https://www.npmjs.com/package/mocker-api">
+    <img alt="npm version" src="https://img.shields.io/npm/v/mocker-api.svg">
+  </a>
+</p>
 
-
-[English](./README.md) · [快速开始](#快速开始) · [使用](#使用) · [参数设置](#参数设置) · [延迟响应](#延迟响应) · [实例](#实例) · [License](#license)
+<p align="center">
+  <a href="README.md">English</a> · 
+  <a href="#快速开始">快速开始</a> · 
+  <a href="#使用">使用</a> · 
+  <a href="#参数设置">参数设置</a> · 
+  <a href="#延迟响应">延迟响应</a> · 
+  <a href="#实例">实例</a> · 
+  <a href="#license">License</a> · 
+  <a href="https://jaywcjlove.github.io/mocker-api/type/" target="__blank">Type</a>
+</p>
 
 `mocker-api` 为 REST API 创建模拟。 当您尝试在没有实际 REST API 服务器的情况下测试应用程序时，这将很有帮助。
 

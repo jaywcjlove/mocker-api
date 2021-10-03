@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
+
 jobs:
   build-deploy:
     runs-on: ubuntu-18.04
@@ -27,9 +26,8 @@ jobs:
     - run: yarn run doc
 
     - run: npm i markdown-to-html-cli -g
-    - name: markdown-to-html
-      working-directory: packages/core
-      run: markdown-to-html --output docs/index.html
+    - run: markdown-to-html -s packages/core/README.md --output packages/core/docs/index.html
+    - run: markdown-to-html -s README-zh.md --output packages/core/docs/index.zh.html
     
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3

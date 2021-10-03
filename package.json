@@ -27,6 +27,12 @@
   "jest": {},
   "license": "MIT",
   "author": "Kenny Wong <wowohoo@qq.com>",
+  "markdown-to-html": {
+    "reurls": {
+      "README-zh.md": "index.zh.html",
+      "README.md": "index.html"
+    }
+  },
   "devDependencies": {
     "tsbb": "3.3.7",
     "typescript": "4.4.3",

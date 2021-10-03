@@ -174,6 +174,7 @@ module.exports = proxy;
 
 - [`proxy`](https://www.npmjs.com/package/path-to-regexp) => `{}` Proxy settings, Turn a path string such as `/user/:name` into a regular expression.
 - [`pathRewrite`](https://github.com/jaywcjlove/mocker-api/issues/62) => `{}` rewrite target's url path. Object-keys will be used as RegExp to match paths. [#62](https://github.com/jaywcjlove/mocker-api/issues/62)
+- `withFullUrlPath=false` => `Boolean` the proxy regular expression support full url path. if the proxy regular expression like `/test?a=1&b=1` can be matched. [#25](https://github.com/jaywcjlove/mocker-api/issues/25)
 - `priority` => `proxy` priority `proxy` or `mocker` [#151](https://github.com/jaywcjlove/mocker-api/issues/151)
 - `changeHost` => `Boolean` Setting req headers host.
 - `httpProxy` => `{}` Set the [listen event](https://github.com/nodejitsu/node-http-proxy#listening-for-proxy-events) and [configuration](https://github.com/nodejitsu/node-http-proxy#options) of [http-proxy](https://github.com/nodejitsu/node-http-proxy)    
@@ -262,7 +263,7 @@ Or you can put it the `package.json` config as a current project dependency.
 
 ### 在 [Express](https://github.com/expressjs/express) 中使用
 
-[Express example](example/express)
+[Express example](https://github.com/jaywcjlove/mocker-api/tree/master/example/express)
 
 >⚠️  Not dependent on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).
 
@@ -297,7 +298,7 @@ app.listen(8080);
 
 ### 在 [Webpack](https://github.com/webpack/webpack) 中使用
 
-[webpack example](example/webpack)
+[webpack example](https://github.com/jaywcjlove/mocker-api/tree/master/example/webpack)
 
 To use api mocker on your [Webpack](https://github.com/webpack/webpack) projects, simply add a setup options to your [webpack-dev-server](https://github.com/webpack/webpack-dev-server) options:
 
@@ -382,7 +383,7 @@ Mock API proxying made simple.
 
 ###  在 create-react-app 中使用
 
-[create-react-app example](example/create-react-app)
+[create-react-app example](https://github.com/jaywcjlove/mocker-api/tree/master/example/create-react-app)
 
 创建 [`src/setupProxy.js`](https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11) 并放置以下内容：
 

@@ -11,7 +11,7 @@
     "react-scripts": "4.0.3"
   },
   "devDependencies": {
-    "mocker-api": "2.9.2"
+    "mocker-api": "2.9.3"
   },
   "scripts": {
     "start": "react-scripts start",

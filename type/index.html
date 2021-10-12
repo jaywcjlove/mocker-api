@@ -115,9 +115,9 @@
 </code></pre>
 
 <a href="#using-with-express" id="using-with-express" style="color: inherit; text-decoration: none;">
-  <h3>Using With Express</h3>
+  <h3>Using With <a href="https://github.com/expressjs/express">Express</a></h3>
 </a>
-<p><a href="example/express">Express example</a></p>
+<p><a href="https://github.com/jaywcjlove/mocker-api/tree/master/example/express">Express example</a></p>
 <p>To use api mocker on your <a href="https://github.com/expressjs/express">express</a> projects.</p>
 <blockquote>
 <p>⚠️  Not dependent on <a href="https://github.com/webpack/webpack">webpack</a> and <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a>.</p>
@@ -129,9 +129,9 @@
 </code></pre>
 
 <a href="#using-with-webpack" id="using-with-webpack" style="color: inherit; text-decoration: none;">
-  <h3>Using With Webpack</h3>
+  <h3>Using With <a href="https://github.com/webpack/webpack">Webpack</a></h3>
 </a>
-<p><a href="example/webpack">webpack example</a></p>
+<p><a href="https://github.com/jaywcjlove/mocker-api/tree/master/example/webpack">webpack example</a></p>
 <p>To use api mocker on your <a href="https://github.com/webpack/webpack">Webpack</a> projects, simply add a setup options to your <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> options:</p>
 <p>Change your config file to tell the dev server where to look for files: <code>webpack.config.js</code>.</p>
 <pre><code class="language-diff"><span class="hl-0">const HtmlWebpackPlugin = require(&#39;html-webpack-plugin&#39;);</span><br/><span class="hl-7">+ const path = require(&#39;path&#39;);</span><br/><span class="hl-7">+ const apiMocker = require(&#39;mocker-api&#39;);</span><br/><br/><span class="hl-0">module.exports = {</span><br/><span class="hl-0">  entry: {</span><br/><span class="hl-0">    app: &#39;./src/index.js&#39;,</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  output: {</span><br/><span class="hl-0">    filename: &#39;[name].bundle.js&#39;,</span><br/><span class="hl-0">    path: path.resolve(__dirname, &#39;dist&#39;)</span><br/><span class="hl-0">  },</span><br/><span class="hl-7">+ devServer: {</span><br/><span class="hl-7">+   ...</span><br/><span class="hl-7">+   before(app){</span><br/><span class="hl-7">+     apiMocker(app, path.resolve(&#39;./mocker/index.js&#39;), {</span><br/><span class="hl-7">+       proxy: {</span><br/><span class="hl-7">+         &#39;/repos/(.*)&#39;: &#39;https://api.github.com/&#39;,</span><br/><span class="hl-7">+         &#39;/:owner/:repo/raw/:ref/(.*)&#39;: &#39;http://127.0.0.1:2018&#39;</span><br/><span class="hl-7">+       },</span><br/><span class="hl-7">+       changeHost: true,</span><br/><span class="hl-7">+     })</span><br/><span class="hl-7">+   }</span><br/><span class="hl-7">+ },</span><br/><span class="hl-0">  plugins: [</span><br/><span class="hl-0">    new HtmlWebpackPlugin({</span><br/><span class="hl-0">      template: path.resolve(&#39;./public/index.html&#39;),</span><br/><span class="hl-0">      title: &#39;Webpack App Mocker API&#39;</span><br/><span class="hl-0">    })</span><br/><span class="hl-0">  ],</span><br/><span class="hl-0">};</span>
@@ -147,7 +147,7 @@
 <a href="#using-with-create-react-app" id="using-with-create-react-app" style="color: inherit; text-decoration: none;">
   <h3>Using With create-react-app</h3>
 </a>
-<p><a href="example/create-react-app">create-react-app example</a></p>
+<p><a href="https://github.com/jaywcjlove/mocker-api/tree/master/example/create-react-app">create-react-app example</a></p>
 <p>To use api mocker on your <a href="https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md">create-react-app</a> projects. create <a href="https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11"><code>src/setupProxy.js</code></a> and place the following contents in it:</p>
 <pre><code class="language-diff"><span class="hl-7">+ const apiMocker = require(&#39;mocker-api&#39;);</span><br/><span class="hl-7">+ const path = require(&#39;path&#39;);</span><br/><br/><span class="hl-0">module.exports = function(app) {</span><br/><span class="hl-7">+  apiMocker(app, path.resolve(&#39;./mocker/index.js&#39;), {</span><br/><span class="hl-7">+    proxy: {</span><br/><span class="hl-7">+      &#39;/repos/(.*)&#39;: &#39;https://api.github.com/&#39;,</span><br/><span class="hl-7">+    },</span><br/><span class="hl-7">+    changeHost: true,</span><br/><span class="hl-7">+  });</span><br/><span class="hl-0">};</span>
 </code></pre>

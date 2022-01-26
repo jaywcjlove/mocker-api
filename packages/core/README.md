@@ -431,6 +431,12 @@ $ yarn run watch
 $ yarn run test
 ```
 
+## Contributors
+
+<a href="https://github.com/jaywcjlove/mocker-api/graphs/contributors">
+  <img src="https://jaywcjlove.github.io/mocker-api/CONTRIBUTORS.svg" />
+</a>
+
 ## License
 
 [MIT © Kenny Wong](https://github.com/jaywcjlove/mocker-api/blob/master/LICENSE)

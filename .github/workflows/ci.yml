@@ -29,6 +29,13 @@ jobs:
     - run: markdown-to-html -s packages/core/README.md --output packages/core/docs/index.html
     - run: markdown-to-html -s README-zh.md --output packages/core/docs/index.zh.html
     
+    - name: Generate Contributors Images
+      uses: jaywcjlove/github-action-contributors@main
+      with:
+        filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
+        output: ./packages/core/docs/CONTRIBUTORS.svg
+        avatarSize: 36
+
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:

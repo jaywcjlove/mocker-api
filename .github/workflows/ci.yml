@@ -14,7 +14,7 @@ jobs:
         node-version: 14
 
     - name: Look Changelog
-      uses: jaywcjlove/changelog-generator@v1.4.6
+      uses: jaywcjlove/changelog-generator@v1.4.8
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         filter-author: (小弟调调™|Renovate Bot)
@@ -34,7 +34,7 @@ jobs:
       with:
         filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
         output: ./packages/core/docs/CONTRIBUTORS.svg
-        avatarSize: 36
+        avatarSize: 43
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
@@ -51,7 +51,7 @@ jobs:
 
     - name: Generate Changelog
       id: changelog
-      uses: jaywcjlove/changelog-generator@v1.4.6
+      uses: jaywcjlove/changelog-generator@v1.4.8
       if: steps.create_tag.outputs.successful
       with:
         token: ${{ secrets.GITHUB_TOKEN }}

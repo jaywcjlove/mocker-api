@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@webpack-cli/serve": "1.6.0",
+    "@webpack-cli/serve": "1.6.1",
     "html-webpack-plugin": "5.5.0",
     "mocker-api": "2.9.4",
     "webpack": "5.46.0",

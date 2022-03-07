@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://github.com/jaywcjlove/mocker-api/actions">
-    <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/workflows/Build%20and%20Deploy/badge.svg">
+    <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/actions/workflows/ci.yml/badge.svg">
   </a>
   <a href="https://www.npmjs.com/package/mocker-api">
     <img alt="Download" src="https://img.shields.io/npm/dm/mocker-api.svg?style=flat">
@@ -114,7 +114,7 @@
 <pre><code class="language-bash"><span class="hl-2"># Global install dependent.</span><br/><span class="hl-0">npm install mocker-api -g</span><br/><span class="hl-2"># Run server</span><br/><span class="hl-0">mocker ./mocker/index.js</span>
 </code></pre>
 <p>Or you can put it the <code>package.json</code> config as a current project dependency.</p>
-<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  &quot;name&quot;: &quot;base-example&quot;,</span><br/><span class="hl-0">  &quot;scripts&quot;: {</span><br/><span class="hl-7">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-7">+    &quot;mocker-api&quot;: &quot;2.9.4&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-7">+  &quot;mocker&quot;: {</span><br/><span class="hl-7">+    &quot;port&quot;: 7788</span><br/><span class="hl-7">+  },</span><br/><span class="hl-0">  &quot;license&quot;: &quot;MIT&quot;</span><br/><span class="hl-0">}</span>
+<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  &quot;name&quot;: &quot;base-example&quot;,</span><br/><span class="hl-0">  &quot;scripts&quot;: {</span><br/><span class="hl-7">+    &quot;api&quot;: &quot;mocker ./mocker&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-7">+    &quot;mocker-api&quot;: &quot;2.9.5&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-7">+  &quot;mocker&quot;: {</span><br/><span class="hl-7">+    &quot;port&quot;: 7788</span><br/><span class="hl-7">+  },</span><br/><span class="hl-0">  &quot;license&quot;: &quot;MIT&quot;</span><br/><span class="hl-0">}</span>
 </code></pre>
 
 <a href="#using-with-express" id="using-with-express" style="color: inherit; text-decoration: none;">
@@ -141,7 +141,7 @@
 </code></pre>
 <p>Must have a file suffix! For example: <code>./mocker/index.js</code>.</p>
 <p>Let&#39;s add a script to easily run the dev server as well: <code>package.json</code></p>
-<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  &quot;name&quot;: &quot;development&quot;,</span><br/><span class="hl-0">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br/><span class="hl-0">  &quot;description&quot;: &quot;&quot;,</span><br/><span class="hl-0">  &quot;main&quot;: &quot;webpack.config.js&quot;,</span><br/><span class="hl-0">  &quot;scripts&quot;: {</span><br/><span class="hl-0">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br/><span class="hl-7">+    &quot;start&quot;: &quot;webpack serve --progress --mode development&quot;,</span><br/><span class="hl-0">    &quot;build&quot;: &quot;webpack --mode production&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  &quot;keywords&quot;: [],</span><br/><span class="hl-0">  &quot;author&quot;: &quot;&quot;,</span><br/><span class="hl-0">  &quot;license&quot;: &quot;MIT&quot;,</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-0">    &quot;html-webpack-plugin&quot;: &quot;4.5.0&quot;,</span><br/><span class="hl-0">    &quot;mocker-api&quot;: &quot;2.9.4&quot;,</span><br/><span class="hl-0">    &quot;webpack&quot;: &quot;5.22.0&quot;,</span><br/><span class="hl-0">    &quot;webpack-cli&quot;: &quot;4.5.0&quot;,</span><br/><span class="hl-0">    &quot;webpack-dev-server&quot;: &quot;3.11.2&quot;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
+<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  &quot;name&quot;: &quot;development&quot;,</span><br/><span class="hl-0">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br/><span class="hl-0">  &quot;description&quot;: &quot;&quot;,</span><br/><span class="hl-0">  &quot;main&quot;: &quot;webpack.config.js&quot;,</span><br/><span class="hl-0">  &quot;scripts&quot;: {</span><br/><span class="hl-0">    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,</span><br/><span class="hl-7">+    &quot;start&quot;: &quot;webpack serve --progress --mode development&quot;,</span><br/><span class="hl-0">    &quot;build&quot;: &quot;webpack --mode production&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  &quot;keywords&quot;: [],</span><br/><span class="hl-0">  &quot;author&quot;: &quot;&quot;,</span><br/><span class="hl-0">  &quot;license&quot;: &quot;MIT&quot;,</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-0">    &quot;html-webpack-plugin&quot;: &quot;4.5.0&quot;,</span><br/><span class="hl-0">    &quot;mocker-api&quot;: &quot;2.9.5&quot;,</span><br/><span class="hl-0">    &quot;webpack&quot;: &quot;5.22.0&quot;,</span><br/><span class="hl-0">    &quot;webpack-cli&quot;: &quot;4.5.0&quot;,</span><br/><span class="hl-0">    &quot;webpack-dev-server&quot;: &quot;3.11.2&quot;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
 </code></pre>
 <p>Mock API proxying made simple.</p>
 <pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  before(app){</span><br/><span class="hl-7">+   apiMocker(app, path.resolve(&#39;./mocker/index.js&#39;), {</span><br/><span class="hl-7">+     proxy: {</span><br/><span class="hl-7">+       &#39;/repos/(.*)&#39;: &#39;https://api.github.com/&#39;,</span><br/><span class="hl-7">+     },</span><br/><span class="hl-7">+     changeHost: true,</span><br/><span class="hl-7">+   })</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span>
@@ -154,7 +154,7 @@
 <p>To use api mocker on your <a href="https://github.com/facebook/create-react-app/blob/3f699fd08044de9ab0ce1991a66b376d3e1956a8/docusaurus/docs/proxying-api-requests-in-development.md">create-react-app</a> projects. create <a href="https://github.com/jaywcjlove/mocker-api/blob/64a093685b05c70ab0ddcf3fd5dbede7871efa8a/example/create-react-app/src/setupProxy.js#L1-L11"><code>src/setupProxy.js</code></a> and place the following contents in it:</p>
 <pre><code class="language-diff"><span class="hl-7">+ const apiMocker = require(&#39;mocker-api&#39;);</span><br/><span class="hl-7">+ const path = require(&#39;path&#39;);</span><br/><br/><span class="hl-0">module.exports = function(app) {</span><br/><span class="hl-7">+  apiMocker(app, path.resolve(&#39;./mocker/index.js&#39;), {</span><br/><span class="hl-7">+    proxy: {</span><br/><span class="hl-7">+      &#39;/repos/(.*)&#39;: &#39;https://api.github.com/&#39;,</span><br/><span class="hl-7">+    },</span><br/><span class="hl-7">+    changeHost: true,</span><br/><span class="hl-7">+  });</span><br/><span class="hl-0">};</span>
 </code></pre>
-<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  .....</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-7">+    &quot;mocker-api&quot;: &quot;2.9.4&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  ....</span><br/><span class="hl-0">}</span>
+<pre><code class="language-diff"><span class="hl-0">{</span><br/><span class="hl-0">  .....</span><br/><span class="hl-0">  &quot;devDependencies&quot;: {</span><br/><span class="hl-7">+    &quot;mocker-api&quot;: &quot;2.9.5&quot;</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  ....</span><br/><span class="hl-0">}</span>
 </code></pre>
 
 <a href="#development" id="development" style="color: inherit; text-decoration: none;">
@@ -166,10 +166,12 @@
 <a href="#contributors" id="contributors" style="color: inherit; text-decoration: none;">
   <h2>Contributors</h2>
 </a>
+<p>As always, thanks to our amazing contributors!</p>
 <a href="https://github.com/jaywcjlove/mocker-api/graphs/contributors">
   <img src="https://jaywcjlove.github.io/mocker-api/CONTRIBUTORS.svg" />
 </a>
 
+<p>Made with <a href="https://github.com/jaywcjlove/github-action-contributors">github-action-contributors</a>.</p>
 
 <a href="#license" id="license" style="color: inherit; text-decoration: none;">
   <h2>License</h2>

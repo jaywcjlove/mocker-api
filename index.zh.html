@@ -74,26 +74,26 @@ mocker ./api.js --host localhost --port 8000
   <span class="token comment">// 优先处理。</span>
   <span class="token comment">// apiMocker(app, path, option)</span>
   <span class="token comment">// 这是 apiMocker 的选项参数设置 `option`</span>
-  _proxy<span class="token operator">:</span> <span class="token punctuation">{</span>
-    proxy<span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token literal-property property">_proxy</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">proxy</span><span class="token operator">:</span> <span class="token punctuation">{</span>
       <span class="token comment">// 将路径字符串（例如`/user/:name`）转换为正则表达式。</span>
       <span class="token comment">// https://www.npmjs.com/package/path-to-regexp</span>
-      <span class="token string">'/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'https://api.github.com/'</span><span class="token punctuation">,</span>
-      <span class="token string">'/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:2018'</span><span class="token punctuation">,</span>
-      <span class="token string">'/api/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:3721/'</span>
+      <span class="token string-property property">'/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'https://api.github.com/'</span><span class="token punctuation">,</span>
+      <span class="token string-property property">'/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:2018'</span><span class="token punctuation">,</span>
+      <span class="token string-property property">'/api/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:3721/'</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
     <span class="token comment">// 重写目标网址路径。对象键将用作RegEx来匹配路径。</span>
     <span class="token comment">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
-    pathRewrite<span class="token operator">:</span> <span class="token punctuation">{</span>
-      <span class="token string">'^/api/repos/'</span><span class="token operator">:</span> <span class="token string">'/repos/'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">pathRewrite</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token string-property property">'^/api/repos/'</span><span class="token operator">:</span> <span class="token string">'/repos/'</span><span class="token punctuation">,</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
-    changeHost<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">changeHost</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
     <span class="token comment">// 修改 http-proxy 选项</span>
-    httpProxy<span class="token operator">:</span> <span class="token punctuation">{</span>
-      options<span class="token operator">:</span> <span class="token punctuation">{</span>
-        ignorePath<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">httpProxy</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">options</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token literal-property property">ignorePath</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
       <span class="token punctuation">}</span><span class="token punctuation">,</span>
-      listeners<span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token literal-property property">listeners</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token function-variable function">proxyReq</span><span class="token operator">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">proxyReq<span class="token punctuation">,</span> req<span class="token punctuation">,</span> res<span class="token punctuation">,</span> options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
           <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span><span class="token string">'proxyReq'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span><span class="token punctuation">,</span>
@@ -103,28 +103,28 @@ mocker ./api.js --host localhost --port 8000
   <span class="token comment">// =====================</span>
   <span class="token comment">// 默认的 GET 请求。</span>
   <span class="token comment">// https://github.com/jaywcjlove/mocker-api/pull/63</span>
-  <span class="token string">'/api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-    username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-    sex<span class="token operator">:</span> <span class="token number">6</span>
+  <span class="token string-property property">'/api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token string">'GET /api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-    username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-    sex<span class="token operator">:</span> <span class="token number">6</span>
+  <span class="token string-property property">'GET /api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token string">'GET /api/user/list'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token string-property property">'GET /api/user/list'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
     <span class="token punctuation">{</span>
-      id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-      username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-      sex<span class="token operator">:</span> <span class="token number">6</span>
+      <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
     <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-      id<span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
-      username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-      sex<span class="token operator">:</span> <span class="token number">6</span>
+      <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">2</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
-  <span class="token string">'GET /api/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token string-property property">'GET /api/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> <span class="token punctuation">{</span> owner<span class="token punctuation">,</span> repo<span class="token punctuation">,</span> ref <span class="token punctuation">}</span> <span class="token operator">=</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">;</span>
     <span class="token comment">// http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md</span>
     <span class="token comment">// owner => admin</span>
@@ -132,35 +132,35 @@ mocker ./api.js --host localhost --port 8000
     <span class="token comment">// ref => master</span>
     <span class="token comment">// req.params[0] => add/ddd.md</span>
     <span class="token keyword control-flow">return</span> res<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-      id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+      <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
       owner<span class="token punctuation">,</span> repo<span class="token punctuation">,</span> ref<span class="token punctuation">,</span>
-      path<span class="token operator">:</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+      <span class="token literal-property property">path</span><span class="token operator">:</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token string">'POST /api/login/account'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token string-property property">'POST /api/login/account'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
     <span class="token keyword">const</span> <span class="token punctuation">{</span> password<span class="token punctuation">,</span> username <span class="token punctuation">}</span> <span class="token operator">=</span> req<span class="token punctuation">.</span><span class="token property-access">body</span><span class="token punctuation">;</span>
     <span class="token keyword control-flow">if</span> <span class="token punctuation">(</span>password <span class="token operator">===</span> <span class="token string">'888888'</span> <span class="token operator">&#x26;&#x26;</span> username <span class="token operator">===</span> <span class="token string">'admin'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
       <span class="token keyword control-flow">return</span> res<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        status<span class="token operator">:</span> <span class="token string">'ok'</span><span class="token punctuation">,</span>
-        code<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-        token<span class="token operator">:</span> <span class="token string">"sdfsdfsdfdsf"</span><span class="token punctuation">,</span>
-        data<span class="token operator">:</span> <span class="token punctuation">{</span>
-          id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-          username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-          sex<span class="token operator">:</span> <span class="token number">6</span>
+        <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">'ok'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">code</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">token</span><span class="token operator">:</span> <span class="token string">"sdfsdfsdfdsf"</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">data</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
         <span class="token punctuation">}</span>
       <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span> <span class="token keyword control-flow">else</span> <span class="token punctuation">{</span>
       <span class="token keyword control-flow">return</span> res<span class="token punctuation">.</span><span class="token method function property-access">status</span><span class="token punctuation">(</span><span class="token number">403</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        status<span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
-        code<span class="token operator">:</span> <span class="token number">403</span>
+        <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+        <span class="token literal-property property">code</span><span class="token operator">:</span> <span class="token number">403</span>
       <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token string">'DELETE /api/user/:id'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+  <span class="token string-property property">'DELETE /api/user/:id'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
     <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span><span class="token string">'---->'</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span><span class="token property-access">body</span><span class="token punctuation">)</span>
     <span class="token console class-name">console</span><span class="token punctuation">.</span><span class="token method function property-access">log</span><span class="token punctuation">(</span><span class="token string">'---->'</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">.</span><span class="token property-access">id</span><span class="token punctuation">)</span>
-    res<span class="token punctuation">.</span><span class="token method function property-access">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> status<span class="token operator">:</span> <span class="token string">'ok'</span><span class="token punctuation">,</span> message<span class="token operator">:</span> <span class="token string">'删除成功！'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    res<span class="token punctuation">.</span><span class="token method function property-access">send</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">status</span><span class="token operator">:</span> <span class="token string">'ok'</span><span class="token punctuation">,</span> <span class="token literal-property property">message</span><span class="token operator">:</span> <span class="token string">'删除成功！'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 module<span class="token punctuation">.</span><span class="token property-access">exports</span> <span class="token operator">=</span> proxy<span class="token punctuation">;</span>
@@ -275,8 +275,8 @@ module.exports = proxy;
         <li><a href="https://github.com/paulmillr/chokidar#api"><code>watchOptions</code></a> => <code>object</code> Options object as defined <a href="https://github.com/paulmillr/chokidar#api">chokidar api options</a></li>
         <li><code>header</code> => <code>{}</code> Access Control Allow options.
           <pre class="language-js"><code class="language-js"><span class="token punctuation">{</span>
-  header<span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token string">'Access-Control-Allow-Methods'</span><span class="token operator">:</span> <span class="token string">'POST, GET, OPTIONS, PUT, DELETE'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">header</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token string-property property">'Access-Control-Allow-Methods'</span><span class="token operator">:</span> <span class="token string">'POST, GET, OPTIONS, PUT, DELETE'</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code><div onclick="copied(this)" data-code="{
@@ -294,10 +294,10 @@ module.exports = proxy;
 <span class="token keyword">const</span> noProxy <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">NO_PROXY</span> <span class="token operator">===</span> <span class="token string">'true'</span><span class="token punctuation">;</span>
 
 <span class="token keyword">const</span> proxy <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token string">'GET /api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    id<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
-    username<span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
-    sex<span class="token operator">:</span> <span class="token number">6</span>
+  <span class="token string-property property">'GET /api/user'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">username</span><span class="token operator">:</span> <span class="token string">'kenny'</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// ...</span>
 <span class="token punctuation">}</span>

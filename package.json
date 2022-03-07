@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "tsbb": "~3.7.2",
+    "typescript": "~4.6.2",
     "typedoc": "~0.22.13"
   }
 }

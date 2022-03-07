@@ -18,6 +18,6 @@
     "nodemon": "~2.0.15"
   },
   "devDependencies": {
-    "mocker-api": "2.9.4"
+    "mocker-api": "2.9.5"
   }
 }

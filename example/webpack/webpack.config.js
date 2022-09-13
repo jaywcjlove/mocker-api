@@ -12,14 +12,23 @@ module.exports = {
   },
   devServer: {
     port: 8082,
-    before(app){
-      apiMocker(app, path.resolve('./mocker/index.js'), {
+    onBeforeSetupMiddleware: (devServer) => {
+      apiMocker(devServer.app, path.resolve('./mocker/index.js'), {
         proxy: {
           '/repos/(.*)': 'https://api.github.com/',
         },
         changeHost: true,
       })
-    }
+
+    },
+    // before(app){
+    //   apiMocker(app, path.resolve('./mocker/index.js'), {
+    //     proxy: {
+    //       '/repos/(.*)': 'https://api.github.com/',
+    //     },
+    //     changeHost: true,
+    //   })
+    // }
   },
   plugins: [
     new HtmlWebpackPlugin({

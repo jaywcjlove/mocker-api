@@ -1,5 +1,8 @@
 {
-  "version": "2.9.5",
-  "packages": ["packages/*", "example/*"],
+  "version": "2.9.6",
+  "packages": [
+    "packages/*",
+    "example/*"
+  ],
   "useWorkspaces": true
 }

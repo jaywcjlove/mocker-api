@@ -28,6 +28,15 @@ jobs:
     - run: npm i markdown-to-html-cli -g
     - run: markdown-to-html -s packages/core/README.md --output packages/core/docs/index.html
     - run: markdown-to-html -s README-zh.md --output packages/core/docs/index.zh.html
+
+    - run: npm run build
+      working-directory: example/create-react-app
+
+    - run: npm run build
+      working-directory: example/build
+
+    - run: npm run build
+      working-directory: example/webpack
     
     - name: Generate Contributors Images
       uses: jaywcjlove/github-action-contributors@main

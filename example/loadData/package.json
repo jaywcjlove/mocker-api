@@ -1,5 +1,5 @@
 {
-  "name": "load-data",
+  "name": "@example/load-data",
   "version": "1.0.0",
   "description": "",
   "private": true,

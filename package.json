@@ -2,23 +2,21 @@
   "name": "mocker-api",
   "private": true,
   "description": "This is dev support mock RESTful API.",
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "example/*"
-    ],
-    "nohoist": [
-      "**/tsbb",
-      "**/tsbb/**"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "example/*"
+  ],
   "scripts": {
-    "doc": "yarn workspace mocker-api typedoc src/index.ts src/delay.ts --name mocker-api --out docs/type",
-    "build": "yarn workspace mocker-api tsbb build --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
-    "watch": "yarn workspace mocker-api tsbb watch --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
-    "test": "yarn workspace mocker-api tsbb test",
-    "coverage": "yarn workspace mocker-api tsbb test --coverage",
-    "example:base": "yarn workspace base api"
+    "version": "lerna version --no-changelog --no-git-tag-version --no-push",
+    "doc": "lerna exec --scope mocker-api -- typedoc src/index.ts src/delay.ts --name mocker-api --out docs/type",
+    "build": "lerna exec --scope mocker-api -- tsbb build --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
+    "watch": "lerna exec --scope mocker-api -- tsbb watch --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
+    "test": "lerna exec --scope mocker-api -- tsbb test",
+    "coverage": "lerna exec --scope mocker-api -- tsbb test --coverage",
+    "example:base": "lerna exec --scope mocker-api -- npm run api",
+    "example:create-react-app": "lerna exec --scope @example/create-react-app -- npm run build",
+    "example:typescript": "lerna exec --scope @example/typescript -- npm run build",
+    "example:webpack": "lerna exec --scope @example/webpack -- npm run build"
   },
   "repository": {
     "type": "git",
@@ -34,8 +32,9 @@
     }
   },
   "devDependencies": {
-    "tsbb": "~3.7.2",
-    "typescript": "~4.6.2",
-    "typedoc": "~0.23.0"
+    "lerna": "^6.1.0",
+    "tsbb": "~3.7.9",
+    "typedoc": "~0.23.0",
+    "typescript": "~4.9.3"
   }
 }

@@ -7,6 +7,11 @@
   },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "./delay": "./lib/delay.js",
+    "./lib/delay": "./lib/delay.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaywcjlove/mocker-api.git"

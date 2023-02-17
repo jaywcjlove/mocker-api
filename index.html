@@ -387,7 +387,7 @@ module.exports = proxy;
     <p>⚠️ No wildcard asterisk <del><code>*</code></del> - use parameters instead <code>(.*)</code>, support <code>v1.7.3+</code></p>
     <h2 id="delayed-response"><a class="anchor" aria-hidden="true" tabindex="-1" href="#delayed-response"><span class="octicon octicon-link"></span></a>Delayed Response</h2>
     <p>You can use functional tool to enhance mock. <a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
-    <pre class="language-js"><code class="language-js code-highlight"><span class="code-line line-number" line="1"><span class="token keyword">const</span> delay <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api/lib/delay'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <pre class="language-js"><code class="language-js code-highlight"><span class="code-line line-number" line="1"><span class="token keyword">const</span> delay <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api/delay'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </span><span class="code-line line-number" line="2"><span class="token keyword">const</span> noProxy <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token property-access">env</span><span class="token punctuation">.</span><span class="token constant">NO_PROXY</span> <span class="token operator">===</span> <span class="token string">'true'</span><span class="token punctuation">;</span>
 </span><span class="code-line line-number" line="3">
 </span><span class="code-line line-number" line="4"><span class="token keyword">const</span> proxy <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -399,7 +399,7 @@ module.exports = proxy;
 </span><span class="code-line line-number" line="10">  <span class="token comment">// ...</span>
 </span><span class="code-line line-number" line="11"><span class="token punctuation">}</span>
 </span><span class="code-line line-number" line="12">module<span class="token punctuation">.</span><span class="token property-access">exports</span> <span class="token operator">=</span> <span class="token punctuation">(</span>noProxy <span class="token operator">?</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token operator">:</span> <span class="token function">delay</span><span class="token punctuation">(</span>proxy<span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span></code><div onclick="copied(this)" data-code="const delay = require(&#x27;mocker-api/lib/delay&#x27;);
+</span></code><div onclick="copied(this)" data-code="const delay = require(&#x27;mocker-api/delay&#x27;);
 const noProxy = process.env.NO_PROXY === &#x27;true&#x27;;
 
 const proxy = {

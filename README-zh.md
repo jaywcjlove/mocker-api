@@ -203,7 +203,7 @@ module.exports = proxy;
 您可以使用功能性工具来增强模拟效果。[#17](https://github.com/jaywcjlove/webpack-api-mocker/issues/17)
 
 ```js
-const delay = require('mocker-api/lib/delay');
+const delay = require('mocker-api/delay');
 const noProxy = process.env.NO_PROXY === 'true';
 
 const proxy = {

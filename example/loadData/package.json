@@ -1,6 +1,6 @@
 {
   "name": "@example/load-data",
-  "version": "2.9.7",
+  "version": "2.9.8",
   "description": "",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "devDependencies": {
-    "mocker-api": "^2.9.7"
+    "mocker-api": "^2.9.8"
   },
   "license": "MIT"
 }

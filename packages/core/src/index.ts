@@ -340,10 +340,6 @@ export default function mockerApi(app: Application, watchFile: string | string[]
     } catch (e) {}
     var module = require.cache[modulePath];
     if (!module) return;
-    // remove reference in module.parent
-    if (module.parent) {
-      module.parent.children.splice(module.parent.children.indexOf(module), 1);
-    }
     // https://github.com/jaywcjlove/mocker-api/issues/42
     clearModule(modulePath);
   }

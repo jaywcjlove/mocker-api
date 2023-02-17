@@ -21,3 +21,11 @@ fetch('/repos/jaywcjlove/webpack-api-mocker')
   .then(data => {
     document.getElementById('github').innerText = `from github api: webpack-api-mocker star count: ${data.stargazers_count}`
   });
+
+fetch('/api/login/account', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ password: '888888', username: 'admin' })
+})

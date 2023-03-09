@@ -43,7 +43,7 @@
     "@types/express": "~4.17.14",
     "@types/http-proxy": "~1.17.9",
     "@types/minimist": "~1.2.2",
-    "@types/node": "~18.11.11",
+    "@types/node": "~18.14.0",
     "body-parser": "~1.20.1",
     "chokidar": "~3.5.3",
     "clear-module": "~4.1.2",

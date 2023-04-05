@@ -23,6 +23,9 @@
     "src",
     "lib"
   ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "keywords": [
     "express",
     "webpack-dev-server",

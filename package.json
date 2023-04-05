@@ -24,6 +24,9 @@
     "url": "git+https://github.com/jaywcjlove/mocker-api.git"
   },
   "jest": {},
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "license": "MIT",
   "author": "Kenny Wong <wowohoo@qq.com>",
   "markdown-to-html": {

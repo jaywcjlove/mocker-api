@@ -88,6 +88,7 @@ jobs:
 
     - run: npm publish
       continue-on-error: true
+      working-directory: packages/core
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

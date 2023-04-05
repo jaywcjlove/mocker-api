@@ -9,14 +9,15 @@
   "scripts": {
     "version": "lerna version --no-changelog --no-git-tag-version --no-push",
     "doc": "lerna exec --scope mocker-api -- typedoc src/index.ts src/delay.ts --name mocker-api --out docs/type",
-    "build": "lerna exec --scope mocker-api -- tsbb build --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
-    "watch": "lerna exec --scope mocker-api -- tsbb watch --disable-babel --file-names src/bin/mocker.ts --file-names src/delay.ts",
+    "build": "lerna exec --scope mocker-api -- tsbb build",
+    "watch": "lerna exec --scope mocker-api -- tsbb watch",
     "test": "lerna exec --scope mocker-api -- tsbb test",
     "coverage": "lerna exec --scope mocker-api -- tsbb test --coverage",
     "example:base": "lerna exec --scope mocker-api -- npm run api",
     "example:create-react-app": "lerna exec --scope @example/create-react-app -- npm run build",
     "example:typescript": "lerna exec --scope @example/typescript -- npm run build",
-    "example:webpack": "lerna exec --scope @example/webpack -- npm run build"
+    "example:webpack": "lerna exec --scope @example/webpack -- npm run build",
+    "clean": "lerna clean --yes"
   },
   "repository": {
     "type": "git",
@@ -33,8 +34,7 @@
   },
   "devDependencies": {
     "lerna": "^6.1.0",
-    "tsbb": "~3.7.9",
-    "typedoc": "~0.23.0",
-    "typescript": "~4.9.3"
+    "tsbb": "^4.1.3",
+    "typedoc": "~0.23.0"
   }
 }

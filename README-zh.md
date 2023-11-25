@@ -20,8 +20,8 @@
   <a href="https://gitee.com/jaywcjlove/mocker-api">
     <img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg">
   </a>
-  <a href="https://www.npmjs.com/package/mocker-api">
-    <img alt="npm version" src="https://img.shields.io/npm/v/mocker-api.svg">
+  <a href="https://jaywcjlove.github.io/#/sponsor">
+    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee">
   </a>
 </p>
 

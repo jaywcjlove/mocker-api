@@ -5,6 +5,9 @@
 </p>
 
 <p align="center">
+  <a href="https://jaywcjlove.github.io/#/sponsor">
+    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee">
+  </a>
   <a href="https://github.com/jaywcjlove/mocker-api/actions">
     <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/workflows/Build%20and%20Deploy/badge.svg">
   </a>
@@ -19,9 +22,6 @@
   </a>
   <a href="https://gitee.com/jaywcjlove/mocker-api">
     <img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg">
-  </a>
-  <a href="https://jaywcjlove.github.io/#/sponsor">
-    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee">
   </a>
 </p>
 

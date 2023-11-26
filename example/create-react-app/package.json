@@ -1,6 +1,6 @@
 {
   "name": "@example/create-react-app",
-  "version": "2.9.9",
+  "version": "2.9.10",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "~5.16.5",
@@ -11,7 +11,7 @@
     "react-scripts": "~5.0.1"
   },
   "devDependencies": {
-    "mocker-api": "^2.9.9"
+    "mocker-api": "^2.9.10"
   },
   "scripts": {
     "start": "react-scripts start",

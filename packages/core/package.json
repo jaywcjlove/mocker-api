@@ -2,6 +2,8 @@
   "name": "mocker-api",
   "version": "2.9.9",
   "description": "This is dev support mock RESTful API.",
+  "homepage": "https://wangchujiang.com/mocker-api/",
+  "funding": "https://jaywcjlove.github.io/#/sponsor",
   "bin": {
     "mocker": "lib/bin/mocker.js"
   },

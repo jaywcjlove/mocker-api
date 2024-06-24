@@ -3,6 +3,5 @@
   "packages": [
     "packages/*",
     "example/*"
-  ],
-  "useWorkspaces": true
+  ]
 }

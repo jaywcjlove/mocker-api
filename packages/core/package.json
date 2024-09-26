@@ -58,6 +58,6 @@
     "http-proxy": "~1.18.1",
     "local-ip-url": "~1.0.3",
     "minimist": "~1.2.7",
-    "path-to-regexp": "~6.3.0"
+    "path-to-regexp": "~8.2.0"
   }
 }

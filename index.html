@@ -222,9 +222,9 @@ mocker ./api.js --host localhost --port 8000
 </span><span class="code-line line-number" line="6">    <span class="token literal-property property">proxy</span><span class="token operator">:</span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="7">      <span class="token comment">// Turn a path string such as `/user/:name` into a regular expression.</span>
 </span><span class="code-line line-number" line="8">      <span class="token comment">// https://www.npmjs.com/package/path-to-regexp</span>
-</span><span class="code-line line-number" line="9">      <span class="token string-property property">'/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'https://api.github.com/'</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="10">      <span class="token string-property property">'/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:2018'</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="11">      <span class="token string-property property">'/api/repos/(.*)'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:3721/'</span>
+</span><span class="code-line line-number" line="9">      <span class="token string-property property">'/repos/*path'</span><span class="token operator">:</span> <span class="token string">'https://api.github.com/'</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="10">      <span class="token string-property property">'/:owner/:repo/raw/:ref/*path'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:2018'</span><span class="token punctuation">,</span>
+</span><span class="code-line line-number" line="11">      <span class="token string-property property">'/api/repos/*path'</span><span class="token operator">:</span> <span class="token string">'http://127.0.0.1:3721/'</span>
 </span><span class="code-line line-number" line="12">    <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="13">    <span class="token comment">// rewrite target's url path. Object-keys will be used as RegExp to match paths.</span>
 </span><span class="code-line line-number" line="14">    <span class="token comment">// https://github.com/jaywcjlove/mocker-api/issues/62</span>
@@ -268,17 +268,17 @@ mocker ./api.js --host localhost --port 8000
 </span><span class="code-line line-number" line="52">      <span class="token literal-property property">sex</span><span class="token operator">:</span> <span class="token number">6</span>
 </span><span class="code-line line-number" line="53">    <span class="token punctuation">}</span>
 </span><span class="code-line line-number" line="54">  <span class="token punctuation">]</span><span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="55">  <span class="token string-property property">'GET /api/:owner/:repo/raw/:ref/(.*)'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
+</span><span class="code-line line-number" line="55">  <span class="token string-property property">'GET /api/:owner/:repo/raw/:ref/*path'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="56">    <span class="token keyword">const</span> <span class="token punctuation">{</span> owner<span class="token punctuation">,</span> repo<span class="token punctuation">,</span> ref <span class="token punctuation">}</span> <span class="token operator">=</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">;</span>
 </span><span class="code-line line-number" line="57">    <span class="token comment">// http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md</span>
 </span><span class="code-line line-number" line="58">    <span class="token comment">// owner => admin</span>
 </span><span class="code-line line-number" line="59">    <span class="token comment">// repo => webpack-mock-api</span>
 </span><span class="code-line line-number" line="60">    <span class="token comment">// ref => master</span>
-</span><span class="code-line line-number" line="61">    <span class="token comment">// req.params[0] => add/ddd.md</span>
+</span><span class="code-line line-number" line="61">    <span class="token comment">// req.params.path => add/ddd.md</span>
 </span><span class="code-line line-number" line="62">    <span class="token keyword control-flow">return</span> res<span class="token punctuation">.</span><span class="token method function property-access">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
 </span><span class="code-line line-number" line="63">      <span class="token literal-property property">id</span><span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="64">      owner<span class="token punctuation">,</span> repo<span class="token punctuation">,</span> ref<span class="token punctuation">,</span>
-</span><span class="code-line line-number" line="65">      <span class="token literal-property property">path</span><span class="token operator">:</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+</span><span class="code-line line-number" line="65">      <span class="token literal-property property">path</span><span class="token operator">:</span> req<span class="token punctuation">.</span><span class="token property-access">params</span><span class="token punctuation">.</span><span class="token property-access">path</span>
 </span><span class="code-line line-number" line="66">    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </span><span class="code-line line-number" line="67">  <span class="token punctuation">}</span><span class="token punctuation">,</span>
 </span><span class="code-line line-number" line="68">  <span class="token string-property property">'POST /api/login/account'</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">req<span class="token punctuation">,</span> res</span><span class="token punctuation">)</span> <span class="token arrow operator">=></span> <span class="token punctuation">{</span>
@@ -316,9 +316,9 @@ mocker ./api.js --host localhost --port 8000
     proxy: {
       // Turn a path string such as &#x60;/user/:name&#x60; into a regular expression.
       // https://www.npmjs.com/package/path-to-regexp
-      &#x27;/repos/(.*)&#x27;: &#x27;https://api.github.com/&#x27;,
-      &#x27;/:owner/:repo/raw/:ref/(.*)&#x27;: &#x27;http://127.0.0.1:2018&#x27;,
-      &#x27;/api/repos/(.*)&#x27;: &#x27;http://127.0.0.1:3721/&#x27;
+      &#x27;/repos/*path&#x27;: &#x27;https://api.github.com/&#x27;,
+      &#x27;/:owner/:repo/raw/:ref/*path&#x27;: &#x27;http://127.0.0.1:2018&#x27;,
+      &#x27;/api/repos/*path&#x27;: &#x27;http://127.0.0.1:3721/&#x27;
     },
     // rewrite target&#x27;s url path. Object-keys will be used as RegExp to match paths.
     // https://github.com/jaywcjlove/mocker-api/issues/62
@@ -362,17 +362,17 @@ mocker ./api.js --host localhost --port 8000
       sex: 6
     }
   ],
-  &#x27;GET /api/:owner/:repo/raw/:ref/(.*)&#x27;: (req, res) => {
+  &#x27;GET /api/:owner/:repo/raw/:ref/*path&#x27;: (req, res) => {
     const { owner, repo, ref } = req.params;
     // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
     // owner => admin
     // repo => webpack-mock-api
     // ref => master
-    // req.params[0] => add/ddd.md
+    // req.params.path => add/ddd.md
     return res.json({
       id: 1,
       owner, repo, ref,
-      path: req.params[0]
+      path: req.params.path
     });
   },
   &#x27;POST /api/login/account&#x27;: (req, res) => {
@@ -432,6 +432,7 @@ module.exports = proxy;
       </li>
     </ul>
     <p>⚠️ No wildcard asterisk <del><code>*</code></del> - use parameters instead <code>(.*)</code>, support <code>v1.7.3+</code></p>
+    <p>⚠️ No wildcard asterisk <del><code>(.*)</code></del> - use parameters instead <code>*path</code>, support <code>v3.0.0+</code></p>
     <h2 id="delayed-response"><a class="anchor" aria-hidden="true" tabindex="-1" href="#delayed-response"><span class="octicon octicon-link"></span></a>Delayed Response</h2>
     <p>You can use functional tool to enhance mock. <a href="https://github.com/jaywcjlove/webpack-api-mocker/issues/17">#17</a></p>
     <pre class="language-js"><code class="language-js code-highlight"><span class="code-line line-number" line="1"><span class="token keyword">const</span> delay <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'mocker-api/delay'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -592,8 +593,8 @@ app.listen(8080);
 </span></span></span><span class="code-line line-number inserted" line="15"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">   before(app){
 </span></span></span><span class="code-line line-number inserted" line="16"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">     apiMocker(app, path.resolve('./mocker/index.js'), {
 </span></span></span><span class="code-line line-number inserted" line="17"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">       proxy: {
-</span></span></span><span class="code-line line-number inserted" line="18"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">         '/repos/(.*)': 'https://api.github.com/',
-</span></span></span><span class="code-line line-number inserted" line="19"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">         '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
+</span></span></span><span class="code-line line-number inserted" line="18"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">         '/repos/*path': 'https://api.github.com/',
+</span></span></span><span class="code-line line-number inserted" line="19"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">         '/:owner/:repo/raw/:ref/*path': 'http://127.0.0.1:2018'
 </span></span></span><span class="code-line line-number inserted" line="20"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">       },
 </span></span></span><span class="code-line line-number inserted" line="21"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">       changeHost: true,
 </span></span></span><span class="code-line line-number inserted" line="22"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">     })
@@ -623,8 +624,8 @@ module.exports = {
 +   before(app){
 +     apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {
 +       proxy: {
-+         &#x27;/repos/(.*)&#x27;: &#x27;https://api.github.com/&#x27;,
-+         &#x27;/:owner/:repo/raw/:ref/(.*)&#x27;: &#x27;http://127.0.0.1:2018&#x27;
++         &#x27;/repos/*path&#x27;: &#x27;https://api.github.com/&#x27;,
++         &#x27;/:owner/:repo/raw/:ref/*path&#x27;: &#x27;http://127.0.0.1:2018&#x27;
 +       },
 +       changeHost: true,
 +     })
@@ -688,7 +689,7 @@ module.exports = {
 </span><span class="code-line line-number" line="2"><span class="token unchanged"><span class="token prefix unchanged"> </span><span class="token line"> before(app){
 </span></span></span><span class="code-line line-number inserted" line="3"><span class="token unchanged"><span class="token line"></span></span><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">   apiMocker(app, path.resolve('./mocker/index.js'), {
 </span></span></span><span class="code-line line-number inserted" line="4"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">     proxy: {
-</span></span></span><span class="code-line line-number inserted" line="5"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">       '/repos/(.*)': 'https://api.github.com/',
+</span></span></span><span class="code-line line-number inserted" line="5"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">       '/repos/*path': 'https://api.github.com/',
 </span></span></span><span class="code-line line-number inserted" line="6"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">     },
 </span></span></span><span class="code-line line-number inserted" line="7"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">     changeHost: true,
 </span></span></span><span class="code-line line-number inserted" line="8"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">   })
@@ -698,7 +699,7 @@ module.exports = {
   before(app){
 +   apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {
 +     proxy: {
-+       &#x27;/repos/(.*)&#x27;: &#x27;https://api.github.com/&#x27;,
++       &#x27;/repos/*path&#x27;: &#x27;https://api.github.com/&#x27;,
 +     },
 +     changeHost: true,
 +   })
@@ -714,7 +715,7 @@ module.exports = {
 </span><span class="code-line line-number" line="4">module.exports = function(app) {
 </span><span class="code-line line-number inserted" line="5"><span class="token inserted-sign inserted"><span class="token prefix inserted">+</span><span class="token line">  apiMocker(app, path.resolve('./mocker/index.js'), {
 </span></span></span><span class="code-line line-number inserted" line="6"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">    proxy: {
-</span></span></span><span class="code-line line-number inserted" line="7"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">      '/repos/(.*)': 'https://api.github.com/',
+</span></span></span><span class="code-line line-number inserted" line="7"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">      '/repos/*path': 'https://api.github.com/',
 </span></span></span><span class="code-line line-number inserted" line="8"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">    },
 </span></span></span><span class="code-line line-number inserted" line="9"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">    changeHost: true,
 </span></span></span><span class="code-line line-number inserted" line="10"><span class="token inserted-sign inserted"><span class="token line"></span><span class="token prefix inserted">+</span><span class="token line">  });
@@ -725,7 +726,7 @@ module.exports = {
 module.exports = function(app) {
 +  apiMocker(app, path.resolve(&#x27;./mocker/index.js&#x27;), {
 +    proxy: {
-+      &#x27;/repos/(.*)&#x27;: &#x27;https://api.github.com/&#x27;,
++      &#x27;/repos/*path&#x27;: &#x27;https://api.github.com/&#x27;,
 +    },
 +    changeHost: true,
 +  });

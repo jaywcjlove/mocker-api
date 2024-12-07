@@ -40,11 +40,11 @@
   <a href="https://jaywcjlove.github.io/mocker-api/type/">type</a>
 </p>
 
-`mocker-api` that creates mocks for REST APIs. It will be helpful when you try to test your application without the actual REST API server.
+`mocker-api` creates mocks for REST APIs. It is helpful when you need to test your application without the actual REST API server.
 
 **Features:**  
 
-🔥 Built in support for hot Mocker file replacement.  
+🔥 Built-in support for hot Mocker file replacement.  
 🚀 Quickly and easily configure the API via JSON.  
 🌱 Mock API proxying made simple.  
 💥 Can be used independently without relying on [webpack](https://github.com/webpack/webpack) and [webpack-dev-server](https://github.com/webpack/webpack-dev-server).

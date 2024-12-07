@@ -36,14 +36,14 @@
   <a href="https://jaywcjlove.github.io/mocker-api/type/" target="__blank">Type</a>
 </p>
 
-`mocker-api` 为 REST API 创建模拟。 当您尝试在没有实际 REST API 服务器的情况下测试应用程序时，这将很有帮助。
+`mocker-api` 用于创建 REST API 的模拟。当你需要在没有实际 REST API 服务器的情况下测试你的应用程序时，它会非常有用。
 
-**特点:**  
+**特点：**  
 
-🔥 内置对 Mocker 文件热更新支持。  
-🚀 通过JSON快速轻松地配置API。  
-🌱 模拟API代理变得简单。
-💥 可以独立使用，而无需依赖 [webpack](https://github.com/webpack/webpack) 和 [webpack-dev-server](https://github.com/webpack/webpack-dev-server)。  
+🔥 内置对热替换 Mocker 文件的支持。  
+🚀 通过 JSON 快速轻松地配置 API。  
+🌱 简化的 Mock API 代理。  
+💥 可以独立使用，不依赖于 [webpack](https://github.com/webpack/webpack) 和 [webpack-dev-server](https://github.com/webpack/webpack-dev-server)。
 
 ## 快速开始
 

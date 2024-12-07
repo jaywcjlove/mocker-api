@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import httpProxy from 'http-proxy';
 import * as toRegexp from 'path-to-regexp';
 import clearModule from 'clear-module';
-import chokidar from 'chokidar';
+import chokidar, { ChokidarOptions } from 'chokidar';
 import color from 'colors-cli/safe';
 import { proxyHandle } from './proxyHandle';
 import { mockerHandle } from './mockerHandle';
@@ -166,7 +166,7 @@ export interface MockerOption {
    * Options object as defined [chokidar api options](https://github.com/paulmillr/chokidar#api)
    * @default `{}`
    */
-  watchOptions?: chokidar.WatchOptions;
+  watchOptions?: ChokidarOptions;
   /**
    * Access Control Allow options.
    * @default `{}`

@@ -43,9 +43,9 @@ const proxy = {
     console.log(req.params); // false
     return res.json({ test: true });
   },
-  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
+  'GET /api/:owner/:repo/raw/:ref/*path': (req, res) => {
     console.log(req.params); // false
-    return res.json({ test: true });
+    return res.json({ test: true, path: req.params.path });
   },
   'GET /repos/hello': (req, res) => {
     return res.json({
@@ -54,8 +54,9 @@ const proxy = {
   },
 
   'GET /api/jobs/:id': (req, res) => {
+    console.log('---->', req.params)
     return res.json({
-      text: 'url: /api/jobs/:id'
+      text: `url: /api/jobs/${req.params.id}`
     });
   },
 

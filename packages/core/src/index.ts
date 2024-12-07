@@ -275,8 +275,13 @@ export default function mockerApi(app: Application, watchFile: string | string[]
      * Get Proxy key
      */
     const proxyKey = Object.keys(options.proxy).find((kname) => {
-      const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
-      return !!regexp.exec(getExecUrlPath(req));
+      try {
+        const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
+        return !!regexp.exec(getExecUrlPath(req));
+      } catch (error) {
+        console.error(`${color.red_b.black(' Failed: ')} The proxy configuration ${color.red(kname)} contains a syntax error!!\n doc: ${color.blue("https://www.npmjs.com/package/path-to-regexp/v/8.2.0")}`);
+        return false;
+      }
     });
     /**
      * Get Mocker key
@@ -284,8 +289,13 @@ export default function mockerApi(app: Application, watchFile: string | string[]
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
     const mockerKey: string = Object.keys(mocker).find((kname) => {
-      const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
-      return !!regexp.exec(getExecUrlPath(req));
+      try {
+        const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
+        return !!regexp.exec(getExecUrlPath(req));
+      } catch (error) {
+        console.error(`${color.red_b.black(' Failed: ')} The mocker configuration ${color.red(kname)} contains a syntax error!!\n doc: ${color.blue("https://www.npmjs.com/package/path-to-regexp/v/8.2.0")}`);
+        return false;
+      }
     });
     /**
      * Access Control Allow options.
@@ -302,8 +312,13 @@ export default function mockerApi(app: Application, watchFile: string | string[]
       res.setHeader(keyName, accessOptions[keyName]);
     });
     const proxyKeyString: string = Object.keys(mocker).find((kname) => {
-      const { regexp } = pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), ''))
-      return !!regexp.exec(getExecUrlPath(req))
+      try {
+        const { regexp } = pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), ''))
+        return !!regexp.exec(getExecUrlPath(req))
+      } catch (error) {
+        console.error(`${color.red_b.black(' Failed: ')} The mocker configuration ${color.red(kname)} contains a syntax error!!\n doc: ${color.blue("https://www.npmjs.com/package/path-to-regexp/v/8.2.0")}`);
+        return false;
+      }
     })
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.

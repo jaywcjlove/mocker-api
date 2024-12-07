@@ -44,7 +44,7 @@ export function mockerHandle(param: MockerHandleOptions) {
     const result = mocker[mockerKey];
     if (typeof result === 'function') {
       const rgxStr = ~mockerKey.indexOf(' ') ? ' ' : '';
-      req.params = pathMatch({ sensitive: false, strict: false, end: false })(mockerKey.split(new RegExp(rgxStr))[1])(URL.parse(req.url).pathname);
+      req.params = pathMatch({ sensitive: false, trailing: false, end: false })(mockerKey.split(new RegExp(rgxStr))[1])(URL.parse(req.url).pathname);
       result(req, res, next);
     } else {
       res.json(result);

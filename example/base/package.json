@@ -1,6 +1,6 @@
 {
   "name": "@example/base",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "author": "",
   "devDependencies": {
-    "mocker-api": "^3.0.1"
+    "mocker-api": "^3.0.2"
   },
   "license": "MIT"
 }

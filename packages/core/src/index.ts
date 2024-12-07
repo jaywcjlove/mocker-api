@@ -270,12 +270,13 @@ export default function mockerApi(app: Application, watchFile: string | string[]
   app.all('/*', (req: Request, res: Response, next: NextFunction) => {
     const getExecUrlPath = (req: Request) => {
       return options.withFullUrlPath ? req.url : req.path;
-    } 
+    }
     /**
      * Get Proxy key
      */
     const proxyKey = Object.keys(options.proxy).find((kname) => {
-      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(getExecUrlPath(req));
+      const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
+      return !!regexp.exec(getExecUrlPath(req));
     });
     /**
      * Get Mocker key
@@ -283,7 +284,8 @@ export default function mockerApi(app: Application, watchFile: string | string[]
      * => `GET /api/:owner/:repo/raw/:ref/(.*)`
      */
     const mockerKey: string = Object.keys(mocker).find((kname) => {
-      return !!pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), '')).exec(getExecUrlPath(req));
+      const { regexp } = pathToRegexp(kname.replace((new RegExp('^' + req.method + ' ')), ''))
+      return !!regexp.exec(getExecUrlPath(req));
     });
     /**
      * Access Control Allow options.
@@ -299,11 +301,13 @@ export default function mockerApi(app: Application, watchFile: string | string[]
     Object.keys(accessOptions).forEach(keyName => {
       res.setHeader(keyName, accessOptions[keyName]);
     });
+    const proxyKeyString: string = Object.keys(mocker).find((kname) => {
+      const { regexp } = pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), ''))
+      return !!regexp.exec(getExecUrlPath(req))
+    })
     // fix issue 34 https://github.com/jaywcjlove/mocker-api/issues/34
     // In some cross-origin http request, the browser will send the preflighted options request before sending the request methods written in the code.
-    if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS'
-      && Object.keys(mocker).find((kname) => !!pathToRegexp(kname.replace((new RegExp('^(PUT|POST|GET|DELETE) ')), '')).exec(getExecUrlPath(req)))
-    ) {
+    if (!mockerKey && req.method.toLocaleUpperCase() === 'OPTIONS' && proxyKeyString) {
       return res.sendStatus(200);
     }
 

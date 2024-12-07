@@ -1,31 +1,31 @@
 <p align="center">
   <a href="https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api/file/README.md">
-    <img alt="Mocker API LOGO" src="https://user-images.githubusercontent.com/1680273/105883915-5845a780-6042-11eb-8eee-614ba512a74a.png">
+    <img alt="Mocker API LOGO" src="https://github.com/user-attachments/assets/68d24ccf-2100-41b8-8ff2-96397c6cee77" />
   </a>
 </p>
 
 
 <p align="center">
   <a href="https://jaywcjlove.github.io/#/sponsor">
-    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee">
+    <img alt="Buy me a coffee" src="https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee" />
   </a>
   <a href="https://github.com/jaywcjlove/mocker-api/actions">
-    <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/actions/workflows/ci.yml/badge.svg">
+    <img alt="Build & Deploy" src="https://github.com/jaywcjlove/mocker-api/actions/workflows/ci.yml/badge.svg" />
   </a>
   <a href="https://www.npmjs.com/package/mocker-api">
-    <img alt="Download" src="https://img.shields.io/npm/dm/mocker-api.svg?style=flat">
+    <img alt="Download" src="https://img.shields.io/npm/dm/mocker-api.svg?style=flat" />
   </a>
   <a href="https://github.com/jaywcjlove/mocker-api/network/dependents">
-    <img alt="Repo Dependents" src="https://badgen.net/github/dependents-repo/jaywcjlove/mocker-api">
+    <img alt="Repo Dependents" src="https://badgen.net/github/dependents-repo/jaywcjlove/mocker-api" />
   </a>
   <a href="https://uiwjs.github.io/npm-unpkg/#/pkg/mocker-api/file/README.md">
-    <img src="https://img.shields.io/badge/Open%20in-unpkg-blue" alt="Open in unpkg">
+    <img src="https://img.shields.io/badge/Open%20in-unpkg-blue" alt="Open in unpkg" />
   </a>
   <a href="https://gitee.com/jaywcjlove/mocker-api">
-    <img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg">
+    <img alt="Release" src="https://jaywcjlove.github.io/sb/ico/gitee.svg" />
   </a>
   <a href="https://www.npmjs.com/package/mocker-api">
-    <img alt="npm version" src="https://img.shields.io/npm/v/mocker-api.svg">
+    <img alt="npm version" src="https://img.shields.io/npm/v/mocker-api.svg" />
   </a>
 </p>
 

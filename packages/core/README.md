@@ -91,9 +91,9 @@ const proxy = {
     proxy: {
       // Turn a path string such as `/user/:name` into a regular expression.
       // https://www.npmjs.com/package/path-to-regexp
-      '/repos/(.*)': 'https://api.github.com/',
-      '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018',
-      '/api/repos/(.*)': 'http://127.0.0.1:3721/'
+      '/repos/*path': 'https://api.github.com/',
+      '/:owner/:repo/raw/:ref/*path': 'http://127.0.0.1:2018',
+      '/api/repos/*path': 'http://127.0.0.1:3721/'
     },
     // rewrite target's url path. Object-keys will be used as RegExp to match paths.
     // https://github.com/jaywcjlove/mocker-api/issues/62
@@ -137,17 +137,17 @@ const proxy = {
       sex: 6
     }
   ],
-  'GET /api/:owner/:repo/raw/:ref/(.*)': (req, res) => {
+  'GET /api/:owner/:repo/raw/:ref/*path': (req, res) => {
     const { owner, repo, ref } = req.params;
     // http://localhost:8081/api/admin/webpack-mock-api/raw/master/add/ddd.md
     // owner => admin
     // repo => webpack-mock-api
     // ref => master
-    // req.params[0] => add/ddd.md
+    // req.params.path => add/ddd.md
     return res.json({
       id: 1,
       owner, repo, ref,
-      path: req.params[0]
+      path: req.params.path
     });
   },
   'POST /api/login/account': (req, res) => {
@@ -203,6 +203,8 @@ module.exports = proxy;
   ```
 
 ⚠️ No wildcard asterisk ~~`*`~~ - use parameters instead `(.*)`, support `v1.7.3+`
+
+⚠️ No wildcard asterisk ~~`(.*)`~~ - use parameters instead `*path`, support `v3.0.0+`
 
 ## Delayed Response
 
@@ -336,8 +338,8 @@ module.exports = {
 +   before(app){
 +     apiMocker(app, path.resolve('./mocker/index.js'), {
 +       proxy: {
-+         '/repos/(.*)': 'https://api.github.com/',
-+         '/:owner/:repo/raw/:ref/(.*)': 'http://127.0.0.1:2018'
++         '/repos/*path': 'https://api.github.com/',
++         '/:owner/:repo/raw/:ref/*path': 'http://127.0.0.1:2018'
 +       },
 +       changeHost: true,
 +     })
@@ -387,7 +389,7 @@ Mock API proxying made simple.
   before(app){
 +   apiMocker(app, path.resolve('./mocker/index.js'), {
 +     proxy: {
-+       '/repos/(.*)': 'https://api.github.com/',
++       '/repos/*path': 'https://api.github.com/',
 +     },
 +     changeHost: true,
 +   })
@@ -408,7 +410,7 @@ To use api mocker on your [create-react-app](https://github.com/facebook/create-
 module.exports = function(app) {
 +  apiMocker(app, path.resolve('./mocker/index.js'), {
 +    proxy: {
-+      '/repos/(.*)': 'https://api.github.com/',
++      '/repos/*path': 'https://api.github.com/',
 +    },
 +    changeHost: true,
 +  });

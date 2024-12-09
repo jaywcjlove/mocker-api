@@ -60,6 +60,6 @@
     "@types/express": "~4.17.14",
     "@types/http-proxy": "~1.17.9",
     "@types/minimist": "~1.2.2",
-    "@types/node": "~18.14.0"
+    "@types/node": "~22.10.0"
   }
 }

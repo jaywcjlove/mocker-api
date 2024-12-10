@@ -47,7 +47,7 @@
     "chokidar": "~4.0.0",
     "clear-module": "~4.1.2",
     "colors-cli": "~1.0.28",
-    "detect-port": "~1.6.0",
+    "detect-port": "~2.1.0",
     "express": "~4.21.0",
     "http-proxy": "~1.18.1",
     "local-ip-url": "~1.0.3",

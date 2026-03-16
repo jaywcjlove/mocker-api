@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import httpProxy from 'http-proxy';
 import * as toRegexp from 'path-to-regexp';
 import clearModule from 'clear-module';
-import chokidar, { ChokidarOptions } from 'chokidar';
+import chokidar, { ChokidarOptions, FSWatcher } from 'chokidar';
 import color from 'colors-cli/safe';
 import { proxyHandle } from './proxyHandle';
 import { mockerHandle } from './mockerHandle';
@@ -246,9 +246,9 @@ export default function mockerApi(app: Application, watchFile: string | string[]
   if (isWatchFilePath) {
     // 监听配置入口文件所在的目录，一般为认为在配置文件/mock 目录下的所有文件
     // 加上require.resolve，保证 `./mock/`能够找到`./mock/index.js`，要不然就要监控到上一级目录了
-    const watcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), options.watchOptions);
-  
-    watcher.on('all', (event, path) => {
+    const watcher: FSWatcher = chokidar.watch(watchFiles.map(watchFile => PATH.dirname(require.resolve(watchFile))), options.watchOptions);
+    
+    (watcher as any).on('all', (event: string, path: string) => {
       if (event === 'change' || event === 'add') {
         try {
           // 当监听的可能是多个配置文件时，需要清理掉更新文件以及入口文件的缓存，重新获取

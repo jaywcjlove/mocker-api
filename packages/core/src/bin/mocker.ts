@@ -106,7 +106,7 @@ const DEFAULT_CONFIG: MockerConfig = {
   delete mockerConfig.host;
   apiMocker(app, entryFiles, { ...mockerConfig });
 
-  app.listen(DEFAULT_PORT, () => {
+  const server = app.listen(DEFAULT_PORT, () => {
     const localIpUrl = prepareUrls({
       protocol: 'http',
       host: DEFAULT_HOST,
@@ -118,7 +118,7 @@ const DEFAULT_CONFIG: MockerConfig = {
   /**
    * Event listener for HTTP server "error" event.
    */
-  app.on('error', (error: any) => {
+  server.on('error', (error: any) => {
     if (error.syscall !== 'listen') {
       throw error;
     }

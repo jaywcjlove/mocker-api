@@ -57,6 +57,7 @@
   <a href="https://www.npmjs.com/package/mocker-api">
     <img alt="Download" src="https://img.shields.io/npm/dm/mocker-api.svg?style=flat" />
   </a>
+  <br />
   <a href="https://github.com/jaywcjlove/mocker-api/network/dependents">
     <img alt="Repo Dependents" src="https://badgen.net/github/dependents-repo/jaywcjlove/mocker-api" />
   </a>

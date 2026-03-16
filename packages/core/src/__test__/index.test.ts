@@ -83,7 +83,7 @@ describe('mockerApi watch mode', () => {
 
     expect(watchMock).toHaveBeenCalledWith([path.dirname(require.resolve(mockFile))], { ignoreInitial: true });
     expect(onMock).toHaveBeenCalledWith('all', expect.any(Function));
-    expect(app.all).toHaveBeenCalledWith('/*', expect.any(Function));
+    expect(app.all).toHaveBeenCalledWith(/.*/, expect.any(Function));
   });
 
   it('handles watched file changes through the hot reload path', () => {

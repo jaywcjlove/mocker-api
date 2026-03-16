@@ -267,7 +267,7 @@ export default function mockerApi(app: Application, watchFile: string | string[]
   }
   // 监听文件修改重新加载代码
   // 配置热更新
-  app.all('/*', (req: Request, res: Response, next: NextFunction) => {
+  app.all(/.*/, (req: Request, res: Response, next: NextFunction) => {
     const getExecUrlPath = (req: Request) => {
       return options.withFullUrlPath ? req.url : req.path;
     }

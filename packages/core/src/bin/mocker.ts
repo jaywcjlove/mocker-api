@@ -94,7 +94,7 @@ const DEFAULT_CONFIG: MockerConfig = {
   const DEFAULT_HOST = mockerConfig.host;
   const app = express();
 
-  app.all('/*', (req, res, next) => {
+  app.all(/.*/, (req, res, next) => {
     console.log(`${color.green(req.method)} - ${req.url}`);
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length,Authorization,Accept,X-Requested-With');

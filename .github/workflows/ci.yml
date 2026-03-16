@@ -24,7 +24,7 @@ jobs:
         filter-author: (小弟调调™|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
-    - run: npm run install
+    - run: npm install
     - run: npm run build
     - run: npm run coverage
     - run: npm run doc

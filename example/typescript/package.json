@@ -1,6 +1,6 @@
 {
   "name": "@example/typescript",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "private": true,
   "description": "",
   "main": "index.js",
@@ -15,6 +15,6 @@
   "dependencies": {
     "@types/express": "~5.0.6",
     "express": "~5.2.1",
-    "mocker-api": "^3.0.2"
+    "mocker-api": "^4.0.0"
   }
 }

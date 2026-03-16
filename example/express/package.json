@@ -1,6 +1,6 @@
 {
   "name": "@example/express",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "",
   "private": true,
   "scripts": {
@@ -19,6 +19,6 @@
     "nodemon": "~3.1.14"
   },
   "devDependencies": {
-    "mocker-api": "^3.0.2"
+    "mocker-api": "^4.0.0"
   }
 }

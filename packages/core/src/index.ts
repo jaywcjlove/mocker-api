@@ -49,8 +49,8 @@ export type MockerProxyRoute = Record<string, MockerResult> & {
 /**
  * Listening for proxy events.  
  * This options contains listeners for [node-http-proxy](https://github.com/http-party/node-http-proxy#listening-for-proxy-events).
- * {typeof httpProxy.on}
- * {@link httpProxy}
+ * Type shape reference: `typeof httpProxy.on`
+ * See also: [http-proxy](https://github.com/http-party/node-http-proxy)
  */
 export interface HttpProxyListeners extends Record<string, any> {
   start?: (

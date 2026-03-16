@@ -24,10 +24,10 @@ jobs:
         filter-author: (小弟调调™|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
-    - run: yarn install
-    - run: yarn run build
-    - run: yarn run coverage
-    - run: yarn run doc
+    - run: npm ci
+    - run: npm run build
+    - run: npm run coverage
+    - run: npm run doc
 
     - run: npm i markdown-to-html-cli -g
     - run: markdown-to-html -s packages/core/README.md --output packages/core/docs/index.html
